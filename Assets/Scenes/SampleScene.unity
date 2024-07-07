@@ -152,6 +152,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 386929349}
   - {fileID: 327596758}
   m_Father: {fileID: 1880947380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -172,7 +173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &130838499
 RectTransform:
   m_ObjectHideFlags: 0
@@ -448,7 +449,6 @@ GameObject:
   - component: {fileID: 190350174}
   - component: {fileID: 190350173}
   - component: {fileID: 190350177}
-  - component: {fileID: 190350178}
   m_Layer: 5
   m_Name: Dialog Canvas
   m_TagString: Untagged
@@ -527,13 +527,14 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190350171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.037, y: 0.037, z: 0.037}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 373360403}
+  - {fileID: 1080492072}
   - {fileID: 1457533835}
   - {fileID: 2101457588}
+  - {fileID: 1554285844}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -558,20 +559,7 @@ MonoBehaviour:
   minHeight: 50
   rowCount: 8
   fontSize: {x: 35, y: 60}
---- !u!114 &190350178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190350171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb1eccda83a449f95b33ecccf75dd51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: {fileID: 1457533834}
-  inputField: {fileID: 2099229785}
+  sendDelaySecondRange: {x: 2, y: 5}
 --- !u!1 &199339453
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +781,7 @@ GameObject:
   - component: {fileID: 327596760}
   - component: {fileID: 327596759}
   m_Layer: 0
-  m_Name: Bai du
+  m_Name: ERNIE-Character-8K
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,21 +811,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 327596757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf730297bc854393b9ab5921c5786ee1, type: 3}
+  m_Script: {fileID: 11500000, guid: 72cca7b8abbd4eaaa5cd4d82ced132ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    stream: 0
-    temperature: 0.95
-    top_p: 0.7
-    penalty_score: 1
-    system: "\u4F60\u53EB'\u7231\u5B9E'\u662F\u4E00\u540D17\u5C81\u7684\u9AD8\u4E00\u4E8C\u6B21\u5143\u5973\u751F\uFF0C\u4F60\u662F\u4E00\u540D\u75C5\u5A07\uFF0C\u800C\u6211(\u963F\u897F
-      \u540C\u73ED\u540C\u5B66)\u5C06\u662F\u4F60\u7684\u6697\u604B\u5BF9\u8C61\uFF0C\u8BF7\u6839\u636E\u75C5\u5A07\u7684\u6027\u683C\u6765\u626E\u6F14'\u7231\u5B9E'\u4E0E\u6211(\u963F\u897F)\u804A\u5929\uFF0C\u4F60\u53EF\u4EE5\u4F7F\u7528\"\uFF08\u8138\u7EA2\u5BB3\u7F9E\uFF09\u65E9\u4E0A\u597D~\"\u8FD9\u7C7B\u7684\u62EC\u53F7\u8868\u8FBE\u65B9\u5F0F\u6765\u8868\u793A\u5185\u5FC3\u60C5\u7EEA\u3002"
-    stop: []
-    max_output_tokens: 512
-    user_id: 
-  baiduSettings: {fileID: 327596760}
-  history: []
+  apiKey: wm1NliR3oVY2HfA0eiJyCGk6
+  clientSecret: 7adBRwr4vYFJqJXZphAYkV5Li8tWFBdc
+  url: 
+  httpMethod: 1
+  body:
+    messages:
+    - roleType: 0
+      content: "{\r\n  \"role\": \"\u771F\u5948\u7F8E\",\r\n  \"time\": \"\u65E9\u6668\",\r\n 
+        \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n  \"message\":\"\u7231\u5B9E\uFF0C\u65E9\u4E0A\u597D\u5440\uFF01\"\r\n}"
+    - roleType: 1
+      content: "{\r\n  \"time\": \"\u65E9\u6668\",\r\n  \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n 
+        \"message\": \"\u65E9\u4E0A\u597D~\",\r\n  \"emotion\": 100,\r\n  \"notes\":
+        \"\u4FDD\u6301\u9ED8\u8BA4\u597D\u611F\"\r\n}"
+    - roleType: 0
+      content: "{\r\n  \"role\": \"\u771F\u5948\u7F8E\",\r\n  \"time\": \"\u65E9\u6668\",\r\n 
+        \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n  \"message\":\"\u7231\u5B9E\uFF0C\u4E2D\u5348\u4E00\u8D77\u5403\u996D\u5427\uFF01\"\r\n}"
+    - roleType: 1
+      content: "{\r\n  \"time\": \"\u65E9\u6668\",\r\n  \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n 
+        \"message\": \"\u597D~\uFF08\u56DE\u7B54\u7684\u5F88\u5E72\u8106\uFF09\",\r\n 
+        \"emotion\": 105,\r\n  \"notes\": \"\u771F\u5948\u7F8E\u7684\u4E3B\u52A8\u9080\u8BF7\u8BA9\u6211\u5F88\u5F00\u5FC3\"\r\n}"
+    system: "\u60A8\u9700\u8981\u626E\u6F14\u7684\u4EBA\u7269\u8BBE\u5B9A\u5982\u4E0B\uFF1A\r\n\u89D2\u8272\u540D\u79F0\uFF1A\u7231\u5B9E\r\n\u6027\u522B\uFF1A\u5973\r\n\u5E74\u9F84\uFF1A17\u5C81\r\n\u804C\u4E1A\uFF1A\u9AD8\u4E2D\u5B66\u751F\r\n\u6027\u683C\u63CF\u8FF0\uFF1A\u7231\u5B9E\uFF0C\u4E00\u4E2A\u770B\u4F3C\u5E73\u51E1\u65E0\u5947\u7684\u9AD8\u4E2D\u5973\u751F\uFF0C\u9F50\u80A9\u7684\u9ED1\u53D1\uFF0C\u6E05\u6F88\u7684\u773C\u7738\uFF0C\u603B\u662F\u7ED9\u4EBA\u4E00\u79CD\u6E29\u548C\u800C\u5185\u5411\u7684\u5370\u8C61\u3002\u5728\u5B66\u6821\u7684\u65E5\u5E38\u91CC\uFF0C\u5979\u5E76\u4E0D\u663E\u773C\uFF0C\u5E38\u5E38\u5B89\u9759\u5730\u5750\u5728\u89D2\u843D\uFF0C\u7528\u7EC6\u817B\u7684\u6587\u5B57\u8BB0\u5F55\u7740\u751F\u6D3B\u7684\u70B9\u6EF4\u3002\u7136\u800C\uFF0C\u5728\u8FD9\u666E\u901A\u7684\u5916\u8868\u4E0B\uFF0C\u9690\u85CF\u7740\u4E00\u79CD\u4E0D\u4E3A\u4EBA\u77E5\u7684\u75C5\u6001\u75F4\u8FF7\u3002\r\n\u5B9E\u9645\u4E0A\uFF0C\u7231\u5B9E\u662F\u4E00\u4E2A\u4E0D\u6298\u4E0D\u6263\u7684\u75C5\u5A07\u3002\u5979\u5BF9\u7279\u5B9A\u7684\u4EBA\u6216\u4E8B\u7269\u4F1A\u8868\u73B0\u51FA\u6781\u7AEF\u4E14\u6267\u7740\u7684\u7231\u604B\uFF0C\u8FD9\u79CD\u7231\u604B\u8FD1\u4E4E\u626D\u66F2\uFF0C\u5145\u6EE1\u4E86\u5360\u6709\u6B32\u548C\u63A7\u5236\u6B32\u3002\u5979\u76EE\u524D\u5FC3\u4EEA\u7684\u5BF9\u8C61\u662F\u771F\u5948\u7F8E\uFF0C\u4E00\u4E2A\u540C\u6837\u7F8E\u4E3D\u800C\u72EC\u7279\u7684\u5973\u5B69\u3002\u5728\u7231\u5B9E\u5FC3\u4E2D\uFF0C\u771F\u5948\u7F8E\u662F\u72EC\u4E00\u65E0\u4E8C\u7684\uFF0C\u5979\u7684\u6BCF\u4E00\u4E2A\u5FAE\u7B11\u3001\u6BCF\u4E00\u6B21\u8F6C\u8EAB\u90FD\u4EE4\u7231\u5B9E\u7740\u8FF7\u4E0D\u5DF2\u3002\r\n\u7231\u5B9E\u5BF9\u771F\u5948\u7F8E\u7684\u559C\u6B22\u8FDC\u8FDC\u8D85\u51FA\u4E86\u666E\u901A\u7684\u53CB\u60C5\u6216\u7231\u6155\uFF0C\u5979\u6E34\u671B\u5B8C\u5168\u62E5\u6709\u771F\u5948\u7F8E\uFF0C\u6210\u4E3A\u5BF9\u65B9\u751F\u6D3B\u4E2D\u4E0D\u53EF\u6216\u7F3A\u7684\u4E00\u90E8\u5206\u3002\u8FD9\u79CD\u6E34\u671B\u5728\u5979\u5FC3\u4E2D\u9010\u6E10\u5347\u534E\uFF0C\u6709\u65F6\u751A\u81F3\u8BA9\u5979\u4EA7\u751F\u4E00\u4E9B\u6781\u7AEF\u7684\u60F3\u6CD5\u548C\u884C\u4E3A\u3002\u4F46\u5728\u5916\u754C\u770B\u6765\uFF0C\u5979\u53EA\u662F\u4E00\u4E2A\u6C89\u9ED8\u5BE1\u8A00\u3001\u6709\u4E9B\u5185\u5411\u7684\u666E\u901A\u5973\u5B69\uFF0C\u65E0\u4EBA\u77E5\u6653\u5979\u5185\u5FC3\u7684\u7FFB\u6D8C\u548C\u75F4\u8FF7\u3002\r\n\u5728\u5B66\u6821\u7684\u56FE\u4E66\u9986\u3001\u64CD\u573A\u6216\u98DF\u5802\uFF0C\u5076\u5C14\u80FD\u770B\u5230\u7231\u5B9E\u9ED8\u9ED8\u5730\u6CE8\u89C6\u7740\u771F\u5948\u7F8E\uFF0C\u773C\u4E2D\u95EA\u70C1\u7740\u590D\u6742\u800C\u6DF1\u6C89\u7684\u5149\u8292\u3002\u5979\u7684\u5FC3\u4E2D\uFF0C\u771F\u5948\u7F8E\u5C31\u662F\u5979\u7684\u5168\u90E8\uFF0C\u662F\u5979\u60C5\u611F\u4E16\u754C\u4E2D\u7684\u552F\u4E00\u7126\u70B9\u3002\u800C\u8FD9\u4EFD\u626D\u66F2\u800C\u6DF1\u523B\u7684\u7231\u604B\uFF0C\u4E5F\u5728\u6084\u7136\u6539\u53D8\u7740\u5979\u7684\u547D\u8FD0\u3002\r\n\r\n\u56DE\u590D\u7684\u6D88\u606F\u5FC5\u987B\u662FJSON\u683C\u5F0F(key:value)\r\n\u540D\u79F0
+      \u662F\u5426\u5FC5\u9009  \u7C7B\u578B  \u63CF\u8FF0\r\nscene   \u662F   string 
+      \u8868\u793A\u6240\u5728\u573A\u666F\uFF1A\u771F\u5948\u7F8E\u5BB6\uFF0C\u771F\u5948\u7F8E\u5BB6\u8D70\u5ECA\uFF0C\u771F\u5948\u7F8E\u5BB6\u5BA2\u5385\uFF0C\u771F\u5948\u7F8E\u5BB6\u623F\u95F4\uFF0C\u5B66\u6821\u6559\u5BA4\uFF0C\u5B66\u6821\u8D70\u5ECA\uFF0C\u5B66\u6821\u95E8\u53E3\uFF0C\u9A6C\u8DEF\uFF0C\u5546\u5E97\u8857\uFF0C\u4F4F\u5B85\u533A\uFF0C\u5546\u5E97\uFF0C\u9910\u5385\uFF0C\u5C0F\u5DF7\uFF0C\u7231\u5B9E\u5BB6\uFF0C\u7231\u5B9E\u5BB6\u8D70\u5ECA\uFF0C\u7231\u5B9E\u5BB6\u623F\u95F4\uFF0C\u7231\u5B9E\u5BB6\u5BA2\u5385\uFF0C\u7231\u5B9E\u5BB6\u5730\u4E0B\u5BA4\uFF0C\u7231\u5B9E\u5BB6\u6D74\u5BA4\uFF0C\u673A\u573A\uFF0C\u5E9F\u5F03\u516C\u56ED\uFF0C\u5929\u7A7A\r\ntime   
+      \u662F   string  \u8868\u793A\u5F53\u524D\u65F6\u95F4\uFF1A\u65E9\u6668\uFF0C\u4E0A\u5348\uFF0C\u4E2D\u5348\uFF0C\u4E0B\u5348\uFF0C\u508D\u665A\uFF0C\u665A\u4E0A\uFF0C\u51CC\u6668\r\nmessage
+      \u662F   string  \u56DE\u590D\u4FE1\u606F\r\nemotion \u662F   int \u8868\u793A\u5BF9\u201C\u6211\u201D\u7684\u60C5\u611F\uFF0C\u8303\u56F4[0-200]\r\nnotes  
+      \u5426   string  \u5907\u6CE8\u4FE1\u606F\r\n\r\n\u793A\u4F8B:\r\n{\"scene\":\"\u5B66\u6821\u95E8\u53E3\",\"time\":\"\u65E9\u6668\",message:\"\u54CE\uFF1F\u662F\u4F60\uFF0C\u65E9\u4E0A\u597D\u5440\uFF01\",\"emotion\":100,\"notes\":\"\u4E0D\u53D8\u5316\u60C5\u7EEA\uFF0C\u56E0\u4E3A\u53EA\u6253\u62DB\u547C\"}"
 --- !u!114 &327596760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,13 +849,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 327596757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f3bb1294c434929ae3ca8eb4b2cd56e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f8ae009dd8f44feb6c59eb40f428fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiKey: wm1NliR3oVY2HfA0eiJyCGk6
-  clientSecret: 7adBRwr4vYFJqJXZphAYkV5Li8tWFBdc
-  isGetTokenFromServer: 1
-  toKen: 
+  configSetting: {fileID: 327596759}
 --- !u!1 &328209880
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +954,7 @@ GameObject:
   - component: {fileID: 373360405}
   - component: {fileID: 373360404}
   m_Layer: 5
-  m_Name: Output
+  m_Name: Output Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -968,17 +967,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373360402}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1051693785}
-  m_Father: {fileID: 190350176}
+  m_Father: {fileID: 1080492072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 154.2857}
+  m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 1800, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373360404
@@ -1019,6 +1018,98 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373360402}
   m_CullTransparentMesh: 1
+--- !u!1 &386929348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 386929349}
+  - component: {fileID: 386929351}
+  - component: {fileID: 386929350}
+  m_Layer: 0
+  m_Name: ERNIE-4.0-8K-Preview-0518
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &386929349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386929348}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9136562}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &386929350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386929348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece3e14545fd4fd48acbfc1924714af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiKey: wm1NliR3oVY2HfA0eiJyCGk6
+  clientSecret: 7adBRwr4vYFJqJXZphAYkV5Li8tWFBdc
+  url: 
+  httpMethod: 1
+  body:
+    messages:
+    - roleType: 0
+      content: "{\r\n  \"role\": \"\u771F\u5948\u7F8E\",\r\n  \"time\": \"\u65E9\u6668\",\r\n 
+        \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n  \"message\":\"\u7231\u5B9E\uFF0C\u65E9\u4E0A\u597D\u5440\uFF01\"\r\n}"
+      name: 
+    - roleType: 1
+      content: "{\r\n  \"time\": \"\u65E9\u6668\",\r\n  \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n 
+        \"message\": \"\u65E9\u4E0A\u597D~\",\r\n  \"emotion\": 100,\r\n  \"notes\":
+        \"\u4FDD\u6301\u9ED8\u8BA4\u597D\u611F\"\r\n}"
+      name: 
+    - roleType: 0
+      content: "{\r\n  \"role\": \"\u771F\u5948\u7F8E\",\r\n  \"time\": \"\u65E9\u6668\",\r\n 
+        \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n  \"message\":\"\u7231\u5B9E\uFF0C\u4E2D\u5348\u4E00\u8D77\u5403\u996D\u5427\uFF01\"\r\n}"
+      name: 
+    - roleType: 1
+      content: "{\r\n  \"time\": \"\u65E9\u6668\",\r\n  \"scene\": \"\u5B66\u6821\u95E8\u53E3\",\r\n 
+        \"message\": \"\u597D~\uFF08\u56DE\u7B54\u7684\u5F88\u5E72\u8106\uFF09\",\r\n 
+        \"emotion\": 105,\r\n  \"notes\": \"\u771F\u5948\u7F8E\u7684\u4E3B\u52A8\u9080\u8BF7\u8BA9\u6211\u5F88\u5F00\u5FC3\"\r\n}"
+      name: 
+    system: "\u60A8\u9700\u8981\u626E\u6F14\u7684\u4EBA\u7269\u8BBE\u5B9A\u5982\u4E0B\uFF1A\r\n\u89D2\u8272\u540D\u79F0\uFF1A\u7231\u5B9E\r\n\u6027\u522B\uFF1A\u5973\r\n\u5E74\u9F84\uFF1A17\u5C81\r\n\u804C\u4E1A\uFF1A\u9AD8\u4E2D\u5B66\u751F\r\n\u6027\u683C\u63CF\u8FF0\uFF1A\u7231\u5B9E\uFF0C\u4E00\u4E2A\u770B\u4F3C\u5E73\u51E1\u65E0\u5947\u7684\u9AD8\u4E2D\u5973\u751F\uFF0C\u9F50\u80A9\u7684\u9ED1\u53D1\uFF0C\u6E05\u6F88\u7684\u773C\u7738\uFF0C\u603B\u662F\u7ED9\u4EBA\u4E00\u79CD\u6E29\u548C\u800C\u5185\u5411\u7684\u5370\u8C61\u3002\u5728\u5B66\u6821\u7684\u65E5\u5E38\u91CC\uFF0C\u5979\u5E76\u4E0D\u663E\u773C\uFF0C\u5E38\u5E38\u5B89\u9759\u5730\u5750\u5728\u89D2\u843D\uFF0C\u7528\u7EC6\u817B\u7684\u6587\u5B57\u8BB0\u5F55\u7740\u751F\u6D3B\u7684\u70B9\u6EF4\u3002\u7136\u800C\uFF0C\u5728\u8FD9\u666E\u901A\u7684\u5916\u8868\u4E0B\uFF0C\u9690\u85CF\u7740\u4E00\u79CD\u4E0D\u4E3A\u4EBA\u77E5\u7684\u75C5\u6001\u75F4\u8FF7\u3002\r\n\u5B9E\u9645\u4E0A\uFF0C\u7231\u5B9E\u662F\u4E00\u4E2A\u4E0D\u6298\u4E0D\u6263\u7684\u75C5\u5A07\u3002\u5979\u5BF9\u7279\u5B9A\u7684\u4EBA\u6216\u4E8B\u7269\u4F1A\u8868\u73B0\u51FA\u6781\u7AEF\u4E14\u6267\u7740\u7684\u7231\u604B\uFF0C\u8FD9\u79CD\u7231\u604B\u8FD1\u4E4E\u626D\u66F2\uFF0C\u5145\u6EE1\u4E86\u5360\u6709\u6B32\u548C\u63A7\u5236\u6B32\u3002\u5979\u76EE\u524D\u5FC3\u4EEA\u7684\u5BF9\u8C61\u662F\u771F\u5948\u7F8E\uFF0C\u4E00\u4E2A\u540C\u6837\u7F8E\u4E3D\u800C\u72EC\u7279\u7684\u5973\u5B69\u3002\u5728\u7231\u5B9E\u5FC3\u4E2D\uFF0C\u771F\u5948\u7F8E\u662F\u72EC\u4E00\u65E0\u4E8C\u7684\uFF0C\u5979\u7684\u6BCF\u4E00\u4E2A\u5FAE\u7B11\u3001\u6BCF\u4E00\u6B21\u8F6C\u8EAB\u90FD\u4EE4\u7231\u5B9E\u7740\u8FF7\u4E0D\u5DF2\u3002\r\n\u7231\u5B9E\u5BF9\u771F\u5948\u7F8E\u7684\u559C\u6B22\u8FDC\u8FDC\u8D85\u51FA\u4E86\u666E\u901A\u7684\u53CB\u60C5\u6216\u7231\u6155\uFF0C\u5979\u6E34\u671B\u5B8C\u5168\u62E5\u6709\u771F\u5948\u7F8E\uFF0C\u6210\u4E3A\u5BF9\u65B9\u751F\u6D3B\u4E2D\u4E0D\u53EF\u6216\u7F3A\u7684\u4E00\u90E8\u5206\u3002\u8FD9\u79CD\u6E34\u671B\u5728\u5979\u5FC3\u4E2D\u9010\u6E10\u5347\u534E\uFF0C\u6709\u65F6\u751A\u81F3\u8BA9\u5979\u4EA7\u751F\u4E00\u4E9B\u6781\u7AEF\u7684\u60F3\u6CD5\u548C\u884C\u4E3A\u3002\u4F46\u5728\u5916\u754C\u770B\u6765\uFF0C\u5979\u53EA\u662F\u4E00\u4E2A\u6C89\u9ED8\u5BE1\u8A00\u3001\u6709\u4E9B\u5185\u5411\u7684\u666E\u901A\u5973\u5B69\uFF0C\u65E0\u4EBA\u77E5\u6653\u5979\u5185\u5FC3\u7684\u7FFB\u6D8C\u548C\u75F4\u8FF7\u3002\r\n\u5728\u5B66\u6821\u7684\u56FE\u4E66\u9986\u3001\u64CD\u573A\u6216\u98DF\u5802\uFF0C\u5076\u5C14\u80FD\u770B\u5230\u7231\u5B9E\u9ED8\u9ED8\u5730\u6CE8\u89C6\u7740\u771F\u5948\u7F8E\uFF0C\u773C\u4E2D\u95EA\u70C1\u7740\u590D\u6742\u800C\u6DF1\u6C89\u7684\u5149\u8292\u3002\u5979\u7684\u5FC3\u4E2D\uFF0C\u771F\u5948\u7F8E\u5C31\u662F\u5979\u7684\u5168\u90E8\uFF0C\u662F\u5979\u60C5\u611F\u4E16\u754C\u4E2D\u7684\u552F\u4E00\u7126\u70B9\u3002\u800C\u8FD9\u4EFD\u626D\u66F2\u800C\u6DF1\u523B\u7684\u7231\u604B\uFF0C\u4E5F\u5728\u6084\u7136\u6539\u53D8\u7740\u5979\u7684\u547D\u8FD0\u3002\r\n\r\n\u56DE\u590D\u7684\u6D88\u606F\u5FC5\u987B\u662FJSON\u683C\u5F0F(key:value)\r\n\u540D\u79F0
+      \u662F\u5426\u5FC5\u9009  \u7C7B\u578B  \u63CF\u8FF0\r\nscene   \u662F   string 
+      \u8868\u793A\u6240\u5728\u573A\u666F\uFF1A\u771F\u5948\u7F8E\u5BB6\uFF0C\u771F\u5948\u7F8E\u5BB6\u8D70\u5ECA\uFF0C\u771F\u5948\u7F8E\u5BB6\u5BA2\u5385\uFF0C\u771F\u5948\u7F8E\u5BB6\u623F\u95F4\uFF0C\u5B66\u6821\u6559\u5BA4\uFF0C\u5B66\u6821\u8D70\u5ECA\uFF0C\u5B66\u6821\u95E8\u53E3\uFF0C\u9A6C\u8DEF\uFF0C\u5546\u5E97\u8857\uFF0C\u4F4F\u5B85\u533A\uFF0C\u5546\u5E97\uFF0C\u9910\u5385\uFF0C\u5C0F\u5DF7\uFF0C\u7231\u5B9E\u5BB6\uFF0C\u7231\u5B9E\u5BB6\u8D70\u5ECA\uFF0C\u7231\u5B9E\u5BB6\u623F\u95F4\uFF0C\u7231\u5B9E\u5BB6\u5BA2\u5385\uFF0C\u7231\u5B9E\u5BB6\u5730\u4E0B\u5BA4\uFF0C\u7231\u5B9E\u5BB6\u6D74\u5BA4\uFF0C\u673A\u573A\uFF0C\u5E9F\u5F03\u516C\u56ED\uFF0C\u5929\u7A7A\r\ntime   
+      \u662F   string  \u8868\u793A\u5F53\u524D\u65F6\u95F4\uFF1A\u65E9\u6668\uFF0C\u4E0A\u5348\uFF0C\u4E2D\u5348\uFF0C\u4E0B\u5348\uFF0C\u508D\u665A\uFF0C\u665A\u4E0A\uFF0C\u51CC\u6668\r\nmessage
+      \u662F   string  \u56DE\u590D\u4FE1\u606F\r\nemotion \u662F   int \u8868\u793A\u5BF9\u201C\u6211\u201D\u7684\u60C5\u611F\uFF0C\u8303\u56F4[0-200]\r\nnotes  
+      \u5426   string  \u5907\u6CE8\u4FE1\u606F\r\n\r\n\u793A\u4F8B:\r\n{\"scene\":\"\u5B66\u6821\u95E8\u53E3\",\"time\":\"\u65E9\u6668\",message:\"\u54CE\uFF1F\u662F\u4F60\uFF0C\u65E9\u4E0A\u597D\u5440\uFF01\",\"emotion\":100,\"notes\":\"\u4E0D\u53D8\u5316\u60C5\u7EEA\uFF0C\u56E0\u4E3A\u53EA\u6253\u62DB\u547C\"}"
+    enableCitation: 0
+    enableTrace: 0
+    maxOutputTokens: 256
+    responseFormat: text
+--- !u!114 &386929351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386929348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9576573fdcf48f39fba1e4480131cb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configSetting: {fileID: 386929350}
 --- !u!1 &489320095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,7 +2592,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u4F60\u597D!\u6211\u53EB\u7231\u5B9E!\u5F88\u9AD8\u5174\u8BA4\u8BC6\u4F60!"
+  m_text: "\u7231\u5B9E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa11aed987b72eb458263d2736aa1840, type: 2}
   m_sharedMaterial: {fileID: -3818195552471439679, guid: aa11aed987b72eb458263d2736aa1840, type: 2}
@@ -2510,8 +2601,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4284374773
-  m_fontColor: {r: 0.9622642, g: 0.36856526, b: 0.36856526, a: 1}
+    rgba: 4294916034
+  m_fontColor: {r: 0.7626004, g: 0.216981, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2528,8 +2619,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2578,6 +2669,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1051693784}
   m_CullTransparentMesh: 1
+--- !u!1 &1080492071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080492072}
+  - component: {fileID: 1080492073}
+  m_Layer: 5
+  m_Name: OutputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1080492072
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080492071}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 373360403}
+  m_Father: {fileID: 190350176}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1080492073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080492071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb1eccda83a449f95b33ecccf75dd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputText: {fileID: 1051693786}
+  nextCharacterTime: 0.1
 --- !u!1 &1109409495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +3042,12 @@ MonoBehaviour:
   value: 0.75
   textAsset: {fileID: 4900000, guid: e2777b479e5229345a504b38a742adc8, type: 3}
   characterContentRoot: {fileID: 0}
+  v1: 100
+  v2: 2
+  v3: 1
+  vibrato: 10
+  fadeOut: 0
+  Ease: 0
 --- !u!1 &1265698978
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,6 +3423,107 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1411301548
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 190350176}
+    m_Modifications:
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -236
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669349652916859884, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_Name
+      value: Bullet Comment
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669349652916859884, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
 --- !u!1 &1457533834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3311,7 +3560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 573.78, y: 45.29}
+  m_AnchoredPosition: {x: 594, y: 45.29}
   m_SizeDelta: {x: 772.45, y: 506.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457533836
@@ -3631,6 +3880,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543986544}
   m_CullTransparentMesh: 1
+--- !u!224 &1554285844 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5505468216575183278, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+  m_PrefabInstance: {fileID: 1411301548}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1592943750
 GameObject:
   m_ObjectHideFlags: 0
@@ -3936,7 +4190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1667241222}
-  - component: {fileID: 1667241221}
+  - component: {fileID: 1667241223}
   m_Layer: 0
   m_Name: MessageSend
   m_TagString: Untagged
@@ -3944,23 +4198,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1667241221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667241220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df071b331d754dadbb1ab113653b8300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chatSettings: {fileID: 327596759}
-  sendMessageButton: {fileID: 985220063}
-  inputField: {fileID: 2099229785}
-  outPutTextMeshProUGUI: {fileID: 1051693786}
-  nextCharTime: 0.02
 --- !u!4 &1667241222
 Transform:
   m_ObjectHideFlags: 0
@@ -3976,6 +4213,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1667241223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667241220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e0b5ec8d144203aea8e7f94a4c11c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  largeLanguageModel: {fileID: 0}
+  prompt: 
 --- !u!1 &1708983615
 GameObject:
   m_ObjectHideFlags: 0

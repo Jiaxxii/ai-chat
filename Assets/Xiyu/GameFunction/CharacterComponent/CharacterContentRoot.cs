@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using DG.Tweening;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using Xiyu.CharacterIllustration;
@@ -72,8 +73,18 @@ namespace Xiyu.GameFunction.CharacterComponent
             var scaleProperty = new Property<Vector3>(() => rt.localScale, value => rt.localScale = value);
             var rotateProperty = new Property<Vector3>(() => rt.eulerAngles, value => rt.eulerAngles = value);
 
-            return new GeomTransforms(positionProperty, sizeProperty, scaleProperty, rotateProperty);
+            var colorProperty = new Property<Color>(() => Body.RoleUnits[0].SpriteContent.color, value =>
+            {
+                Body.RoleUnits[0].SpriteContent.color = value;
+                foreach (var roleUnit in Faces.RoleUnits)
+                {
+                    roleUnit.SpriteContent.color = value;
+                }
+            });
+
+            return new GeomTransforms(positionProperty, sizeProperty, scaleProperty, rotateProperty, colorProperty);
         }
+
 
         public virtual IEnumerator Init(string roleTye, JObject transformInfoDataJson, bool isLoadRefAssets)
         {
@@ -132,6 +143,58 @@ namespace Xiyu.GameFunction.CharacterComponent
             yield return SpriteAssetLoader.LoadAssetAsync(faceCode, facesSprites => Faces.Display(facesSprites, faceData));
         }
 
+        public IEnumerator DisplayFaceFade(string faceCode, float outDuration, float inDuration)
+        {
+            var property = new Property<Color>(() => Faces.RoleUnits[0].SpriteContent.color, value =>
+            {
+                foreach (var roleUnit in Faces.RoleUnits)
+                {
+                    roleUnit.SpriteContent.color = value;
+                }
+            });
+
+            yield return DisplayFade(property, () => Faces, faceCode, outDuration, inDuration);
+        }
+
+        public IEnumerator DisplayBodyFade(string bodyCode, float outDuration, float inDuration)
+        {
+            var property = new Property<Color>(() => Faces.RoleUnits[0].SpriteContent.color, value =>
+            {
+                Body.RoleUnits[0].SpriteContent.color = value;
+                foreach (var roleUnit in Faces.RoleUnits)
+                {
+                    roleUnit.SpriteContent.color = value;
+                }
+            });
+
+            yield return DisplayFade(property, () => Body, bodyCode, outDuration, inDuration);
+        }
+
+
+        private IEnumerator DisplayFade(Property<Color> property, Func<RoleBodyType> bodyType, string typeCode, float outDuration, float inDuration)
+        {
+            // 淡出动画序列  
+            var fadeOutSequence = DOTween.Sequence();
+            fadeOutSequence.Append(DOTween.ToAlpha(() => property.Member, color => property.Member = color, 0, outDuration)
+                .SetEase(Ease.OutExpo));
+            yield return fadeOutSequence.WaitForCompletion();
+
+            var result = IsEqualTypeCode(null, typeCode);
+
+            if (!result.equalFace)
+            {
+                // 异步加载资源  
+                var faceData = SpriteAssetLoader.GetSpriteAsset(typeCode).Data.TransformInfoData;
+                yield return SpriteAssetLoader.LoadAssetAsync(typeCode, facesSprites => bodyType.Invoke().Display(facesSprites, faceData));
+            }
+
+            // 创建新的序列以执行淡入动画  
+            var fadeInSequence = DOTween.Sequence();
+            fadeInSequence.Append(DOTween.ToAlpha(() => property.Member, color => property.Member = color, 1, inDuration)
+                .SetEase(Ease.InExpo));
+            yield return fadeInSequence.WaitForCompletion();
+        }
+
         /// <summary>
         /// 创建一个角色立绘控制器
         /// </summary>
@@ -165,18 +228,18 @@ namespace Xiyu.GameFunction.CharacterComponent
             var hasBody = false;
             var hasFace = false;
 
-            if (bodyCode == _lastTypeCode.bodyCode)
+            if (!string.IsNullOrEmpty(bodyCode) && bodyCode == _lastTypeCode.bodyCode)
             {
                 hasBody = true;
-                _lastTypeCode.bodyCode = bodyCode;
             }
+            else _lastTypeCode.bodyCode = bodyCode;
 
             // ReSharper disable once InvertIf
-            if (faceCode == _lastTypeCode.faceCode)
+            if (!string.IsNullOrEmpty(faceCode) && faceCode == _lastTypeCode.faceCode)
             {
                 hasFace = true;
-                _lastTypeCode.faceCode = faceCode;
             }
+            else _lastTypeCode.faceCode = faceCode;
 
             return (hasBody, hasFace);
         }

@@ -2,8 +2,6 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
-using Xiyu.AIChat.LargeLanguageModel.BaiDu;
-using Config = Xiyu.AIChat.SpeechSynthesisTechnology.Baidu.Config;
 
 namespace Xiyu.AIChat.SpeechSynthesisTechnology.Baidu
 {
@@ -37,7 +35,7 @@ namespace Xiyu.AIChat.SpeechSynthesisTechnology.Baidu
 
         private IEnumerator GetToken()
         {
-            yield return BaiduSettings.GeToken(apiKey, secretKey, result => token = result);
+            yield return AccessToken.GetTokenAsync(apiKey, secretKey, result => token = result.AccessToKen);
         }
     }
 }

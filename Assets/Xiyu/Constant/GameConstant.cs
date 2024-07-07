@@ -3,5 +3,9 @@
     public static class GameConstant
     {
         public const string MainCanvasName = "Main Canvas";
+
+        public const string Player = "西";
+
+
     }
 }

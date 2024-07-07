@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Pool;
+using Xiyu.ExpandMethod;
 using Xiyu.GameFunction.CharacterComponent;
 using Xiyu.GameFunction.InputComponent;
 using Xiyu.GameFunction.SceneView;
@@ -13,6 +13,9 @@ using Random = UnityEngine.Random;
 
 namespace Xiyu.GameFunction.BarrageComments
 {
+    public delegate void BulletCommentsShip(BulletComments bullet);
+
+
     public class BulletCommentsScreenView : MonoBehaviour
     {
         [SerializeField] private float bulletSpeed = 1F;
@@ -24,20 +27,37 @@ namespace Xiyu.GameFunction.BarrageComments
         [Tooltip("弹幕行数")] [SerializeField] private int rowCount;
         [Tooltip("弹幕字体大小")] [SerializeField] private Vector2 fontSize;
 
+        [Tooltip("发送弹幕时延迟随机时间后打印结果")] [SerializeField]
+        private Vector2 sendDelaySecondRange = new(2F, 5F);
+
 
         private ObjectPool<BulletComments> _pool;
 
         private readonly List<List<BulletComments>> _bulletComments = new();
 
-        private float _lastY;
+        private readonly Dictionary<string, BulletCommentsShip> _bulletCommentsShipsMap = new();
+
+        private readonly Queue<string> _bulletBufferQueue = new();
+
+        private Transform _selectObj;
+
+        public event Action<string, float> OnBulletCommentSubmitEventHandler;
+
+
+        private bool _isSelect;
 
         private IEnumerator Start()
         {
+            // var str = new []
+            // {
+            //     "？？？","WOW","耗康","服从调剂","哇库"
+            // }
             while (true)
             {
-                yield return new WaitForSeconds(Random.Range(0.5F, 3F));
+                yield return new WaitForSeconds(Random.Range(0.1F, 1F));
                 var now = DateTime.Now;
-                SendBulletComment($"{now.Year}年{now.Year}月{now.Day:00}日 {now.Hour}时{now.Minute:00}分钟{now.Second:00}秒{now.Millisecond}毫秒");
+                // {now.Year}年{now.Year}月{now.Day:00}日 
+                SendBulletComment($"{now.Hour}时{now.Minute:00}分钟{now.Second:00}秒");
             }
         }
 
@@ -59,6 +79,29 @@ namespace Xiyu.GameFunction.BarrageComments
             {
                 _bulletComments.Add(new List<BulletComments>());
             }
+
+            _bulletCommentsShipsMap.Add("选择", bullet =>
+            {
+                bullet.BulletSpeed /= 2F;
+                bullet.Panel.color = new Color(1, 1, 1, .3F);
+                bullet.Panel.transform.SetAsLastSibling();
+            });
+            _bulletCommentsShipsMap.Add("取消选择", bullet =>
+            {
+                bullet.BulletSpeed *= 2F;
+                bullet.Panel.color = Color.clear;
+            });
+            _bulletCommentsShipsMap.Add("默认", bullet =>
+            {
+                bullet.BulletSpeed = bulletSpeed;
+                bullet.Panel.color = Color.clear;
+                if (bullet.IsPlay)
+                {
+                    bullet.Stop();
+                }
+
+                bullet.ContentRect.localScale = Vector3.one;
+            });
         }
 
         public void SetBulletSpeed(float speed)
@@ -71,8 +114,6 @@ namespace Xiyu.GameFunction.BarrageComments
 
         public void SendBulletComment(string message)
         {
-            var bullet = _pool.Get();
-
             // 从上向下遍历每一行
             for (var i = 0; i < _bulletComments.Count; i++)
             {
@@ -82,8 +123,22 @@ namespace Xiyu.GameFunction.BarrageComments
                 var lastBullet = rowItems.Count != 0 ? rowItems[^1] : null;
 
                 // 这一行没有弹幕 或 最后一个弹幕没有完全显示时直接进入下一轮循环
-                if (lastBullet != null && !lastBullet.IsSeeAll()) continue;
+                if (lastBullet != null && !lastBullet.IsSeeAll())
+                {
+                    continue;
+                }
 
+                var bullet = _pool.Get();
+
+                // 如果缓存队列中有弹幕 就先优先让它来
+                if (_bulletBufferQueue.Count != 0)
+                {
+                    var bufferMessage = message;
+
+                    message = _bulletBufferQueue.Dequeue();
+
+                    _bulletBufferQueue.Enqueue(bufferMessage);
+                }
 
                 var start = new Vector3(0, maxHeight / (rowCount - 1) * -i - minHeight, 0);
                 var end = new Vector3(-GameInsView.ScreenSize.x, start.y, 0);
@@ -100,53 +155,108 @@ namespace Xiyu.GameFunction.BarrageComments
 
                 bullet.UpData(message, maxHeight / (rowCount - 1), Random.Range(fontSize.x, fontSize.y));
                 bullet.Play();
+
+                if (_selectObj != null)
+                {
+                    _selectObj.SetAsLastSibling();
+                }
+
                 return;
             }
+
+            _bulletBufferQueue.Enqueue(message);
         }
 
 
         private void OnPointerEnter(BulletComments bulletComment)
         {
-            bulletComment.BulletSpeed /= 2F;
-            bulletComment.Panel.color = new Color(1, 1, 1, .3F);
+            if (_isSelect)
+            {
+                return;
+            }
+
+            _bulletCommentsShipsMap["选择"].Invoke(bulletComment);
         }
 
         private void OnPointerExit(BulletComments bulletComment)
         {
-            bulletComment.BulletSpeed *= 2F;
-            bulletComment.Panel.color = Color.clear;
+            if (_isSelect)
+            {
+                return;
+            }
+
+            _bulletCommentsShipsMap["取消选择"].Invoke(bulletComment);
         }
+
 
         private void OnPointerClick(BulletComments bulletComment)
         {
-            // 让弹幕停止
-            bulletComment.BulletSpeed = 0f;
+            if (_isSelect)
+            {
+                return;
+            }
+
+            Transform transform1;
+            (transform1 = bulletComment.Panel.transform).SetAsLastSibling();
+            _selectObj = transform1;
+
+            _isSelect = true;
 
             // 移除托管
             _bulletComments[bulletComment.Index].Remove(bulletComment);
 
-            // 声明委托
-            UnityAction<string> onValueChange = content => bulletComment.UpData(content, maxHeight / (rowCount - 1));
+            var rawSpeed = bulletSpeed;
 
-            // 注册文本输入事件 与 提交事件
-            InputText.Instance.OnValueChangedEventHandler(onValueChange).OnSubmitEventHandler(OnSubmit)
-                // 打开文本输入框 并且聚焦
-                .Active(true).SetFocus();
+            bulletSpeed = 0;
+            SetBulletSpeed(0);
+
+            // 让弹幕停止
+            bulletComment.Stop();
+
+            var scale = Vector3.one * 1.5F;
+            var targetPosX = -GameInsView.ScreenSize.x.Half() - bulletComment.ContentRect.sizeDelta.x.Half() * scale.x;
+            var targetPosY = -GameInsView.ScreenSize.y.Half() - bulletComment.ContentRect.sizeDelta.y.Half() * scale.y;
 
 
-            return;
+            bulletComment.ContentRect.DOAnchorPos(new Vector2(targetPosX, targetPosY), 1.5F).SetAutoKill(true).SetEase(Ease.OutElastic);
+            bulletComment.Panel.DOColor(new Color(1, 1f, 0, .8F), 1.5F).SetAutoKill(true).SetEase(Ease.OutElastic);
 
-            void OnSubmit(string content)
+            bulletComment.ContentRect.DOScale(scale, 1.5F).OnComplete(() =>
             {
-                bulletComment.Stop();
-                _pool.Release(bulletComment);
-                SendBulletComment(content);
+                SetBulletSpeed(bulletSpeed = rawSpeed);
 
-                // 取消委托
-                InputText.Instance.RemoveValueChangedEventHandler(onValueChange).RemoveSubmitEventHandler(OnSubmit)
-                    // 关闭对话框
-                    .Active(false);
-            }
+                var inputField = bulletComment.BulletComment.InputText();
+
+                inputField.onValueChanged.AddListener(content =>
+                {
+                    bulletComment.UpData(content, maxHeight / (rowCount - 1));
+                    bulletComment.ContentRect.anchoredPosition = new Vector2(
+                        -GameInsView.ScreenSize.x.Half() - bulletComment.ContentRect.sizeDelta.x.Half() * scale.x,
+                        -GameInsView.ScreenSize.y.Half() - bulletComment.ContentRect.sizeDelta.y.Half() * scale.y);
+                });
+
+                inputField.onSubmit.AddListener(content => HideBullet(bulletComment, () =>
+                {
+                    OnBulletCommentSubmitEventHandler?.Invoke(content, Random.Range(sendDelaySecondRange.x, sendDelaySecondRange.y));
+                    _selectObj = null;
+                    Destroy(inputField);
+                    SendBulletComment(content);
+                }));
+            });
+        }
+
+
+        private void HideBullet(BulletComments bulletComment, Action onHideComplete)
+        {
+            bulletComment.ContentRect.DOAnchorPos(new Vector2(0, bulletComment.ContentRect.anchoredPosition.y), 0.75F)
+                .SetEase(Ease.OutQuart)
+                .OnComplete(() =>
+                {
+                    _bulletCommentsShipsMap["默认"].Invoke(bulletComment);
+                    onHideComplete.Invoke();
+                    _pool.Release(bulletComment);
+                    _isSelect = false;
+                });
         }
     }
 }

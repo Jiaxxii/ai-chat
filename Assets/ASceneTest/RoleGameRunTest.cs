@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using DG.Tweening;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using Xiyu.ExpandMethod;
@@ -15,6 +17,12 @@ namespace ASceneTest
 
         [SerializeField] private CharacterContentRoot characterContentRoot;
         private ICharacterControl _contentRoot;
+
+        [SerializeField] private float v1, v2 = 30f, v3 = 90f;
+        [SerializeField] private int vibrato = 10;
+
+        [SerializeField] private bool fadeOut;
+        [SerializeField] private Ease Ease;
 
         private IEnumerator Start()
         {
@@ -36,12 +44,40 @@ namespace ASceneTest
 
             yield return _contentRoot.Display("ai_a_0006", "ai_a_0026");
 
-            _contentRoot.Geometry.SetScale(0.5F);
-            // _contentRoot.Geometry.Angle(90F);
+            if (_contentRoot.Geometry is not GeomTransforms gt)
+            {
+                throw new InvalidCastException();
+            }
 
-            _contentRoot.Geometry.MoveTo(ViewHorizontalAlign.Center, ViewVerticalAlign.Top);
 
-            _contentRoot.Geometry.Offset(new Vector2(0, -GameInsView.ScreenSize.y * (1 - value)));
+            gt.SetScale(0.5F)
+                .MoveTo(ViewHorizontalAlign.Center, ViewVerticalAlign.Top)
+                .Offset(new Vector2(0, -GameInsView.ScreenSize.y * (1 - value)));
+
+            // .DoFade(new Color(1, 1, 1, 0.5F), 5);
+
+            // yield return _contentRoot.DisplayFaceFade("ai_a_0028");
+
+            yield return new WaitForSeconds(1);
+
+            // yield return _contentRoot.DisplayBodyFade("ai_a_0002");
+
+            // yield return gt.WaitForDoNod();
+            //
+            // yield return gt.WaitForDoShake();
+            //
+            // yield return gt.WaitForDoShakeHead();
+
+            yield return gt.WaitForDoJump();
+            while (true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    yield return gt.WaitForDoJump();
+                }
+
+                yield return null;
+            }
 
             yield break;
         }

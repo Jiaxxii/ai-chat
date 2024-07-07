@@ -24,6 +24,8 @@ namespace Xiyu.GameFunction.BarrageComments
 
         public Image Panel => panel;
 
+        public TextMeshProUGUI BulletComment => bulletComment;
+
 
         private Action<BulletComments> _onMoveToTarget;
         private Action<BulletComments> _onPointerEnterEventHandler;
@@ -125,8 +127,8 @@ namespace Xiyu.GameFunction.BarrageComments
             if (Vector2.Distance(panel.rectTransform.anchoredPosition, target) <= 0.01F)
             {
                 IsPlay = false;
-                _onMoveToTarget.Invoke(this);
                 panel.rectTransform.anchoredPosition = target;
+                _onMoveToTarget.Invoke(this);
             }
             else
             {
