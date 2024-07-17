@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
-using Xiyu.ExpandMethod;
+using Xiyu.Expand;
 using Xiyu.GameFunction.CharacterComponent;
 using Xiyu.GameFunction.InputComponent;
 using Xiyu.GameFunction.SceneView;

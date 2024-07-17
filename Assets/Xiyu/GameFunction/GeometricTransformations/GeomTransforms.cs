@@ -3,7 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Xiyu.ExpandMethod;
+using Xiyu.Expand;
 using Xiyu.GameFunction.SceneView;
 
 namespace Xiyu.GameFunction.GeometricTransformations

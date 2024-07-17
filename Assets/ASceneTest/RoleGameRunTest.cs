@@ -3,7 +3,6 @@ using System.Collections;
 using DG.Tweening;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using Xiyu.ExpandMethod;
 using Xiyu.GameFunction.CharacterComponent;
 using Xiyu.GameFunction.GeometricTransformations;
 using Xiyu.GameFunction.SceneView;
@@ -18,11 +17,11 @@ namespace ASceneTest
         [SerializeField] private CharacterContentRoot characterContentRoot;
         private ICharacterControl _contentRoot;
 
-        [SerializeField] private float v1, v2 = 30f, v3 = 90f;
-        [SerializeField] private int vibrato = 10;
-
-        [SerializeField] private bool fadeOut;
-        [SerializeField] private Ease Ease;
+        // [SerializeField] private float v1, v2 = 30f, v3 = 90f;
+        // [SerializeField] private int vibrato = 10;
+        //
+        // [SerializeField] private bool fadeOut;
+        // [SerializeField] private Ease Ease;
 
         private IEnumerator Start()
         {
@@ -78,8 +77,6 @@ namespace ASceneTest
 
                 yield return null;
             }
-
-            yield break;
         }
     }
 }

@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Xiyu.ExpandMethod;
+using Xiyu.Expand;
 
 namespace Xiyu.GameFunction.BarrageComments
 {

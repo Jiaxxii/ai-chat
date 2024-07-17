@@ -19,3 +19,7 @@ MonoBehaviour:
     preform: {fileID: 956436656940872319, guid: 5f0b86e6a3d6dc743a6d24427ba67081, type: 3}
   - name: Bullet Comment
     preform: {fileID: 5669349652916859884, guid: 64c461d2b2583724492c7046b88e9332, type: 3}
+  - name: Input Dialog Window
+    preform: {fileID: 4389748199721449716, guid: 053b5846a34c1c0418706351769dc525, type: 3}
+  - name: Select Dialog Window
+    preform: {fileID: 3486271410895506455, guid: 43adeaac3f0ed284e8655c7be78212e8, type: 3}
