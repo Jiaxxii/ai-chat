@@ -37,28 +37,17 @@ namespace Xiyu.GameFunction.GameWindows
         protected override void Init(bool autoClose)
         {
             base.Init(autoClose);
-            oK.onClick.AddListener(() => SelectCompleteHandler?.Invoke(true));
-            cancel.onClick.AddListener(() => SelectCompleteHandler?.Invoke(false));
-
-            var image = basePanel.GetComponent(typeof(Image)) as Image ?? throw new NullReferenceException();
-
-            var okButtonPanel = oK.GetComponent<Image>();
-            var cancelButtonPanel = cancel.GetComponent<Image>();
-
-            _alphaProperty = new Property<float>(() => image.color.a, v =>
-            {
-                // v[0-1]
-                image.color = image.color.SetAlpha(v);
-                okButtonPanel.color = okButtonPanel.color.SetAlpha(v);
-                cancelButtonPanel.color = cancelButtonPanel.color.SetAlpha(v);
-                titleUGUI.alpha = v;
-                contentTex.alpha = v;
-            });
+            Init();
         }
 
         protected override void Init(UnityAction<object> autoCloseAction)
         {
             base.Init(autoCloseAction);
+            Init();
+        }
+
+        private void Init()
+        {
             oK.onClick.AddListener(() => SelectCompleteHandler?.Invoke(true));
             cancel.onClick.AddListener(() => SelectCompleteHandler?.Invoke(false));
 
@@ -76,13 +65,25 @@ namespace Xiyu.GameFunction.GameWindows
                 titleUGUI.alpha = v;
                 contentTex.alpha = v;
             });
-        }
 
-        // unsafe TODO
-        public override void Dispose()
-        {
-            OnReleaseWindow(this);
+            OnGetWindowHandler += () =>
+            {
+                IsSelect = false;
+                UpDateUIContent(new Parameters(string.Empty, string.Empty));
+                ButtonActive(true);
+
+                _alphaProperty.Member = 0;
+                basePanel.gameObject.SetActive(true);
+            };
+
+            OnReleaseWindowHandler += () =>
+            {
+                // IsSelect = false;
+                _alphaProperty.Member = 1;
+                basePanel.gameObject.SetActive(false);
+            };
         }
+        
 
         public bool IsSelect { get; private set; }
 
@@ -94,7 +95,7 @@ namespace Xiyu.GameFunction.GameWindows
         }
 
 
-        protected override Tween DoShow(float duration, Ease ease)
+        protected override Tween DoShow(float duration, Ease ease, Action onComplete = null)
         {
             // WindowState = DialogWindowState.DisplayShow;
             ButtonActive(false);
@@ -103,10 +104,14 @@ namespace Xiyu.GameFunction.GameWindows
 
             return DOTween.To(() => _alphaProperty.GetValue(), _alphaProperty.SetValue, 1, duration)
                 .SetEase(ease)
-                .OnComplete(() => ButtonActive(true));
+                .OnComplete(() =>
+                {
+                    ButtonActive(true);
+                    onComplete?.Invoke();
+                });
         }
 
-        protected override Tween DoHide(float duration, Ease ease)
+        protected override Tween DoHide(float duration, Ease ease, Action onComplete = null)
         {
             // WindowState = DialogWindowState.DisplayHide;
             ButtonActive(false);
@@ -116,9 +121,8 @@ namespace Xiyu.GameFunction.GameWindows
                 .OnComplete(() =>
                 {
                     ButtonActive(true);
-                    _alphaProperty.SetValue(1);
-                    basePanel.gameObject.SetActive(false);
-                    IsSelect = false;
+                    IsSelect = true;
+                    onComplete?.Invoke();
                 });
         }
 
@@ -142,15 +146,20 @@ namespace Xiyu.GameFunction.GameWindows
         /// </summary>
         /// <param name="result">选择结果</param>
         /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, IDialogParameters dialogParameters)
+        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, IDialogParameters dialogParameters, Action onComplete = null)
         {
-            var window = (SelectDialogWindow)GetWindow(GetTypeName());
-            window.Init(autoClose: true);
+            var window = (SelectDialogWindow)GetWindow(GetTypeName(), autoClose: true);
+            // window.Init(autoClose: true);
 
-            yield return window.DisplayWindow(result, dialogParameters);
-            yield return new WaitUntil(() => window.IsSelect);
-            OnReleaseWindow(window);
+            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            while (window.IsSelect == false /* && window.basePanel.gameObject.activeSelf == false*/)
+            {
+                // wait for one Frame
+                yield return null;
+            }
+            // ReleaseWindow(window);
         }
 
         /// <summary>
@@ -159,16 +168,22 @@ namespace Xiyu.GameFunction.GameWindows
         /// <param name="result">选择结果</param>
         /// <param name="closeFunc">窗口关闭条件</param>
         /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, Func<bool> closeFunc, IDialogParameters dialogParameters)
+        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, Func<bool> closeFunc, IDialogParameters dialogParameters, Action onComplete = null)
         {
-            var window = (SelectDialogWindow)GetWindow(GetTypeName());
-            window.Init(autoClose: false);
+            var window = (SelectDialogWindow)GetWindow(GetTypeName(), autoClose: false);
+            // window.Init(autoClose: false);
 
-            yield return window.DisplayWindow(result, dialogParameters);
-            yield return new WaitUntil(closeFunc.Invoke);
-            yield return window.DoHide(window.HideTweenParams.duration, window.HideTweenParams.ease);
-            RecoveryWindow(window);
+            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            while (closeFunc.Invoke() == false)
+            {
+                // wait for one Frame
+                yield return null;
+            }
+
+            yield return window.DoHide(window.HideTweenParams.duration, window.HideTweenParams.ease, onComplete).WaitForCompletion();
+            window.Dispose();
         }
     }
 }

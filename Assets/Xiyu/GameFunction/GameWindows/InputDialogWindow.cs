@@ -93,6 +93,23 @@ namespace Xiyu.GameFunction.GameWindows
             });
 
 
+            OnGetWindowHandler += () =>
+            {
+                copyPanel.text = inputField.text = _copyContent = GUIUtility.systemCopyBuffer;
+                IsSuccess = false;
+                UpDateUIContent(new DialogParametersDefault(string.Empty));
+                _timer = 0F;
+
+                _alphaProperty.Member = 0;
+                basePanel.gameObject.SetActive(true);
+            };
+
+            OnReleaseWindowHandler += () =>
+            {
+                _alphaProperty.Member = 1;
+                basePanel.gameObject.SetActive(false);
+            };
+
             copyPanel.text = inputField.text = _copyContent = GUIUtility.systemCopyBuffer;
         }
 
@@ -117,7 +134,7 @@ namespace Xiyu.GameFunction.GameWindows
         }
 
 
-        protected override Tween DoShow(float duration, Ease ease)
+        protected override Tween DoShow(float duration, Ease ease, Action onComplete = null)
         {
             // WindowState = DialogWindowState.DisplayShow;
             _alphaProperty.SetValue(0);
@@ -127,23 +144,20 @@ namespace Xiyu.GameFunction.GameWindows
                 .SetEase(ease);
         }
 
-        protected override Tween DoHide(float duration, Ease ease)
+        protected override Tween DoHide(float duration, Ease ease, Action onComplete = null)
         {
             // WindowState = DialogWindowState.DisplayHide;
             _alphaProperty.SetValue(1);
             basePanel.gameObject.SetActive(true);
 
             return DOTween.To(() => _alphaProperty.GetValue(), _alphaProperty.SetValue, 0, duration)
-                .SetEase(ease)
-                .OnComplete(() => IsSuccess = true);
+                .SetEase(ease).OnComplete(() =>
+                {
+                    IsSuccess = true;
+                    onComplete?.Invoke();
+                });
         }
-
-
-        // unsafe TODO
-        public override void Dispose()
-        {
-            OnReleaseWindow(this);
-        }
+        
 
         public static string GetTypeName() => GameConstant.InputDialogWindow;
 
@@ -153,14 +167,18 @@ namespace Xiyu.GameFunction.GameWindows
         /// </summary>
         /// <param name="result">选择结果</param>
         /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, IDialogParameters dialogParameters)
+        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, IDialogParameters dialogParameters, Action onComplete = null)
         {
-            var window = (InputDialogWindow)GetWindow(GetTypeName());
-            window.Init(autoClose: true);
+            var window = (InputDialogWindow)GetWindow(GetTypeName(), autoClose: true);
+            // window.Init(autoClose: true);
 
-            yield return window.DisplayWindow(result, dialogParameters);
-            yield return new WaitUntil(() => window.IsSuccess);
+            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            while (window.IsSuccess == false)
+            {
+                yield return null;
+            }
         }
 
         /// <summary>
@@ -169,15 +187,21 @@ namespace Xiyu.GameFunction.GameWindows
         /// <param name="result">选择结果</param>
         /// <param name="closeFunc"></param>
         /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, Func<bool> closeFunc, IDialogParameters dialogParameters)
+        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, Func<bool> closeFunc, IDialogParameters dialogParameters, Action onComplete = null)
         {
-            var window = (InputDialogWindow)GetWindow(GetTypeName());
-            window.Init(autoClose: false);
+            var window = (InputDialogWindow)GetWindow(GetTypeName(), autoClose: false);
+            // window.Init(autoClose: false);
 
-            yield return window.DisplayWindow(result, dialogParameters);
-            yield return new WaitUntil(closeFunc.Invoke);
-            yield return window.DoHide(window.HideTweenParams.duration, window.HideTweenParams.ease);
+            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            while (closeFunc.Invoke() == false)
+            {
+                yield return null;
+            }
+
+            yield return window.DoHide(window.HideTweenParams.duration, window.HideTweenParams.ease, onComplete).WaitForCompletion();
+            window.Dispose();
         }
     }
 }

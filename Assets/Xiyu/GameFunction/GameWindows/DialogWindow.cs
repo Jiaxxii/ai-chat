@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
@@ -9,32 +8,25 @@ using UnityEngine.Pool;
 
 namespace Xiyu.GameFunction.GameWindows
 {
-    public enum DialogWindowState
+    public abstract class DialogWindow<TResult> : DialogWindowBase
     {
-        InGet,
-        InRelease,
-        DisplayShow,
-        DisplayHide
-    }
-
-    public abstract class DialogWindow<TResult> : DialogWindowBase  , IDisposable
-    {
+        
         private static ObjectPool<DialogWindow<TResult>> _objectPool;
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        protected readonly Queue<UnityAction<TResult>> WaitForResultDelegateQueue = new();
+        private readonly Queue<UnityAction<TResult>> _waitForResultDelegateQueue = new();
 
 
         protected UnityAction<TResult> SelectCompleteHandler;
 
         public event UnityAction<TResult> SelectComplete
         {
-            add => SelectCompleteHandler = value;
+            add => SelectCompleteHandler += value;
             remove => SelectCompleteHandler -= value;
         }
+
+        protected event UnityAction OnGetWindowHandler;
+        protected event UnityAction OnReleaseWindowHandler;
 
 
         protected override void Init(bool autoClose)
@@ -54,7 +46,7 @@ namespace Xiyu.GameFunction.GameWindows
                 throw new InvalidConnectionException($"无法将{typeof(object).FullName}转换为{typeof(TResult).FullName}");
             }
 
-            SelectCompleteHandler += new UnityAction<TResult>(autoCloseAction);
+            SelectCompleteHandler += autoCloseAction as UnityAction<TResult>;
         }
 
         private void Init()
@@ -62,15 +54,15 @@ namespace Xiyu.GameFunction.GameWindows
             // WindowState = DialogWindowState.InGet;
             SelectCompleteHandler += result =>
             {
-                foreach (var unityAction in WaitForResultDelegateQueue)
+                foreach (var unityAction in _waitForResultDelegateQueue)
                 {
                     unityAction?.Invoke(result);
                 }
 
 
-                while (WaitForResultDelegateQueue.Count != 0)
+                while (_waitForResultDelegateQueue.Count != 0)
                 {
-                    SelectCompleteHandler -= WaitForResultDelegateQueue.Dequeue();
+                    SelectCompleteHandler -= _waitForResultDelegateQueue.Dequeue();
                 }
             };
 
@@ -83,18 +75,13 @@ namespace Xiyu.GameFunction.GameWindows
         protected virtual void AutoClose()
         {
             var hideTweenParams = HideTweenParams;
-            DoHide(hideTweenParams.duration, hideTweenParams.ease)
-                .OnComplete(() =>
-                {
-                    basePanel.gameObject.SetActive(false);
-                    _objectPool.Release(this);
-                });
+            DoHide(hideTweenParams.duration, hideTweenParams.ease, this.Dispose);
         }
 
 
-        public Tween DisplayWindow(UnityAction<TResult> result, IDialogParameters dialogParameters)
+        public Tween DisplayWindow(UnityAction<TResult> result, IDialogParameters dialogParameters, Action onComplete = null)
         {
-            WaitForResultDelegateQueue.Enqueue(result);
+            _waitForResultDelegateQueue.Enqueue(result);
             UpDateUIContent(dialogParameters);
 
             if (dialogParameters.HideTweenParams.HasValue)
@@ -108,54 +95,93 @@ namespace Xiyu.GameFunction.GameWindows
             }
 
             var showTweenParams = dialogParameters.ShowTweenParams ?? ShowTweenParams;
-            return DoShow(showTweenParams.duration, showTweenParams.ease);
+            return DoShow(showTweenParams.duration, showTweenParams.ease, onComplete);
         }
 
-        public sealed override Tween DisplayWindow(UnityAction<object> result, IDialogParameters dialogParameters)
+        public sealed override Tween DisplayWindow(UnityAction<object> result, IDialogParameters dialogParameters, Action onComplete = null)
         {
             if (result.Target is not TResult)
             {
                 throw new InvalidConnectionException($"无法将{typeof(object).FullName}转换为{typeof(TResult).FullName}");
             }
 
-            return DisplayWindow(result as UnityAction<TResult>, dialogParameters);
+            return DisplayWindow(result as UnityAction<TResult>, dialogParameters, onComplete);
         }
 
-        public static DialogWindow<TResult> GetWindow(string typeName, Transform parent = null)
+        public static DialogWindow<TResult> GetWindow(string typeName, bool autoClose, Transform parent = null)
         {
-            _objectPool ??= new ObjectPool<DialogWindow<TResult>>(() => CreateFunc(typeName, parent), OnGetWindow, OnReleaseWindow);
+            _objectPool ??= new ObjectPool<DialogWindow<TResult>>(() => CreateFunc(typeName, autoClose, parent), GetWindow, ReleaseWindow);
 
             DialogWindow<TResult> window = _objectPool.Get();
+
             return window;
         }
 
-        private static DialogWindow<TResult> CreateFunc(string typeName, Transform parent = null)
+        public static DialogWindow<TResult> GetWindow(string typeName, UnityAction<object> autoCloseAction, Transform parent = null)
+        {
+            _objectPool ??= new ObjectPool<DialogWindow<TResult>>(() => CreateFunc(typeName, autoCloseAction, parent), GetWindow, ReleaseWindow);
+
+            DialogWindow<TResult> window = _objectPool.Get();
+
+            return window;
+        }
+
+
+        private static DialogWindow<TResult> CreateFunc(string typeName, bool autoClose, Transform parent = null)
         {
             var preform = CharacterComponent.CharacterContentRoot.PreformScriptableObject.Table[typeName].Preform;
 
             var dialogWindow = Instantiate(preform, parent == null ? DialogWindowManager.Instance.Parent : parent).GetComponent<DialogWindow<TResult>>();
 
-            dialogWindow.Init();
+            dialogWindow.Init(autoClose);
 
-            // dialogWindow.WindowState = DialogWindowState.InRelease;
+
+            return dialogWindow;
+        }
+
+        private static DialogWindow<TResult> CreateFunc(string typeName, UnityAction<object> autoCloseAction, Transform parent = null)
+        {
+            var preform = CharacterComponent.CharacterContentRoot.PreformScriptableObject.Table[typeName].Preform;
+
+            var dialogWindow = Instantiate(preform, parent == null ? DialogWindowManager.Instance.Parent : parent).GetComponent<DialogWindow<TResult>>();
+
+            dialogWindow.Init(autoCloseAction);
+
 
             return dialogWindow;
         }
 
 
-        private static void OnGetWindow(DialogWindow<TResult> window)
+        private static void GetWindow(DialogWindow<TResult> window)
         {
-            window.gameObject.SetActive(true);
+            // ReSharper disable once ConvertIfStatementToNullCoalescingAssignment
+            if (window.OnGetWindowHandler is null)
+            {
+                window.OnGetWindowHandler += () => window.gameObject.SetActive(true);
+            }
+
+            window.OnGetWindowHandler.Invoke();
             PopWindow(window);
         }
 
-        protected static void OnReleaseWindow(DialogWindow<TResult> window)
+        private static void ReleaseWindow(DialogWindow<TResult> window)
         {
-            // TODO 可能重复设置状态
-            window.gameObject.SetActive(false);
+            // // ReSharper disable once ConvertIfStatementToNullCoalescingAssignment
+            // if (window.OnReleaseWindowHandler is null)
+            // {
+            //     window.OnReleaseWindowHandler += () => window.gameObject.SetActive(false);
+            // }
+
+            window.OnReleaseWindowHandler?.Invoke();
             RecoveryWindow(window);
         }
 
-        public abstract void Dispose();
+
+        public override void Dispose()
+        {
+            basePanel.gameObject.SetActive(false);
+            _objectPool.Release(this);
+            ReleaseWindow(this);
+        }
     }
 }

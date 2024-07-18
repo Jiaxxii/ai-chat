@@ -19,10 +19,10 @@ namespace Xiyu.GameFunction.GameWindows
             Parent = FindObjectOfType<DialogWindowManager>().transform;
         }
 
-        [Obsolete("建议使用具体的对话窗口类型来获取实例", false)]
-        public static DialogWindowBase GetWindow<TResult>(string typeName, Transform parent = null)
-        {
-            return DialogWindowBase.GetWindow<TResult>(typeName, parent);
-        }
+        // [Obsolete("建议使用具体的对话窗口类型来获取实例", false)]
+        // public static DialogWindowBase GetWindow<TResult>(string typeName, Transform parent = null)
+        // {
+        //     return DialogWindowBase.GetWindow<TResult>(typeName, parent);
+        // }
     }
 }
