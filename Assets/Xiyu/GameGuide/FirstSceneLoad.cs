@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Xiyu.AI.Client;
 using Xiyu.Constant;
 using Xiyu.Cryptography;
 using Xiyu.GameFunction.GameWindows;
+using Xiyu.LoggerSystem;
+using Random = UnityEngine.Random;
 
 namespace Xiyu.GameGuide
 {
@@ -20,10 +24,35 @@ namespace Xiyu.GameGuide
             GUIUtility.systemCopyBuffer =
                 "zAErBNgQo7jK75EL75azrGWOoEx6WpUx*Bfm/4Z4Dz31RqKyAnT7vZNFdex93oMPpYo0g9njAYh837Z3Xtk9oGOyYswWTD2p1zz+EX1I6ewM/24Evib9I/VigI6UYvubtk8NqUPRRIAU8doHKsTju2Be4rrBdSGKuS3cOdmIO8CYRh7FzTDUrIg==";
 #endif
+
+            var list = new List<SingleDialogWindow>();
+
+            var index = 0;
             while (true)
             {
+                if (list.Count == 10)
+                {
+                    foreach (var win in list)
+                    {
+                        win.Dispose();
+                    }
 
-                yield return InputDialogWindow.GetWindowWaitForSubmit(OnSubmitTo, new DialogParametersDefault("输入您的<color=#FE6389>激活秘钥</color>")
+                    list.Clear();
+                }
+
+                index++;
+                var window = (SingleDialogWindow)SingleDialogWindow.GetWindow(SingleDialogWindow.GetTypeName(), autoClose: false);
+                list.Add(window);
+
+                yield return window.DisplayWindow(null, new SingleWindowParams($"窗口:{index}", $"<color=#FE6389>{index}</color>")).WaitForCompletion();
+            }
+
+            yield return SingleDialogWindow.GetWindowWaitForClick(null, () => Input.GetKeyDown(KeyCode.KeypadEnter), new SingleWindowParams("XXX", "XXXX"));
+
+
+            while (true)
+            {
+                yield return InputDialogWindow.GetWindowWaitForSubmit(OnSubmitTo, new InputWindowParams("输入您的<color=#FE6389>激活秘钥</color>")
                 {
                     ShowTweenParams = (0.25F, Ease.Linear),
                     HideTweenParams = (0.25F, Ease.Linear)
@@ -33,11 +62,8 @@ namespace Xiyu.GameGuide
                 {
                     _result = string.Empty;
 
-                    yield return InputDialogWindow.GetWindowWaitForSubmit(OnSubmitTo, new DialogParametersDefault("<color=#FE6389>激活秘钥无效!</color>")
-                    {
-                        ShowTweenParams = (0.25F, Ease.Linear),
-                        HideTweenParams = (0.25F, Ease.Linear)
-                    });
+                    yield return
+                        SingleDialogWindow.GetWindowWaitForClick(null, new SingleWindowParams("签名无效", "<color=#FE6389>激活秘钥无效!</color>", MessageType.Error));
 
                     continue;
                 }
@@ -80,13 +106,13 @@ namespace Xiyu.GameGuide
 
                 var content = $"秘钥格式:{keyFormat}\r\n签名状态:{signatureState}";
 
-                yield return SelectDialogWindow.GetWindowWaitForSelect(null, new SelectDialogWindow.Parameters("签名无效", content));
+                yield return SingleDialogWindow.GetWindowWaitForClick(null, new SingleWindowParams("签名无效", content, MessageType.Error));
 
                 _result = string.Empty;
             }
 
-            var parameters = new SelectDialogWindow.Parameters("签名完成", $"有效时间:{AuthenticateManager.AuthenticateElectronAuth.GetAffectiveTime:yy-MM-dd hh:mm:ss}");
-            yield return SelectDialogWindow.GetWindowWaitForSelect(_ => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1), parameters);
+            var parameters = new SingleWindowParams("签名完成", $"有效时间:{AuthenticateManager.AuthenticateElectronAuth.GetAffectiveTime:yy-MM-dd hh:mm:ss}", MessageType.Message);
+            yield return SingleDialogWindow.GetWindowWaitForClick(_ => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1), parameters);
         }
 
         private async void OnSubmitTo(string auth)
@@ -102,6 +128,37 @@ namespace Xiyu.GameGuide
             {
                 _result = $"Exception {e.Message}";
             }
+        }
+
+        private IEnumerator Sample()
+        {
+            UnityAction<bool> resultAction = result => Debug.Log($"用户选择：{(result ? '是' : '否')}");
+            var selectWindowParams = new SelectWindowParams("时间", "2024年7月20日00:42:54");
+
+            // SingleDialogWindow   SelectDialogWindow  InputDialogWindow 等继承自 : DialogWindow<TResult> : DialogWindowBase
+            
+            // UI型-自动回收窗口 (在用户  点击任意按钮  窗口淡出后会自动回收窗口)
+            yield return SelectDialogWindow.GetWindowWaitForSelect(resultAction, selectWindowParams);
+
+
+            // 条件型-自动回收窗口 (在用户  点击键盘[ESC]或[回车]  窗口淡出后会自动回收窗口)
+            yield return SelectDialogWindow.GetWindowWaitForSelect(resultAction, () => Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.KeypadEnter),
+                selectWindowParams);
+
+
+            // 手动型-作用域回收窗口
+            using (var windowFirst = (SelectDialogWindow)SelectDialogWindow.GetWindow(SelectDialogWindow.GetTypeName(), autoClose: false))
+            {
+                yield return windowFirst.DisplayWindow(resultAction, selectWindowParams);
+            }
+
+
+            // 手动型-手动回收窗口
+            var windowLast = (SelectDialogWindow)SelectDialogWindow.GetWindow(SelectDialogWindow.GetTypeName(), autoClose: false);
+            yield return windowLast.DisplayWindow(resultAction, selectWindowParams);
+            windowLast.Dispose();
+            
+            
         }
     }
 }

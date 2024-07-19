@@ -12,6 +12,7 @@ namespace Xiyu.Constant
 
         public const string SelectDialogWindow = "Select Dialog Window";
 
+        public const string SingleDialogWindow = "Single Dialog Window";
         public const int MaxEffectiveDay = 7;
 
         /// <summary>

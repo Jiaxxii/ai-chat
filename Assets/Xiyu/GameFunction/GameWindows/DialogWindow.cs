@@ -79,33 +79,33 @@ namespace Xiyu.GameFunction.GameWindows
         }
 
 
-        public Tween DisplayWindow(UnityAction<TResult> result, IDialogParameters dialogParameters, Action onComplete = null)
+        public Tween DisplayWindow(UnityAction<TResult> result, IDialogWindowParameters dialogWindowParameters, Action onComplete = null)
         {
             _waitForResultDelegateQueue.Enqueue(result);
-            UpDateUIContent(dialogParameters);
+            UpDateUIContent(dialogWindowParameters);
 
-            if (dialogParameters.HideTweenParams.HasValue)
+            if (dialogWindowParameters.HideTweenParams.HasValue)
             {
-                HideTweenParams = dialogParameters.HideTweenParams.Value;
+                HideTweenParams = dialogWindowParameters.HideTweenParams.Value;
             }
 
-            if (dialogParameters.ShowTweenParams.HasValue)
+            if (dialogWindowParameters.ShowTweenParams.HasValue)
             {
-                ShowTweenParams = dialogParameters.ShowTweenParams.Value;
+                ShowTweenParams = dialogWindowParameters.ShowTweenParams.Value;
             }
 
-            var showTweenParams = dialogParameters.ShowTweenParams ?? ShowTweenParams;
+            var showTweenParams = dialogWindowParameters.ShowTweenParams ?? ShowTweenParams;
             return DoShow(showTweenParams.duration, showTweenParams.ease, onComplete);
         }
 
-        public sealed override Tween DisplayWindow(UnityAction<object> result, IDialogParameters dialogParameters, Action onComplete = null)
+        public sealed override Tween DisplayWindow(UnityAction<object> result, IDialogWindowParameters dialogWindowParameters, Action onComplete = null)
         {
             if (result.Target is not TResult)
             {
                 throw new InvalidConnectionException($"无法将{typeof(object).FullName}转换为{typeof(TResult).FullName}");
             }
 
-            return DisplayWindow(result as UnityAction<TResult>, dialogParameters, onComplete);
+            return DisplayWindow(result as UnityAction<TResult>, dialogWindowParameters, onComplete);
         }
 
         public static DialogWindow<TResult> GetWindow(string typeName, bool autoClose, Transform parent = null)

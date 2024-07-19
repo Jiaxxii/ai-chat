@@ -95,10 +95,11 @@ namespace Xiyu.GameFunction.GameWindows
 
             OnGetWindowHandler += () =>
             {
-                copyPanel.text = inputField.text = _copyContent = GUIUtility.systemCopyBuffer;
+                inputField.text = string.Empty;
+                copyPanel.text = _copyContent = GUIUtility.systemCopyBuffer;
                 IsSuccess = false;
-                UpDateUIContent(new DialogParametersDefault(string.Empty));
                 _timer = 0F;
+                UpDateUIContent(new InputWindowParams(string.Empty) /* or new DialogWindowParameters(string.Empty) */);
 
                 _alphaProperty.Member = 0;
                 basePanel.gameObject.SetActive(true);
@@ -110,7 +111,7 @@ namespace Xiyu.GameFunction.GameWindows
                 basePanel.gameObject.SetActive(false);
             };
 
-            copyPanel.text = inputField.text = _copyContent = GUIUtility.systemCopyBuffer;
+            copyPanel.text = _copyContent = GUIUtility.systemCopyBuffer;
         }
 
         private float _timer;
@@ -119,18 +120,18 @@ namespace Xiyu.GameFunction.GameWindows
         {
             if (_timer >= GameConstant.ClipboardAccessHeartbeatSeconds && GUIUtility.systemCopyBuffer != _copyContent)
             {
-                copyPanel.text = inputField.text = _copyContent = GUIUtility.systemCopyBuffer;
+                copyPanel.text = _copyContent = GUIUtility.systemCopyBuffer;
                 _timer = 0F;
             }
             else _timer += Time.deltaTime;
         }
 
 
-        protected override void UpDateUIContent(IDialogParameters dialogParameters)
+        protected override void UpDateUIContent(IDialogWindowParameters dialogWindowParameters)
         {
-            base.UpDateUIContent(dialogParameters);
+            base.UpDateUIContent(dialogWindowParameters);
             // TODO
-            inputField.placeholder.GetComponent<TextMeshProUGUI>().text = dialogParameters.Title;
+            inputField.placeholder.GetComponent<TextMeshProUGUI>().text = dialogWindowParameters.Title;
         }
 
 
@@ -157,7 +158,7 @@ namespace Xiyu.GameFunction.GameWindows
                     onComplete?.Invoke();
                 });
         }
-        
+
 
         public static string GetTypeName() => GameConstant.InputDialogWindow;
 
@@ -166,15 +167,15 @@ namespace Xiyu.GameFunction.GameWindows
         /// [自动回收] 弹出 文本输入窗口，在显示窗口后提交文本时隐藏窗口 （可等待至窗口隐藏）
         /// </summary>
         /// <param name="result">选择结果</param>
-        /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="dialogWindowParameters">窗口参数</param>
         /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, IDialogParameters dialogParameters, Action onComplete = null)
+        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, IDialogWindowParameters dialogWindowParameters, Action onComplete = null)
         {
             var window = (InputDialogWindow)GetWindow(GetTypeName(), autoClose: true);
             // window.Init(autoClose: true);
 
-            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            yield return window.DisplayWindow(result, dialogWindowParameters, onComplete).WaitForCompletion();
             while (window.IsSuccess == false)
             {
                 yield return null;
@@ -186,15 +187,15 @@ namespace Xiyu.GameFunction.GameWindows
         /// </summary>
         /// <param name="result">选择结果</param>
         /// <param name="closeFunc"></param>
-        /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="dialogWindowParameters">窗口参数</param>
         /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, Func<bool> closeFunc, IDialogParameters dialogParameters, Action onComplete = null)
+        public static IEnumerator GetWindowWaitForSubmit(UnityAction<string> result, Func<bool> closeFunc, IDialogWindowParameters dialogWindowParameters, Action onComplete = null)
         {
             var window = (InputDialogWindow)GetWindow(GetTypeName(), autoClose: false);
             // window.Init(autoClose: false);
 
-            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            yield return window.DisplayWindow(result, dialogWindowParameters, onComplete).WaitForCompletion();
             while (closeFunc.Invoke() == false)
             {
                 yield return null;

@@ -30,6 +30,9 @@ namespace Xiyu.Expand
         // [MethodImpl(MethodImplOptions.InternalCall)]
         public static Color SetAlpha(this Color color, float a) => new(color.r, color.g, color.b, a);
 
+        // [MethodImpl(MethodImplOptions.InternalCall)]
+        public static string ToHexadecimalString(this Color color) => $"{Mathf.CeilToInt(color.r * 255):x2}{Mathf.CeilToInt(color.g * 255):x2}{Mathf.CeilToInt(color.b * 255):x2}";
+
         public static TMP_InputField InputText(this TextMeshProUGUI text)
         {
             var inputField = text.gameObject.AddComponent<TMP_InputField>();

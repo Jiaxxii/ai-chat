@@ -64,6 +64,7 @@
      <Compile Include="Assets\Xiyu\GameFunction\BarrageComments\BulletCommentsScreenView.cs" />
      <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\Message.cs" />
      <Compile Include="Assets\Xiyu\Settings\PreformScriptableObject.cs" />
+     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\IDialogWindowParameters.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\GeomTransforms.cs" />
@@ -81,12 +82,14 @@
      <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\RequestResource.cs" />
      <Compile Include="Assets\Xiyu\GameInitialization\Initialization.cs" />
      <Compile Include="Assets\Xiyu\AI\Client\IamAuthenticate.cs" />
+     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\SingleDialogWindow.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowManager.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteResourceManager.cs" />
      <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\MemoryModule.cs" />
      <Compile Include="Assets\Xiyu\AI\Client\RequestOptions.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\GameWindows\InputDialogWindow.cs" />
+     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowParameters.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Xiyu\AI\Client\AuthenticateManager.cs" />
      <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteAssetLoader.cs" />
@@ -98,12 +101,13 @@
      <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\DeserializeParameterModule.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindow.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\BarrageComments\BulletComments.cs" />
+     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\Parameters.cs" />
      <Compile Include="Assets\Xiyu\CharacterIllustration\TransformInfo.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
      <Compile Include="Assets\Xiyu\Constant\GameConstant.cs" />
      <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SerializeParameterModule.cs" />
+     <Compile Include="Assets\Xiyu\LoggerSystem\MessageType.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\SceneView\GameInsView.cs" />
-     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\IDialogParameters.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
      <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowBase.cs" />
      <Folder Include="Assets" />
@@ -113,6 +117,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
      <Folder Include="Assets\Xiyu\CharacterIllustration" />
+     <Folder Include="Assets\Xiyu\LoggerSystem" />
      <Folder Include="Assets\Xiyu\GameInitialization" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
      <Folder Include="Assets\Xiyu\GameFunction\GameWindows" />

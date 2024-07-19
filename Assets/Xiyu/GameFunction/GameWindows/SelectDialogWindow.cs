@@ -13,21 +13,6 @@ namespace Xiyu.GameFunction.GameWindows
 {
     public class SelectDialogWindow : DialogWindow<bool>
     {
-        public class Parameters : IDialogParameters
-        {
-            public Parameters(string title, string content)
-            {
-                Title = title;
-                Content = content;
-            }
-
-            public string Title { get; }
-            public string Content { get; }
-
-            public (float duration, Ease ease)? ShowTweenParams { get; set; }
-            public (float duration, Ease ease)? HideTweenParams { get; set; }
-        }
-
 
         [SerializeField] private TextMeshProUGUI contentTex;
         [SerializeField] private Button oK, cancel;
@@ -69,7 +54,7 @@ namespace Xiyu.GameFunction.GameWindows
             OnGetWindowHandler += () =>
             {
                 IsSelect = false;
-                UpDateUIContent(new Parameters(string.Empty, string.Empty));
+                UpDateUIContent(new SelectWindowParams(string.Empty, string.Empty));
                 ButtonActive(true);
 
                 _alphaProperty.Member = 0;
@@ -87,10 +72,10 @@ namespace Xiyu.GameFunction.GameWindows
 
         public bool IsSelect { get; private set; }
 
-        protected override void UpDateUIContent(IDialogParameters dialogParameters)
+        protected override void UpDateUIContent(IDialogWindowParameters dialogWindowParameters)
         {
-            base.UpDateUIContent(dialogParameters);
-            var parameters = GetParams<Parameters>(dialogParameters);
+            base.UpDateUIContent(dialogWindowParameters);
+            var parameters = GetParams<SelectWindowParams>(dialogWindowParameters);
             contentTex.text = parameters.Content;
         }
 
@@ -145,15 +130,15 @@ namespace Xiyu.GameFunction.GameWindows
         /// [自动回收] 弹出一个选择框，在窗口完成显示后选择任意按钮后隐藏 （可等待至窗口隐藏）
         /// </summary>
         /// <param name="result">选择结果</param>
-        /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="dialogWindowParameters">窗口参数</param>
         /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, IDialogParameters dialogParameters, Action onComplete = null)
+        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, IDialogWindowParameters dialogWindowParameters, Action onComplete = null)
         {
             var window = (SelectDialogWindow)GetWindow(GetTypeName(), autoClose: true);
             // window.Init(autoClose: true);
 
-            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            yield return window.DisplayWindow(result, dialogWindowParameters, onComplete).WaitForCompletion();
             while (window.IsSelect == false /* && window.basePanel.gameObject.activeSelf == false*/)
             {
                 // wait for one Frame
@@ -167,15 +152,15 @@ namespace Xiyu.GameFunction.GameWindows
         /// </summary>
         /// <param name="result">选择结果</param>
         /// <param name="closeFunc">窗口关闭条件</param>
-        /// <param name="dialogParameters">窗口参数</param>
+        /// <param name="dialogWindowParameters">窗口参数</param>
         /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, Func<bool> closeFunc, IDialogParameters dialogParameters, Action onComplete = null)
+        public static IEnumerator GetWindowWaitForSelect(UnityAction<bool> result, Func<bool> closeFunc, IDialogWindowParameters dialogWindowParameters, Action onComplete = null)
         {
             var window = (SelectDialogWindow)GetWindow(GetTypeName(), autoClose: false);
             // window.Init(autoClose: false);
 
-            yield return window.DisplayWindow(result, dialogParameters, onComplete).WaitForCompletion();
+            yield return window.DisplayWindow(result, dialogWindowParameters, onComplete).WaitForCompletion();
             while (closeFunc.Invoke() == false)
             {
                 // wait for one Frame

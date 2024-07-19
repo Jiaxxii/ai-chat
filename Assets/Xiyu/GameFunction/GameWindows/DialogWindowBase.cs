@@ -81,15 +81,15 @@ namespace Xiyu.GameFunction.GameWindows
 
         #region 显示窗口
 
-        public abstract Tween DisplayWindow(UnityAction<object> result, IDialogParameters dialogParameters, Action onComplete = null);
+        public abstract Tween DisplayWindow(UnityAction<object> result, IDialogWindowParameters dialogWindowParameters, Action onComplete = null);
 
         #endregion
 
         #region 更新UI    protected
 
-        protected virtual void UpDateUIContent(IDialogParameters dialogParameters)
+        protected virtual void UpDateUIContent(IDialogWindowParameters dialogWindowParameters)
         {
-            titleUGUI.text = dialogParameters.Title;
+            titleUGUI.text = dialogWindowParameters.Title;
         }
 
         #endregion
@@ -120,10 +120,10 @@ namespace Xiyu.GameFunction.GameWindows
         
         #region 将 IDialogParameters 转换为具体类  protected static
 
-        protected static TParams GetParams<TParams>(IDialogParameters dialogParameters) where TParams : class, IDialogParameters => dialogParameters as TParams;
-        protected static bool TryGetParams<TParams>(IDialogParameters dialogParameters, out TParams instance) where TParams : class, IDialogParameters
+        protected static TParams GetParams<TParams>(IDialogWindowParameters dialogWindowParameters) where TParams : class, IDialogWindowParameters => dialogWindowParameters as TParams;
+        protected static bool TryGetParams<TParams>(IDialogWindowParameters dialogWindowParameters, out TParams instance) where TParams : class, IDialogWindowParameters
         {
-            if (dialogParameters is TParams parameters)
+            if (dialogWindowParameters is TParams parameters)
             {
                 instance = parameters;
                 return true;
