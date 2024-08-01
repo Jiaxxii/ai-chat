@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Collections;
-using DG.Tweening;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using Xiyu.AI.Client;
+using Xiyu.AI.LargeLanguageModel;
+using Xiyu.AI.LargeLanguageModel.Service.Request;
+using Xiyu.AI.LargeLanguageModel.Service.Response;
+using Xiyu.AI.Prompt;
+using Xiyu.ArtificialIntelligence;
+using Xiyu.Constant;
+using Xiyu.Expand;
 using Xiyu.GameFunction.CharacterComponent;
 using Xiyu.GameFunction.GeometricTransformations;
 using Xiyu.GameFunction.SceneView;
+using Xiyu.LoggerSystem;
 
 namespace ASceneTest
 {
@@ -15,6 +24,8 @@ namespace ASceneTest
         [SerializeField] private TextAsset textAsset;
 
         [SerializeField] private CharacterContentRoot characterContentRoot;
+
+        [SerializeField] private RequestResource requestResource;
         private ICharacterControl _contentRoot;
 
         // [SerializeField] private float v1, v2 = 30f, v3 = 90f;
@@ -22,6 +33,12 @@ namespace ASceneTest
         //
         // [SerializeField] private bool fadeOut;
         // [SerializeField] private Ease Ease;
+
+        private async void Awake()
+        {
+            await PromptCenterProcessing.Init(default);
+            LoggerManager.Instance.ThrowFail("自动异常抛出");
+        }
 
         private IEnumerator Start()
         {
@@ -54,28 +71,81 @@ namespace ASceneTest
                 .Offset(new Vector2(0, -GameInsView.ScreenSize.y * (1 - value)));
 
             // .DoFade(new Color(1, 1, 1, 0.5F), 5);
-
             // yield return _contentRoot.DisplayFaceFade("ai_a_0028");
-
             yield return new WaitForSeconds(1);
-
-            // yield return _contentRoot.DisplayBodyFade("ai_a_0002");
-
-            // yield return gt.WaitForDoNod();
-            //
-            // yield return gt.WaitForDoShake();
-            //
-            // yield return gt.WaitForDoShakeHead();
-
             yield return gt.WaitForDoJump();
+
+            var player = (name: "player", value: GameConstant.Player);
+
+            var sendMessage = string.Empty;
+            yield return PromptCenterProcessing.GetHttpPrompt("pt-7z8gkd4xd5bnqqd7", prompt =>
+            {
+                sendMessage = prompt.ToString(new Dictionary<string, string>
+                {
+                    { "player", GameConstant.Player },
+                    { "message", "爱实！" }
+                });
+            }, default, player, ("message", "爱实我们做爱吧，昨天你就答应我了哦！"));
+
+            var auth = new IamAuthenticate(AuthenticateManager.AuthenticateElectronAuth.AccessKey, AuthenticateManager.AuthenticateElectronAuth.SecretKey);
+            var llm = new LLM(auth, new Uri("https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-char-8k"));
+            requestResource.RequestRequestModule.Messages = new List<Message>()
+            {
+                new()
+                {
+                    Role = "user",
+                    Content = sendMessage
+                }
+            };
+            llm.RequestResource = requestResource;
+
+
+            var requestOptions = new RequestOptions
+            {
+                HeaderParameters = new Multimap<string, string>
+                {
+                    { "Content-Type", "application/json" }
+                }
+            };
+
+            yield return llm.Request<ResponseModule>(requestOptions, result =>
+            {
+                Xiyu.LoggerSystem.LoggerManager.Instance.LogInfo(result.Result);
+                Xiyu.LoggerSystem.LoggerManager.Instance.LogInfo(result.BanRound.ToString());
+                requestResource.RequestRequestModule.Messages.Add(new Message
+                {
+                    Role = Message.RoleType.Assistant.ToString().ToLowerInvariant(),
+                    Content = result.Result
+                });
+            });
+
+
             while (true)
             {
+                yield return null;
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    yield return gt.WaitForDoJump();
-                }
+                    var type = new[] { LogLevel.Info, LogLevel.Warn, LogLevel.Error }.GetRandom();
 
-                yield return null;
+                    Xiyu.LoggerSystem.LoggerManager.Instance.Log(type, type switch
+                    {
+                        LogLevel.Info => "我是一条消息",
+                        LogLevel.Error => "我是一条错误",
+                        LogLevel.Warn => "我是一条警告",
+                        _ => throw new ArgumentOutOfRangeException()
+                    });
+                    // requestOptions.Clear();
+                    // yield return llm.Request<ResponseModule>(requestOptions, result =>
+                    // {
+                    //     Xiyu.LoggerSystem.LoggerManager.Instance.LogInfo(result.Result);
+                    //     Xiyu.LoggerSystem.LoggerManager.Instance.LogInfo(result.BanRound.ToString());
+                    //     requestResource.RequestRequestModule.Messages.Add(new Message
+                    //     {
+                    //         Role = Message.RoleType.Assistant.ToString().ToLowerInvariant(),
+                    //         Content = result.Result
+                    //     });
+                    // });
+                }
             }
         }
     }

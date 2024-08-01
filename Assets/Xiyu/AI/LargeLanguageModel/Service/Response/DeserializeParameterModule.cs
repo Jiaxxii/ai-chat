@@ -18,9 +18,21 @@ namespace Xiyu.AI.LargeLanguageModel.Service.Response
         public abstract bool IsDefaultOrNull();
 
         [NotNull]
-        public static T Deserialize<T>(string value, JsonSerializerSettings jsonSerializerSettings) where T : DeserializeParameterModule
+        public static T Deserialize<T>(string value, JsonSerializerSettings jsonSerializerSettings) where T : DeserializeParameterModule, new()
         {
             var instance = JsonConvert.DeserializeObject<T>(value, jsonSerializerSettings);
+
+            if (instance is null)
+            {
+                return new T
+                {
+                    Error = new RequestError
+                    {
+                        ErrorCode = -1,
+                        ErrorMessage = $"json 无法被有效序列化为 {typeof(T).Name}、{nameof(IRequestError)}!\n{value}"
+                    }
+                };
+            }
 
             if (!instance.IsDefaultOrNull())
             {

@@ -114,7 +114,7 @@ namespace Xiyu.AI.Client
         private static string GetCanonicalTime()
         {
             // .ToString("yyyy-MM-ddTHH:mm:ssZ")
-            return (DateTime.UtcNow - TimeSpan.FromSeconds(0 )).ToString("yyyy-MM-ddTHH:mm:ssZ");
+            return (DateTime.UtcNow - TimeSpan.FromSeconds(0)).ToString("yyyy-MM-ddTHH:mm:ssZ");
         }
 
 
@@ -132,6 +132,22 @@ namespace Xiyu.AI.Client
             requestOptions.HeaderParameters.Add("Authorization", sign);
 
             return base.ConfigureWebRequest(requestOptions, method, uri);
+        }
+
+        public override UnityWebRequest ConfigureWebRequest(Multimap<string, string> queryParameters, Multimap<string, string> headerParameters, HttpMethod method, Uri uri)
+        {
+            if (string.IsNullOrEmpty(IamAk) || string.IsNullOrEmpty(IamSk))
+            {
+                return null;
+            }
+
+            var timestamp = GetCanonicalTime();
+            headerParameters.Add(HeaderHost, uri.Host);
+            var sign = Sign(queryParameters, headerParameters, timestamp,
+                method.Method, uri.AbsolutePath);
+            headerParameters.Add("Authorization", sign);
+
+            return base.ConfigureWebRequest(queryParameters, headerParameters, method, uri);
         }
     }
 }

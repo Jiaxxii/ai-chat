@@ -46,7 +46,7 @@ namespace Xiyu.AI.LargeLanguageModel.Service.Request
             var jsonObject = JObject.Parse(RequestRequestModule.ToJson());
 
             foreach (var module in new SerializeParameterModule[] { PenaltyModule, MemoryModule, SearchForModule }
-                         .Where(m => !m.IsDefault()))
+                         .Where(m => m != null && !m.IsDefault()))
             {
                 jsonObject.Merge(JObject.Parse(module.ToJson()), new JsonMergeSettings
                 {
@@ -61,7 +61,5 @@ namespace Xiyu.AI.LargeLanguageModel.Service.Request
         }
 
         public byte[] ToJson(Encoding encoding) => encoding.GetBytes(ToJson());
-        
-        
     }
 }

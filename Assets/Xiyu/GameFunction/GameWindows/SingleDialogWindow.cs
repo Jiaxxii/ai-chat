@@ -83,14 +83,14 @@ namespace Xiyu.GameFunction.GameWindows
         }
 
 
-        protected override Tween DoShow(float duration, Ease ease, Action onComplete = null)
+        public override Tween DoShow(float duration, Ease ease, Action onComplete = null)
         {
             return DOTween.To(() => _propertyAlpha.Member, value => _propertyAlpha.Member = value, 1, duration)
                 .SetEase(ease)
                 .OnComplete(() => onComplete?.Invoke());
         }
 
-        protected override Tween DoHide(float duration, Ease ease, Action onComplete = null)
+        public override Tween DoHide(float duration, Ease ease, Action onComplete = null)
         {
             return DOTween.To(() => _propertyAlpha.Member, value => _propertyAlpha.Member = value, 0, duration)
                 .SetEase(ease)
@@ -140,9 +140,8 @@ namespace Xiyu.GameFunction.GameWindows
             // window.Init(autoClose: false);
 
             yield return window.DisplayWindow(result, dialogWindowParameters, onComplete).WaitForCompletion();
-            while (closeFunc.Invoke() == true)
+            while (closeFunc.Invoke() == false)
             {
-                // wait for one Frame
                 yield return null;
             }
 

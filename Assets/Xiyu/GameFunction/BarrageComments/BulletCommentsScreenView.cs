@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Xiyu.Expand;
 using Xiyu.GameFunction.CharacterComponent;
-using Xiyu.GameFunction.InputComponent;
 using Xiyu.GameFunction.SceneView;
 using Random = UnityEngine.Random;
 

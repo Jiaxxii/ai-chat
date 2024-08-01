@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using Xiyu.LoggerSystem;
 
 namespace Xiyu.CharacterIllustration
 {
@@ -18,7 +19,7 @@ namespace Xiyu.CharacterIllustration
                     var spriteAssetLoader = new SpriteAssetLoader(type, spriteAssetMap);
                     if (!TypeToSpriteAssetLoaders.TryAdd(type, spriteAssetLoader))
                     {
-                        Debug.LogError($"可能包含重复的key\"{type}\"!");
+                        LoggerManager.Instance.LogError($"可能包含重复的key\"{type}\"!");
                     }
                 });
         }
@@ -36,7 +37,7 @@ namespace Xiyu.CharacterIllustration
                 var data = property.Value["data"];
                 if (data is not JArray dataArray)
                 {
-                    Debug.LogWarning($"属性:\"{property.Name}\"不是一个数组!");
+                    LoggerManager.Instance.LogWarning($"属性:\"{property.Name}\"不是一个数组!");
                     jsonData.Add(property.Name, null);
                     continue;
                 }
@@ -46,7 +47,7 @@ namespace Xiyu.CharacterIllustration
                 {
                     if (dataArray[i] is not JObject target)
                     {
-                        Debug.LogWarning($"属性\"{property.Name}->data\"中的数据不是一个对象");
+                        LoggerManager.Instance.LogWarning($"属性\"{property.Name}->data\"中的数据不是一个对象");
                         target = new JObject();
                     }
 
@@ -56,7 +57,7 @@ namespace Xiyu.CharacterIllustration
                 var type = property.Value["type"]?.Value<string>();
                 if (string.IsNullOrEmpty(type))
                 {
-                    Debug.LogWarning($"属性\"{property.Value}\"缺少\"type\"属性!");
+                    LoggerManager.Instance.LogWarning($"属性\"{property.Value}\"缺少\"type\"属性!");
                     type = "null";
                 }
 
@@ -76,7 +77,7 @@ namespace Xiyu.CharacterIllustration
                 var data = property.Value["data"];
                 if (data is not JArray dataArray)
                 {
-                    Debug.LogWarning($"属性:\"{property.Name}\"不是一个数组!");
+                    LoggerManager.Instance.LogWarning($"属性:\"{property.Name}\"不是一个数组!");
                     jsonData.Add(property.Name, null);
                     continue;
                 }
@@ -86,7 +87,7 @@ namespace Xiyu.CharacterIllustration
                 {
                     if (dataArray[i] is not JObject target)
                     {
-                        Debug.LogWarning($"属性\"{property.Name}->data\"中的数据不是一个对象");
+                        LoggerManager.Instance.LogWarning($"属性\"{property.Name}->data\"中的数据不是一个对象");
                         target = new JObject();
                     }
 
@@ -96,7 +97,7 @@ namespace Xiyu.CharacterIllustration
                 var type = property.Value["type"]?.Value<string>();
                 if (string.IsNullOrEmpty(type))
                 {
-                    Debug.LogWarning($"属性\"{property.Value}\"缺少\"type\"属性!");
+                    LoggerManager.Instance.LogWarning($"属性\"{property.Value}\"缺少\"type\"属性!");
                     type = "null";
                 }
 

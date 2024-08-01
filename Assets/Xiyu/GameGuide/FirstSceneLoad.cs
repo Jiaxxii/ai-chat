@@ -22,33 +22,10 @@ namespace Xiyu.GameGuide
         {
 #if UNITY_EDITOR
             GUIUtility.systemCopyBuffer =
-                "zAErBNgQo7jK75EL75azrGWOoEx6WpUx*Bfm/4Z4Dz31RqKyAnT7vZNFdex93oMPpYo0g9njAYh837Z3Xtk9oGOyYswWTD2p1zz+EX1I6ewM/24Evib9I/VigI6UYvubtk8NqUPRRIAU8doHKsTju2Be4rrBdSGKuS3cOdmIO8CYRh7FzTDUrIg==";
+
+
+                "3//syr6OGynUUlwLBpulXvTNWimHcyCM*4MusrM8zw8497xM/xcxDePRGXF/RmxPaNPI7n6eJ4K5vw95JQfOpE582ihG72K9ApkqM3yBu+T06kVx4RZ44B6r8ryJE6qmf+tPo29lkDYzysFw9aqmgAWuIOSMmvZeNjQxfYogrJOvpZOh84wpd5NPeESipnn2693t6fzDpJ8drRQUrUNosyiPWxSsXMwCjYBWA0QT8kgOcfyx/ONbSog==";
 #endif
-
-            var list = new List<SingleDialogWindow>();
-
-            var index = 0;
-            while (true)
-            {
-                if (list.Count == 10)
-                {
-                    foreach (var win in list)
-                    {
-                        win.Dispose();
-                    }
-
-                    list.Clear();
-                }
-
-                index++;
-                var window = (SingleDialogWindow)SingleDialogWindow.GetWindow(SingleDialogWindow.GetTypeName(), autoClose: false);
-                list.Add(window);
-
-                yield return window.DisplayWindow(null, new SingleWindowParams($"窗口:{index}", $"<color=#FE6389>{index}</color>")).WaitForCompletion();
-            }
-
-            yield return SingleDialogWindow.GetWindowWaitForClick(null, () => Input.GetKeyDown(KeyCode.KeypadEnter), new SingleWindowParams("XXX", "XXXX"));
-
 
             while (true)
             {
@@ -104,7 +81,7 @@ namespace Xiyu.GameGuide
                     };
 
 
-                var content = $"秘钥格式:{keyFormat}\r\n签名状态:{signatureState}";
+                var content = $"秘钥格式：{keyFormat}\r\n签名状态：{signatureState}";
 
                 yield return SingleDialogWindow.GetWindowWaitForClick(null, new SingleWindowParams("签名无效", content, MessageType.Error));
 
@@ -132,11 +109,11 @@ namespace Xiyu.GameGuide
 
         private IEnumerator Sample()
         {
-            UnityAction<bool> resultAction = result => Debug.Log($"用户选择：{(result ? '是' : '否')}");
+            UnityAction<bool> resultAction = result => LoggerManager.Instance.LogInfo($"用户选择：{(result ? '是' : '否')}");
             var selectWindowParams = new SelectWindowParams("时间", "2024年7月20日00:42:54");
 
             // SingleDialogWindow   SelectDialogWindow  InputDialogWindow 等继承自 : DialogWindow<TResult> : DialogWindowBase
-            
+
             // UI型-自动回收窗口 (在用户  点击任意按钮  窗口淡出后会自动回收窗口)
             yield return SelectDialogWindow.GetWindowWaitForSelect(resultAction, selectWindowParams);
 
@@ -155,10 +132,12 @@ namespace Xiyu.GameGuide
 
             // 手动型-手动回收窗口
             var windowLast = (SelectDialogWindow)SelectDialogWindow.GetWindow(SelectDialogWindow.GetTypeName(), autoClose: false);
+
             yield return windowLast.DisplayWindow(resultAction, selectWindowParams);
+
+            yield return windowLast.DoHide(null /* 可选 ()=> windowLast.Dispose() */);
+
             windowLast.Dispose();
-            
-            
         }
     }
 }

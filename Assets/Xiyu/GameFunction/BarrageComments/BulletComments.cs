@@ -70,7 +70,7 @@ namespace Xiyu.GameFunction.BarrageComments
         {
             if (IsPlay)
             {
-                Debug.LogWarning($"在弹幕移动时改变激活状态为:{value} 可能不是预期的行为!");
+                Xiyu.LoggerSystem.LoggerManager.Instance.LogWarning($"在弹幕移动时改变激活状态为:{value} 可能不是预期的行为!");
             }
 
             panel.gameObject.SetActive(value);

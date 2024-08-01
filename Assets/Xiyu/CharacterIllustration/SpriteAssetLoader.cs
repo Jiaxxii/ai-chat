@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Xiyu.LoggerSystem;
 
 namespace Xiyu.CharacterIllustration
 {
@@ -83,32 +84,37 @@ namespace Xiyu.CharacterIllustration
         {
             if (string.IsNullOrEmpty(typeCode) || string.IsNullOrWhiteSpace(typeCode))
             {
-                Debug.LogError("空的\"typeCode\"");
+                // Debug.LogError("空的\"typeCode\"");
+                LoggerManager.Instance.LogError("空的\"typeCode\"");
                 yield break;
             }
 
             if (!_typeFindAtlasInitializationTransformationInfoMap.TryGetValue(typeCode, out var spriteAsset))
             {
-                Debug.LogError($"不存在的资源名称\"{typeCode}\"");
+                // Debug.LogError($"不存在的资源名称\"{typeCode}\"");
+                LoggerManager.Instance.LogError($"不存在的资源名称\"{typeCode}\"");
                 yield break;
             }
 
 
             if (State == RefState.None)
             {
-                Debug.LogWarning("资源引用未加载,尝试加载中......");
+                // Debug.LogWarning("资源引用未加载,尝试加载中......");
+                LoggerManager.Instance.LogWarning("资源引用未加载,尝试加载中......");
                 yield return LoadRefAssetsAsync(Type);
             }
 
             if (State == RefState.Loading)
             {
-                Debug.LogWarning("资源引用未加载完成,尝试等待中......");
+                // Debug.LogWarning("资源引用未加载完成,尝试等待中......");
+                LoggerManager.Instance.LogWarning("资源引用未加载完成,尝试等待中......");
                 yield return new WaitUntil(() => State != RefState.Loading);
             }
 
             if (State == RefState.Fail)
             {
-                Debug.LogError("资源加载失败!");
+                // Debug.LogError("资源加载失败!");
+                LoggerManager.Instance.LogError("资源加载失败!");
                 yield break;
             }
 

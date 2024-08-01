@@ -1,4 +1,5 @@
 ﻿// 西雨
+
 using System;
 using System.Collections;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using UnityEngine.Networking;
 using Xiyu.AI.Client;
 using Xiyu.AI.LargeLanguageModel.Service.Request;
 using Xiyu.AI.LargeLanguageModel.Service.Response;
+using Xiyu.LoggerSystem;
 
 namespace Xiyu.AI.LargeLanguageModel
 {
@@ -28,16 +30,16 @@ namespace Xiyu.AI.LargeLanguageModel
         /// <param name="authenticate">鉴权凭证，目前提供两种方式:<see cref="AccessToken"/>,<see cref="IamAuthenticate"/></param>
         /// <param name="uri">接口地址:https</param>
         /// <param name="method">请求方式 （默认为：<see cref="HttpMethod.Post"/>）</param>
-        /// <param name="downloadHandler">获取的资源数据类型（默认为：<see cref="DownloadHandlerBuffer"/>）</param>
-        public LLM(Authenticate authenticate, Uri uri, HttpMethod method = null, DownloadHandler downloadHandler = null)
+        public LLM(Authenticate authenticate, Uri uri, HttpMethod method = null)
         {
             Auth = authenticate;
             Url = uri;
             HttpMethod = method ?? HttpMethod.Post;
-            _downloadHandler = downloadHandler ?? new DownloadHandlerBuffer();
+            // _downloadHandler = downloadHandler ?? new DownloadHandlerBuffer();
 
 #if UNITY_EDITOR
-            OnRequestFailEventHandler += Debug.LogError;
+            // OnRequestFailEventHandler += Debug.LogError;
+            OnRequestFailEventHandler += v => LoggerManager.Instance.LogError(v);
 #endif
         }
 
@@ -51,13 +53,13 @@ namespace Xiyu.AI.LargeLanguageModel
         protected readonly Uri Url;
         protected readonly HttpMethod HttpMethod;
 
-        private readonly DownloadHandler _downloadHandler;
+        // private DownloadHandler _downloadHandler;
 
         /// <summary>
         /// 请求数据 Body
         /// </summary>
         public RequestResource RequestResource { get; set; }
-        
+
         /// <summary>
         /// 超时时间
         /// </summary>
@@ -76,7 +78,6 @@ namespace Xiyu.AI.LargeLanguageModel
             DefaultValueHandling = DefaultValueHandling.Ignore
         };
 
-
         /// <summary>
         /// 发送一次请求
         /// </summary>
@@ -87,12 +88,14 @@ namespace Xiyu.AI.LargeLanguageModel
         {
             using var request = SetConfigureWebRequest(requestOptions);
 
+            request.downloadHandler = new DownloadHandlerBuffer();
+
             yield return request.SendWebRequest();
 
 
             if (request.responseCode == 200 && request.result == UnityWebRequest.Result.Success)
             {
-                var resultJson = _downloadHandler.text;
+                var resultJson = request.downloadHandler.text;
                 onSuccess?.Invoke(resultJson);
             }
             else
@@ -108,16 +111,17 @@ namespace Xiyu.AI.LargeLanguageModel
         /// <param name="onSuccess">完成时返回原文本数据(JSON)</param>
         /// <typeparam name="T"><see cref="T"/>必须继承自<see cref="DeserializeParameterModule"/></typeparam>
         /// <returns>需要使用<see cref="UnityEngine.MonoBehaviour.StartCoroutine(IEnumerator)"/></returns>
-        public virtual IEnumerator Request<T>(RequestOptions requestOptions, Action<T> onSuccess) where T : DeserializeParameterModule
+        public virtual IEnumerator Request<T>(RequestOptions requestOptions, Action<T> onSuccess) where T : DeserializeParameterModule, new()
         {
             using var request = SetConfigureWebRequest(requestOptions);
 
+            request.downloadHandler = new DownloadHandlerBuffer();
             yield return request.SendWebRequest();
 
 
             if (request.responseCode == 200 && request.result == UnityWebRequest.Result.Success)
             {
-                var resultJson = _downloadHandler.text;
+                var resultJson = request.downloadHandler.text;
 
                 var response = DeserializeParameterModule.Deserialize<T>(resultJson, JsonSerializerSettings);
                 onSuccess?.Invoke(response);
@@ -141,7 +145,7 @@ namespace Xiyu.AI.LargeLanguageModel
             request.uploadHandler = new UploadHandlerRaw(RequestResource.ToJson(System.Text.Encoding.UTF8));
 #endif
 
-            request.downloadHandler = _downloadHandler;
+            request.downloadHandler = new DownloadHandlerBuffer();
 
             return request;
         }

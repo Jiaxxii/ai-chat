@@ -80,7 +80,7 @@ namespace Xiyu.GameFunction.GameWindows
         }
 
 
-        protected override Tween DoShow(float duration, Ease ease, Action onComplete = null)
+        public override Tween DoShow(float duration, Ease ease, Action onComplete = null)
         {
             // WindowState = DialogWindowState.DisplayShow;
             ButtonActive(false);
@@ -96,7 +96,7 @@ namespace Xiyu.GameFunction.GameWindows
                 });
         }
 
-        protected override Tween DoHide(float duration, Ease ease, Action onComplete = null)
+        public override Tween DoHide(float duration, Ease ease, Action onComplete = null)
         {
             // WindowState = DialogWindowState.DisplayHide;
             ButtonActive(false);

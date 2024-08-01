@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Web;
+using UnityEngine;
 using UnityEngine.Networking;
 using Xiyu.ArtificialIntelligence;
 
@@ -41,7 +42,7 @@ namespace Xiyu.AI.Client
         /// <param name="header"></param>
         /// <param name="urlEncode"></param>
         /// <returns></returns>
-        private static KeyValuePair<string, string> HeaderParameter(KeyValuePair<string, IList<string>> header, bool urlEncode = false)
+        protected static KeyValuePair<string, string> HeaderParameter(KeyValuePair<string, IList<string>> header, bool urlEncode = false)
         {
             var hashSet = new HashSet<string>();
             return new KeyValuePair<string, string>(header.Key, string.Join(',',
@@ -55,7 +56,7 @@ namespace Xiyu.AI.Client
         /// <param name="query"></param>
         /// <param name="urlEncode"></param>
         /// <returns></returns>
-        private static string QueryParameter(Multimap<string, string> query, bool urlEncode = false)
+        protected static string QueryParameter(Multimap<string, string> query, bool urlEncode = false)
         {
             var sb = new StringBuilder();
             var index = 0;
@@ -73,8 +74,6 @@ namespace Xiyu.AI.Client
 
             return sb.ToString();
         }
-
-
         
         public virtual UnityWebRequest ConfigureWebRequest(RequestOptions requestOptions, HttpMethod method, Uri uri)
         {
@@ -94,5 +93,28 @@ namespace Xiyu.AI.Client
 
             return webRequest;
         }
+
+        public virtual UnityWebRequest ConfigureWebRequest(Multimap<string, string> queryParameters, Multimap<string, string> headerParameters, HttpMethod method, Uri uri)
+        {
+            var queryString = QueryParameter(queryParameters);
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                uri = new Uri($"{uri.AbsoluteUri}?{queryString}");
+            }
+
+            var webRequest = new UnityWebRequest(uri, method.Method);
+
+            foreach (var header in headerParameters)
+            {
+                var keyValue = HeaderParameter(header);
+                webRequest.SetRequestHeader(keyValue.Key, keyValue.Value.Replace("%2f", "/"));
+            }
+
+            return webRequest;
+        }
+        
+        
+        
+        
     }
 }

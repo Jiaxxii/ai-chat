@@ -96,9 +96,9 @@ namespace Xiyu.GameFunction.GameWindows
 
         #region 淡入窗口    protected
 
-        protected abstract Tween DoShow(float duration, Ease ease, Action onComplete = null);
+        public abstract Tween DoShow(float duration, Ease ease, Action onComplete = null);
 
-        protected Tween DoShow(Action onComplete)
+        public Tween DoShow(Action onComplete)
         {
             var showTweenParams = ShowTweenParams;
             return DoShow(showTweenParams.duration, showTweenParams.ease, onComplete);
@@ -108,9 +108,9 @@ namespace Xiyu.GameFunction.GameWindows
 
         #region 淡出窗口    protected
 
-        protected abstract Tween DoHide(float duration, Ease ease, Action onComplete = null);
+        public abstract Tween DoHide(float duration, Ease ease, Action onComplete = null);
 
-        protected Tween DoHide(Action onComplete)
+        public Tween DoHide(Action onComplete)
         {
             var hideTweenParams = HideTweenParams;
             return DoHide(hideTweenParams.duration, hideTweenParams.ease, onComplete);

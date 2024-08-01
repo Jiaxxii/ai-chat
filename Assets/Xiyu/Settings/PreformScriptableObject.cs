@@ -32,7 +32,7 @@ namespace Xiyu.Settings
                 _table = new Dictionary<string, Pair>();
                 foreach (var pair in preforms.Where(pair => !_table.TryAdd(pair.Name, pair)))
                 {
-                    Debug.LogWarning($"重复的key\"{pair.Name}\"");
+                    Xiyu.LoggerSystem.LoggerManager.Instance.LogWarning($"重复的key\"{pair.Name}\"");
                 }
 
                 return _table;

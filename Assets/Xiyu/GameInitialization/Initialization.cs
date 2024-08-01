@@ -7,7 +7,6 @@ namespace Xiyu.GameInitialization
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void Init()
         {
-            
         }
         
         
