@@ -6,6 +6,7 @@ Temp/
 
 # 忽略图片资源
 Assets/Images/
+Assets/Animated Loading Icons/
 
 # 忽略 Unity 生成的日志文件  
 *.log  

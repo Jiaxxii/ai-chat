@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Xiyu.Constant
 {
@@ -19,6 +20,15 @@ namespace Xiyu.Constant
 
         public const string LoggerDefaultFileLoggerName = "文件日志";
         public const string LoggerDefaultConsoleLoggerName = "内部控制台";
+
+        public static readonly Vector2 DesktopSize = new(1920, 1080);
+
+        public static readonly string[] DefaultDesktopIcon =
+        {
+            "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间",
+            "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间","我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间",
+            "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间"
+        };
 
         /// <summary>
         /// 访问剪切板心跳间隔
