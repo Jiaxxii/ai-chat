@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1176590092835538629}
   - component: {fileID: 348596684015693733}
   - component: {fileID: 6986548069343970374}
+  - component: {fileID: 4736972914993541326}
+  - component: {fileID: 2734899385075539987}
   m_Layer: 5
   m_Name: Desktop ICON Item
   m_TagString: Untagged
@@ -93,6 +95,49 @@ MonoBehaviour:
   content: {fileID: 348596684015693733}
   iconImage: {fileID: 7368497528259433351}
   appNameText: {fileID: 3335924441039355926}
+  pointerEventProcessor: {fileID: 4736972914993541326}
+  dragEventProcessor: {fileID: 2734899385075539987}
+  selectColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &4736972914993541326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5102271313205543736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0264245ef02f4802b5bbc5bd373a4bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPointEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2734899385075539987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5102271313205543736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3417618eb6d452bbe022fa4bd08c291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onBeginDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrag:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5811893910695013454
 GameObject:
   m_ObjectHideFlags: 0

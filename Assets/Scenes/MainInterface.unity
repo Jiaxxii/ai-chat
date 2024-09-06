@@ -387,6 +387,10 @@ MonoBehaviour:
   content: {fileID: 26064308}
   iconImage: {fileID: 1627093663}
   appNameText: {fileID: 147574657}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &26064308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,6 +634,10 @@ MonoBehaviour:
   content: {fileID: 44343709}
   iconImage: {fileID: 508299639}
   appNameText: {fileID: 1339941523}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &44343709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,6 +731,10 @@ MonoBehaviour:
   content: {fileID: 44925932}
   iconImage: {fileID: 1361698335}
   appNameText: {fileID: 114881134}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &44925932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +828,10 @@ MonoBehaviour:
   content: {fileID: 66933045}
   iconImage: {fileID: 328514341}
   appNameText: {fileID: 209761503}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &66933045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,6 +925,10 @@ MonoBehaviour:
   content: {fileID: 78779400}
   iconImage: {fileID: 774649983}
   appNameText: {fileID: 331585603}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &78779400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3160,6 +3180,10 @@ MonoBehaviour:
   content: {fileID: 322880490}
   iconImage: {fileID: 239962476}
   appNameText: {fileID: 853865804}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &322880490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4389,6 +4413,10 @@ MonoBehaviour:
   content: {fileID: 423062087}
   iconImage: {fileID: 1010294587}
   appNameText: {fileID: 2144508011}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &423062087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4750,6 +4778,10 @@ MonoBehaviour:
   content: {fileID: 443046274}
   iconImage: {fileID: 1852212557}
   appNameText: {fileID: 1695524121}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &443046274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4843,6 +4875,10 @@ MonoBehaviour:
   content: {fileID: 482494551}
   iconImage: {fileID: 2062441254}
   appNameText: {fileID: 865462033}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &482494551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4936,6 +4972,10 @@ MonoBehaviour:
   content: {fileID: 506650993}
   iconImage: {fileID: 1613292221}
   appNameText: {fileID: 1504330990}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &506650993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5238,6 +5278,10 @@ MonoBehaviour:
   content: {fileID: 522253972}
   iconImage: {fileID: 1182071929}
   appNameText: {fileID: 779666441}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &522253972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5331,6 +5375,10 @@ MonoBehaviour:
   content: {fileID: 531411193}
   iconImage: {fileID: 171810541}
   appNameText: {fileID: 1840550083}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &531411193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5767,6 +5815,10 @@ MonoBehaviour:
   content: {fileID: 564333791}
   iconImage: {fileID: 185737846}
   appNameText: {fileID: 662088829}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &564333791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6830,6 +6882,10 @@ MonoBehaviour:
   content: {fileID: 703602480}
   iconImage: {fileID: 1078691819}
   appNameText: {fileID: 1527863855}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &703602480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6923,6 +6979,10 @@ MonoBehaviour:
   content: {fileID: 720690263}
   iconImage: {fileID: 812603825}
   appNameText: {fileID: 585641215}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &720690263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7150,6 +7210,10 @@ MonoBehaviour:
   content: {fileID: 746736039}
   iconImage: {fileID: 785286485}
   appNameText: {fileID: 1169448030}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &746736039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8138,6 +8202,10 @@ MonoBehaviour:
   content: {fileID: 816486089}
   iconImage: {fileID: 420582317}
   appNameText: {fileID: 1334131609}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &816486089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8515,6 +8583,10 @@ MonoBehaviour:
   content: {fileID: 839764567}
   iconImage: {fileID: 1386149742}
   appNameText: {fileID: 1171316438}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &839764567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8879,6 +8951,10 @@ MonoBehaviour:
   content: {fileID: 860519541}
   iconImage: {fileID: 1769248788}
   appNameText: {fileID: 239428412}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &860519541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9106,6 +9182,10 @@ MonoBehaviour:
   content: {fileID: 866069312}
   iconImage: {fileID: 620138980}
   appNameText: {fileID: 425774461}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &866069312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9333,6 +9413,10 @@ MonoBehaviour:
   content: {fileID: 895201333}
   iconImage: {fileID: 418402841}
   appNameText: {fileID: 1639304378}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &895201333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9426,6 +9510,10 @@ MonoBehaviour:
   content: {fileID: 899511446}
   iconImage: {fileID: 1258143235}
   appNameText: {fileID: 1379687748}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &899511446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9862,6 +9950,10 @@ MonoBehaviour:
   content: {fileID: 917485247}
   iconImage: {fileID: 1876965253}
   appNameText: {fileID: 786513276}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &917485247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10089,6 +10181,10 @@ MonoBehaviour:
   content: {fileID: 934378694}
   iconImage: {fileID: 1649108547}
   appNameText: {fileID: 915823003}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &934378694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10182,6 +10278,10 @@ MonoBehaviour:
   content: {fileID: 953987855}
   iconImage: {fileID: 293632170}
   appNameText: {fileID: 1051103657}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &953987855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10484,6 +10584,10 @@ MonoBehaviour:
   content: {fileID: 982267107}
   iconImage: {fileID: 1885649252}
   appNameText: {fileID: 319348796}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &982267107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10756,6 +10860,10 @@ MonoBehaviour:
   content: {fileID: 1030981389}
   iconImage: {fileID: 13890721}
   appNameText: {fileID: 918736883}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1030981389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11117,6 +11225,10 @@ MonoBehaviour:
   content: {fileID: 1058044047}
   iconImage: {fileID: 544741138}
   appNameText: {fileID: 6679980}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1058044047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11210,6 +11322,10 @@ MonoBehaviour:
   content: {fileID: 1068186407}
   iconImage: {fileID: 1601045593}
   appNameText: {fileID: 1377507841}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1068186407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11453,6 +11569,10 @@ MonoBehaviour:
   content: {fileID: 1079664248}
   iconImage: {fileID: 260765648}
   appNameText: {fileID: 758695116}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1079664248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11595,7 +11715,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 905394229961661867}
   - {fileID: 2121489668}
   m_Father: {fileID: 995452288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11616,13 +11735,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7169916365f7474e9fe7ee88e9eead6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sprite: {fileID: 21300000, guid: 437e0de9ffa55a3449e33360740f5acd, type: 3}
   content: {fileID: 1122515247}
   selectIConColor: {r: 1, g: 0, b: 0, a: 1}
   highlightIConColor: {r: 1, g: 1, b: 1, a: 0.78431374}
-  iconSelectEventHandler:
-    m_PersistentCalls:
-      m_Calls: []
-  selectMode: 1
+  taskbar: {fileID: 2121489671}
 --- !u!1 &1169448028
 GameObject:
   m_ObjectHideFlags: 0
@@ -12021,6 +12138,10 @@ MonoBehaviour:
   content: {fileID: 1179268831}
   iconImage: {fileID: 1546696617}
   appNameText: {fileID: 321878392}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1179268831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12323,6 +12444,10 @@ MonoBehaviour:
   content: {fileID: 1182252195}
   iconImage: {fileID: 165122617}
   appNameText: {fileID: 114889535}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1182252195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12416,6 +12541,10 @@ MonoBehaviour:
   content: {fileID: 1190628463}
   iconImage: {fileID: 633029763}
   appNameText: {fileID: 2027688118}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1190628463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12643,6 +12772,10 @@ MonoBehaviour:
   content: {fileID: 1235511098}
   iconImage: {fileID: 1715964694}
   appNameText: {fileID: 1822008219}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1235511098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12736,6 +12869,10 @@ MonoBehaviour:
   content: {fileID: 1243188828}
   iconImage: {fileID: 1593889499}
   appNameText: {fileID: 968822780}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1243188828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12829,6 +12966,10 @@ MonoBehaviour:
   content: {fileID: 1247089035}
   iconImage: {fileID: 969444752}
   appNameText: {fileID: 1902192952}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1247089035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12927,6 +13068,10 @@ MonoBehaviour:
   content: {fileID: 1253936629}
   iconImage: {fileID: 1773705166}
   appNameText: {fileID: 889820857}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1253936629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13170,6 +13315,10 @@ MonoBehaviour:
   content: {fileID: 1267798560}
   iconImage: {fileID: 335389485}
   appNameText: {fileID: 2022188646}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1267798560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13263,6 +13412,10 @@ MonoBehaviour:
   content: {fileID: 1274534498}
   iconImage: {fileID: 909018603}
   appNameText: {fileID: 1325280667}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1274534498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13356,6 +13509,10 @@ MonoBehaviour:
   content: {fileID: 1279171203}
   iconImage: {fileID: 1768218495}
   appNameText: {fileID: 115646103}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1279171203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13449,6 +13606,10 @@ MonoBehaviour:
   content: {fileID: 1287193300}
   iconImage: {fileID: 1983948236}
   appNameText: {fileID: 360424273}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1287193300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14303,6 +14464,10 @@ MonoBehaviour:
   content: {fileID: 1367151818}
   iconImage: {fileID: 836584829}
   appNameText: {fileID: 519762869}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1367151818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14471,6 +14636,10 @@ MonoBehaviour:
   content: {fileID: 1373616480}
   iconImage: {fileID: 1746903923}
   appNameText: {fileID: 1824617955}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1373616480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14907,6 +15076,10 @@ MonoBehaviour:
   content: {fileID: 1414650312}
   iconImage: {fileID: 244644906}
   appNameText: {fileID: 791676734}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1414650312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15000,6 +15173,10 @@ MonoBehaviour:
   content: {fileID: 1419962200}
   iconImage: {fileID: 383855023}
   appNameText: {fileID: 692870138}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1419962200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15377,6 +15554,10 @@ MonoBehaviour:
   content: {fileID: 1480539159}
   iconImage: {fileID: 2132121667}
   appNameText: {fileID: 1332939426}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1480539159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15888,6 +16069,10 @@ MonoBehaviour:
   content: {fileID: 1552848045}
   iconImage: {fileID: 829671713}
   appNameText: {fileID: 1034408796}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1552848045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16474,6 +16659,10 @@ MonoBehaviour:
   content: {fileID: 1604081548}
   iconImage: {fileID: 1365554133}
   appNameText: {fileID: 903337653}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1604081548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17135,6 +17324,10 @@ MonoBehaviour:
   content: {fileID: 1663060208}
   iconImage: {fileID: 29656936}
   appNameText: {fileID: 337604108}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1663060208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17362,6 +17555,10 @@ MonoBehaviour:
   content: {fileID: 1706793981}
   iconImage: {fileID: 675427050}
   appNameText: {fileID: 230415576}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1706793981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17455,6 +17652,10 @@ MonoBehaviour:
   content: {fileID: 1708973378}
   iconImage: {fileID: 1070222162}
   appNameText: {fileID: 670397862}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1708973378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18374,6 +18575,10 @@ MonoBehaviour:
   content: {fileID: 1774520800}
   iconImage: {fileID: 33347206}
   appNameText: {fileID: 2090040222}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1774520800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19078,6 +19283,10 @@ MonoBehaviour:
   content: {fileID: 1845025657}
   iconImage: {fileID: 1555034426}
   appNameText: {fileID: 532183714}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1845025657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19246,6 +19455,10 @@ MonoBehaviour:
   content: {fileID: 1871728261}
   iconImage: {fileID: 1459413961}
   appNameText: {fileID: 91407061}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1871728261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19623,6 +19836,10 @@ MonoBehaviour:
   content: {fileID: 1902945897}
   iconImage: {fileID: 1459006267}
   appNameText: {fileID: 1576016209}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1902945897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19716,6 +19933,10 @@ MonoBehaviour:
   content: {fileID: 1906804397}
   iconImage: {fileID: 1368796353}
   appNameText: {fileID: 1721641212}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1906804397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19809,6 +20030,10 @@ MonoBehaviour:
   content: {fileID: 1914510694}
   iconImage: {fileID: 2057457258}
   appNameText: {fileID: 1712545852}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1914510694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19902,6 +20127,10 @@ MonoBehaviour:
   content: {fileID: 1930603300}
   iconImage: {fileID: 1552329377}
   appNameText: {fileID: 1597542179}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1930603300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20129,6 +20358,10 @@ MonoBehaviour:
   content: {fileID: 1940820230}
   iconImage: {fileID: 335625715}
   appNameText: {fileID: 1940514693}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1940820230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20222,6 +20455,10 @@ MonoBehaviour:
   content: {fileID: 1961457981}
   iconImage: {fileID: 1169840275}
   appNameText: {fileID: 1456307395}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1961457981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20315,6 +20552,10 @@ MonoBehaviour:
   content: {fileID: 1962115047}
   iconImage: {fileID: 1340590873}
   appNameText: {fileID: 427908977}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1962115047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20408,6 +20649,10 @@ MonoBehaviour:
   content: {fileID: 1964574283}
   iconImage: {fileID: 1789589235}
   appNameText: {fileID: 561179326}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1964574283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20501,6 +20746,10 @@ MonoBehaviour:
   content: {fileID: 1972690601}
   iconImage: {fileID: 191723809}
   appNameText: {fileID: 730128278}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1972690601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20669,6 +20918,10 @@ MonoBehaviour:
   content: {fileID: 1990574474}
   iconImage: {fileID: 1088300830}
   appNameText: {fileID: 1232159925}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1990574474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21030,6 +21283,10 @@ MonoBehaviour:
   content: {fileID: 2044530107}
   iconImage: {fileID: 401566955}
   appNameText: {fileID: 809667960}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2044530107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21123,6 +21380,10 @@ MonoBehaviour:
   content: {fileID: 2053497457}
   iconImage: {fileID: 369183845}
   appNameText: {fileID: 839671403}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2053497457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21216,6 +21477,10 @@ MonoBehaviour:
   content: {fileID: 2056843178}
   iconImage: {fileID: 190198443}
   appNameText: {fileID: 415198456}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2056843178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21459,6 +21724,10 @@ MonoBehaviour:
   content: {fileID: 2062492924}
   iconImage: {fileID: 1756906624}
   appNameText: {fileID: 1654250021}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2062492924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21721,6 +21990,10 @@ MonoBehaviour:
   content: {fileID: 2107637459}
   iconImage: {fileID: 1658396066}
   appNameText: {fileID: 592695350}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2107637459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21770,6 +22043,7 @@ GameObject:
   - component: {fileID: 2121489668}
   - component: {fileID: 2121489670}
   - component: {fileID: 2121489669}
+  - component: {fileID: 2121489671}
   m_Layer: 5
   m_Name: Taskbar
   m_TagString: Untagged
@@ -21834,6 +22108,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121489667}
   m_CullTransparentMesh: 1
+--- !u!114 &2121489671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121489667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ec2c9629ba4e27b7f44061fa03142b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 2121489669}
 --- !u!1 &2132121665
 GameObject:
   m_ObjectHideFlags: 0
@@ -21964,6 +22251,10 @@ MonoBehaviour:
   content: {fileID: 2132192378}
   iconImage: {fileID: 607900440}
   appNameText: {fileID: 1838535294}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2132192378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22057,6 +22348,10 @@ MonoBehaviour:
   content: {fileID: 2137569344}
   iconImage: {fileID: 95516928}
   appNameText: {fileID: 1182028928}
+  pointerEventProcessor: {fileID: 0}
+  dragEventProcessor: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  clearColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2137569344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22229,112 +22524,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144508009}
   m_CullTransparentMesh: 1
---- !u!1001 &905394229961661866
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1122515247}
-    m_Modifications:
-    - target: {fileID: 5102271313205543736, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_Name
-      value: Desktop ICON Item
-      objectReference: {fileID: 0}
-    - target: {fileID: 5102271313205543736, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_Pivot.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
---- !u!224 &905394229961661867 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5718818662512507344, guid: 05fd25e831370934982d795494ea1c4a, type: 3}
-  m_PrefabInstance: {fileID: 905394229961661866}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2131372160922363459
 PrefabInstance:
   m_ObjectHideFlags: 0

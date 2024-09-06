@@ -56,6 +56,7 @@
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\RoleBodyType.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\Property.cs" />
     <Compile Include="Assets\Xiyu\GameGuide\FirstSceneLoad.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\FiniteStateMachine\PointerCtrlModel.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\AccessToken.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\Authenticate.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
@@ -63,10 +64,14 @@
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\IGeomTransforms.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\BarrageComments\BulletCommentsScreenView.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\Message.cs" />
-    <Compile Include="Assets\Xiyu\Desktop\DesktopSelectProcessor.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\DesktopTaskbar.cs" />
     <Compile Include="Assets\Xiyu\Application\ApplicationData.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\LogLevel.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\FiniteStateMachine\IPointerState.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\DesktopIconPartial.cs" />
     <Compile Include="Assets\Xiyu\Settings\PreformScriptableObject.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\FiniteStateMachine\PointerShiftModel.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\DesktopIconSelector.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\IDialogWindowParameters.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\Guide\GameMaskManager.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
@@ -77,8 +82,9 @@
     <Compile Include="Assets\Xiyu\Expand\MethodTestTime.cs" />
     <Compile Include="Assets\Xiyu\Desktop\Icon.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\GeomTransforms.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\FiniteStateMachine\PointerSingleModel.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SearchForModule.cs" />
-    <Compile Include="Assets\Xiyu\Desktop\GridInfo.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\DesktopIconOrganizer.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\RefState.cs" />
     <Compile Include="Assets\Xiyu\Expand\Expand.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\RoleUnit.cs" />
@@ -92,6 +98,7 @@
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\SelectDialogWindow.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\RequestResource.cs" />
     <Compile Include="Assets\Xiyu\Desktop\DesktopIcon.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\FiniteStateMachine\StateMachine.cs" />
     <Compile Include="Assets\Xiyu\GameInitialization\Initialization.cs" />
     <Compile Include="Assets\Xiyu\Desktop\DesktopGrid.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\IamAuthenticate.cs" />
@@ -100,6 +107,7 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteResourceManager.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\MemoryModule.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\DesktopIconPointerEventProcessor.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\RequestOptions.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\InputDialogWindow.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowParameters.cs" />
@@ -108,6 +116,7 @@
     <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteAssetLoader.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\Usage.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\PenaltyModule.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\DesktopIconDragEventProcessor.cs" />
     <Compile Include="Assets\Xiyu\AI\Multimap.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\SearchInfo.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\DeserializeParameterModule.cs" />
@@ -119,6 +128,7 @@
     <Compile Include="Assets\Xiyu\CharacterIllustration\TransformInfo.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Xiyu\AI\Prompt\Prompt.cs" />
+    <Compile Include="Assets\Xiyu\Desktop\FiniteStateMachine\PointerModel.cs" />
     <Compile Include="Assets\Xiyu\Settings\DesktopIconCollectorScriptableObject.cs" />
     <Compile Include="Assets\Xiyu\Constant\GameConstant.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SerializeParameterModule.cs" />

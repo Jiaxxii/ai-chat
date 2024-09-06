@@ -1,68 +1,35 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Xiyu.Constant;
-using Xiyu.Expand;
 
 namespace Xiyu.Desktop
 {
-    public class DesktopIcon : MonoBehaviour, IEquatable<DesktopIcon>
-        , IDragHandler
-        , IBeginDragHandler
-        , IEndDragHandler
-        , IPointerEnterHandler
-        , IPointerExitHandler
-        , IPointerClickHandler
+    public partial class DesktopIcon : MonoBehaviour
     {
         public static readonly Vector2 ContentSize = new(150, 150);
 
-
-        private static GameObject _prefab;
-        private static GameObject Prefab => _prefab == null ? Resources.Load<GameObject>("RoleTemplate/Desktop ICON Item") : _prefab;
+        public Vector2Int DesktopMatrix { get; internal set; }
 
 
         [SerializeField] private Image content;
-        [SerializeField] private Image iconImage;
-        [SerializeField] private TextMeshProUGUI appNameText;
 
-        public event UnityAction<DesktopIcon, PointerEventData> OnPointerEnterEvent;
-        public event UnityAction<DesktopIcon, PointerEventData> OnPointerExitEvent;
-        public event UnityAction<DesktopIcon, PointerEventData> OnPointerClickEvent;
-
-
-        public event UnityAction<DesktopIcon, PointerEventData> OnDragEvent;
-        public event UnityAction<DesktopIcon, PointerEventData> OnBeginDragEvent;
-        public event UnityAction<DesktopIcon, PointerEventData> OnEndDragEvent;
-
-        public Color SelectColor
+        public Color SelectPanelColor
         {
             get => content.color;
             set => content.color = value;
         }
 
 
-        public bool IsSelect { get; set; }
-
-
-        private DesktopIcon Init(Sprite iconSprite, string appName)
-        {
-            SetHighlight(Color.clear);
-            iconImage.sprite = iconSprite;
-            appNameText.text = appName;
-            return this;
-        }
-
-        private DesktopIcon Init(Icon icon) => Init(icon.IconSprite, icon.IconName);
-
+        [SerializeField] private Image iconImage;
 
         public Sprite IconSprite
         {
             get => iconImage.sprite;
             set => iconImage.sprite = value;
         }
+
+
+        [SerializeField] private TextMeshProUGUI appNameText;
 
         public string AppName
         {
@@ -71,39 +38,55 @@ namespace Xiyu.Desktop
         }
 
 
-        public void SetHighlight(Color selectColor)
+        [SerializeField] private DesktopIconPointerEventProcessor pointerEventProcessor;
+        public IPointerProcessor PointerProcessor => pointerEventProcessor;
+
+
+        [SerializeField] private DesktopIconDragEventProcessor dragEventProcessor;
+        public IDragProcessor DragProcessor => dragEventProcessor;
+
+
+        [SerializeField] private Color selectColor;
+
+        public Color SelectColor
         {
-            content.color = selectColor;
+            get => selectColor;
+            set => selectColor = value;
         }
 
-        public static DesktopIcon Create(Transform parent, Sprite icon, string iconName)
-        {
-            var instance = Instantiate(Prefab, parent: parent).GetComponent<DesktopIcon>();
 
-            return instance.Init(icon, iconName);
+        [SerializeField] private Color clearColor;
+
+        public Color ClearColor
+        {
+            get => clearColor;
+            set => clearColor = value;
         }
 
-        public static DesktopIcon Create(Transform parent, Icon icon) => Create(parent, icon.IconSprite, icon.IconName);
 
-
-        public void OnDrag(PointerEventData eventData) => OnDragEvent?.Invoke(this, eventData);
-
-        public void OnBeginDrag(PointerEventData eventData) => OnBeginDragEvent?.Invoke(this, eventData);
-
-        public void OnEndDrag(PointerEventData eventData) => OnEndDragEvent?.Invoke(this, eventData);
-
-        public void OnPointerEnter(PointerEventData eventData) => OnPointerEnterEvent?.Invoke(this, eventData);
-
-        public void OnPointerExit(PointerEventData eventData) => OnPointerExitEvent?.Invoke(this, eventData);
-
-        public void OnPointerClick(PointerEventData eventData) => OnPointerClickEvent?.Invoke(this, eventData);
-
-        public bool Equals(DesktopIcon other)
+        private DesktopIcon Init(Sprite iconSprite, string appName)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return base.Equals(other) && Equals(content, other.content) && Equals(iconImage, other.iconImage) && Equals(appNameText, other.appNameText) &&
-                   IsSelect == other.IsSelect;
+            SelectPanelColor = Color.clear;
+            IconSprite = iconSprite;
+            AppName = appName;
+
+            PointerProcessor.OnPointerEnterHandler += _ => SelectPanelColor = SelectColor;
+            PointerProcessor.OnPointerExitHandler += _ => SelectPanelColor = ClearColor;
+
+            SetActive(true);
+
+            return this;
+        }
+
+        public void SetAnchoredPosition(Vector2 anchoredPosition)
+        {
+            ((RectTransform)transform).anchoredPosition = anchoredPosition;
+        }
+
+        public void SetActive(bool value)
+        {
+            content.gameObject.SetActive(value);
         }
     }
+    
 }
