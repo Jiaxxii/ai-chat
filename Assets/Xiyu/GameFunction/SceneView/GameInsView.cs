@@ -16,4 +16,5 @@ namespace Xiyu.GameFunction.SceneView
 
         public static Vector2 ScreenSize => RectTransform.sizeDelta;
     }
+    
 }

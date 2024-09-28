@@ -38,10 +38,10 @@ namespace Xiyu.GameFunction.CharacterComponent
         IEnumerator Display(string bodyCode, string faceCode);
 
         IEnumerator DisplayFaceFade(string faceCode, float outDuration = 0.2F, float inDuration = 0.2F);
-        IEnumerator DisplayBodyFade(string bodyCode, float outDuration = 0.25F, float inDuration= 0.33F);
+        IEnumerator DisplayBodyFade(string bodyCode, float outDuration = 0.25F, float inDuration = 0.33F);
 
 
-        IEnumerator Init(string roleTye, JObject transformInfoDataJson, bool isLoadRefAssets);
+        IEnumerator Init(Vector2 windowSize, string roleTye, JObject transformInfoDataJson, bool isLoadRefAssets);
 
 
         [CanBeNull]

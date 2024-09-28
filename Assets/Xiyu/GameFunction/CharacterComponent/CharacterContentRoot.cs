@@ -43,6 +43,8 @@ namespace Xiyu.GameFunction.CharacterComponent
 
         public IGeomTransforms Geometry { get; private set; }
 
+        private Vector2 _windowSize;
+
         /// <summary>
         /// 一些预制体资源
         /// </summary>
@@ -82,11 +84,11 @@ namespace Xiyu.GameFunction.CharacterComponent
                 }
             });
 
-            return new GeomTransforms(positionProperty, sizeProperty, scaleProperty, rotateProperty, colorProperty);
+            return new GeomTransforms(_windowSize, positionProperty, sizeProperty, scaleProperty, rotateProperty, colorProperty);
         }
 
 
-        public virtual IEnumerator Init(string roleTye, JObject transformInfoDataJson, bool isLoadRefAssets)
+        public virtual IEnumerator Init(Vector2 windowSize, string roleTye, JObject transformInfoDataJson, bool isLoadRefAssets)
         {
             Type = roleTye;
 
@@ -106,6 +108,7 @@ namespace Xiyu.GameFunction.CharacterComponent
                 yield return SpriteAssetLoader.LoadRefAssetsAsync(roleTye);
             }
 
+            _windowSize = windowSize;
             Geometry = PropertyLink();
         }
 
@@ -202,10 +205,12 @@ namespace Xiyu.GameFunction.CharacterComponent
         /// <param name="roleTye">立绘控制器类型(名称) (*强烈建议您将这个控制器需要加载的标签名称作为参数名称)</param>
         /// <param name="transformInfoDataJson">立绘图集初始化参数信息 JSON</param>
         /// <param name="complete">在 <see cref="CharacterContentRoot"/> 完成初始化时</param>
+        /// <param name="windowSize"></param>
         /// <param name="isLoadRefAssets">在初始化时建立引用</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IEnumerator CreateRole<T>(Transform parent, string roleTye, JObject transformInfoDataJson, Action<ICharacterControl> complete, bool isLoadRefAssets = false)
+        public static IEnumerator CreateRole<T>(Vector2 windowSize, Transform parent, string roleTye, JObject transformInfoDataJson, Action<ICharacterControl> complete
+            , bool isLoadRefAssets = false)
             where T : Component, ICharacterControl
         {
             var template = PreformScriptableObject.Table["Role Content Root Template"].Preform;
@@ -218,7 +223,7 @@ namespace Xiyu.GameFunction.CharacterComponent
                 throw new InvalidCastException();
             }
 
-            yield return contentRoot.Init(roleTye, transformInfoDataJson, isLoadRefAssets);
+            yield return contentRoot.Init(windowSize, roleTye, transformInfoDataJson, isLoadRefAssets);
             complete.Invoke(contentRoot);
         }
 

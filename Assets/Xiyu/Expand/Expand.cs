@@ -67,6 +67,9 @@ namespace Xiyu.Expand
         }
 #endif
 
+        // [MethodImpl(MethodImplOptions.InternalCall)]
+        public static RectTransform AsRectTransform(this Transform transform) => (RectTransform)transform;
+
         // public static MessageProcessor.MessageJson ToMessageJson(this ResponseData responseData)
         // {
         //     return JsonConvert.DeserializeObject<MessageProcessor.MessageJson>(responseData.Result);

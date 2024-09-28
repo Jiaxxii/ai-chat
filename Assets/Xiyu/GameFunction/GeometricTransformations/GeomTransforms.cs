@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using Xiyu.Expand;
-using Xiyu.GameFunction.SceneView;
 
 namespace Xiyu.GameFunction.GeometricTransformations
 {
     public class GeomTransforms : IGeomTransforms
     {
-        public GeomTransforms(Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter)
+        public GeomTransforms(Vector2 windowSize, Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter)
         {
+            WindowSize = windowSize;
             _positionProperty = positionSetter;
             _sizeProperty = sizeSetter;
             _scaleProperty = scaleSetter;
             _rotateProperty = rotateSetter;
         }
 
-        public GeomTransforms(Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter,
+        public GeomTransforms(Vector2 windowSize,Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter,
             Property<Color> colorProperty)
         {
+            WindowSize = windowSize;
             _positionProperty = positionSetter;
             _sizeProperty = sizeSetter;
             _scaleProperty = scaleSetter;
@@ -34,6 +33,11 @@ namespace Xiyu.GameFunction.GeometricTransformations
         private readonly Property<Vector3> _rotateProperty;
 
         private readonly Property<Color> _colorProperty;
+        
+        /// <summary>
+        /// (重要)
+        /// </summary>
+        public Vector2 WindowSize { get; }
 
         public Vector2 Position
         {
@@ -117,8 +121,8 @@ namespace Xiyu.GameFunction.GeometricTransformations
                 ViewHorizontalAlign.Ignore => throw new ArgumentException(),
 
                 ViewHorizontalAlign.Center => 0,
-                ViewHorizontalAlign.Left => -GameInsView.ScreenSize.x.Half() + (Size.x.Half() * Scale.x),
-                ViewHorizontalAlign.Right => GameInsView.ScreenSize.x.Half() - (Size.x.Half() * Scale.x),
+                ViewHorizontalAlign.Left => -WindowSize.x.Half() + (Size.x.Half() * Scale.x),
+                ViewHorizontalAlign.Right => WindowSize.x.Half() - (Size.x.Half() * Scale.x),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(align), align, null)
             };
@@ -131,8 +135,8 @@ namespace Xiyu.GameFunction.GeometricTransformations
                 ViewVerticalAlign.Ignore => throw new ArgumentException(),
 
                 ViewVerticalAlign.Center => 0,
-                ViewVerticalAlign.Top => GameInsView.ScreenSize.y.Half() - (Size.y.Half() * Scale.y),
-                ViewVerticalAlign.Bottom => -GameInsView.ScreenSize.y.Half() + (Size.y.Half() * Scale.y),
+                ViewVerticalAlign.Top => WindowSize.y.Half() - (Size.y.Half() * Scale.y),
+                ViewVerticalAlign.Bottom => -WindowSize.y.Half() + (Size.y.Half() * Scale.y),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(align), align, null)
             };

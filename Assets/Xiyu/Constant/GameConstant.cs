@@ -5,9 +5,9 @@ namespace Xiyu.Constant
 {
     public static class GameConstant
     {
-        public const string MainCanvasName = "Main Canvas";
+        public const string MainCanvasName = "直播画面栏";
 
-        public const string Player = "西";
+        // public const string Player = "西";
 
         public const string InputDialogWindow = "Input Dialog Window";
 
@@ -21,14 +21,11 @@ namespace Xiyu.Constant
         public const string LoggerDefaultFileLoggerName = "文件日志";
         public const string LoggerDefaultConsoleLoggerName = "内部控制台";
 
-        public static readonly Vector2 DesktopSize = new(1920, 1080);
 
-        public static readonly string[] DefaultDesktopIcon =
-        {
-            "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间",
-            "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间","我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间",
-            "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间", "我的电脑", "回收站", "爱实直播间"
-        };
+        public const int MaxDanmuMessageLength = 20 * 4;
+        public static readonly Func<string, bool> DefaultDanmuMessageSendBoxSubmitCheck = msg => !string.IsNullOrEmpty(msg) && msg.Length <= MaxDanmuMessageLength;
+
+        public static readonly string DefaultNavigationPage = "https://www.xiyuVL.com";
 
         /// <summary>
         /// 访问剪切板心跳间隔
