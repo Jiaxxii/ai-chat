@@ -1,0 +1,22 @@
+{
+  "templateId": "pt-0vddqwmn08akkc6f",
+  "templateName": "测试模板A",
+  "templateContent": "你好，我叫{aishi}！很高兴认识你！",
+  "templateVariables": "",
+  "variableIdentifier": "",
+  "negativeTemplateContent": "",
+  "type": "Custom",
+  "sceneType": "TextToText",
+  "labels": [
+    {
+      "labelId": "pl-d9givtjk1j5bgxiv",
+      "labelName": "游戏",
+      "color": ""
+    },
+    {
+      "labelId": "pl-f8atnbq0qmp1a7zc",
+      "labelName": "Test",
+      "color": ""
+    }
+  ]
+}

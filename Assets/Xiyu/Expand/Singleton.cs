@@ -14,7 +14,7 @@ namespace Xiyu.Expand
         {
             if (Lazy.IsValueCreated) return;
 
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
             _ = Instance;
         }
     }

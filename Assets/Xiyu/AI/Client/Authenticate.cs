@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Web;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using Xiyu.ArtificialIntelligence;
@@ -74,7 +75,7 @@ namespace Xiyu.AI.Client
 
             return sb.ToString();
         }
-        
+
         public virtual UnityWebRequest ConfigureWebRequest(RequestOptions requestOptions, HttpMethod method, Uri uri)
         {
             var queryString = QueryParameter(requestOptions.QueryParameters);
@@ -112,9 +113,19 @@ namespace Xiyu.AI.Client
 
             return webRequest;
         }
-        
-        
-        
-        
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="timeOutSecond"></param>
+        /// <exception cref="UnityWebRequestException"></exception>
+        public static async UniTask RequestWebServiceAsync(int timeOutSecond = 15)
+        {
+            using var request = UnityWebRequest.Get("https://www.bilibili.com/");
+            request.timeout = timeOutSecond;
+
+            await request.SendWebRequest().ToUniTask();
+        }
     }
 }

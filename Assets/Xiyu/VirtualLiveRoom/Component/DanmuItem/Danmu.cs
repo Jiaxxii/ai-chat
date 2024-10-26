@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 using Xiyu.GameFunction.CharacterComponent;
+using Xiyu.Settings;
 
 namespace Xiyu.VirtualLiveRoom.Component.DanmuItem
 {
-    public class Danmu : UIStyleContainer
+    public class Danmu : MonoBehaviour
     {
         [SerializeField] private DanmuHead headComponent;
         public DanmuHead Head => headComponent;
@@ -25,10 +27,12 @@ namespace Xiyu.VirtualLiveRoom.Component.DanmuItem
         }
 
 
-        public static Danmu Create(Transform root, Sprite headSprite, string userName, string content)
+        public static async UniTask<Danmu> CreateAsync(Transform root, Sprite headSprite, string userName, string content)
         {
-            var danmu = Instantiate(CharacterContentRoot.PreformScriptableObject.Table["弹幕项"].Preform, root)
-                .GetComponent<Danmu>();
+            var asset = (WebViewContentReferenceDeviceSo)await Resources.LoadAsync<WebViewContentReferenceDeviceSo>("Settings/RefPrefabricate");
+
+            var danmu = await asset.LoadComponentAssetAsync<Danmu>("弹幕项", root);
+
             // *设置背景颜色*
             danmu.PanelColor = new Color(.9F, .9F, .9F);
             danmu.Head.PanelColor = new Color(.9F, .9F, .9F);

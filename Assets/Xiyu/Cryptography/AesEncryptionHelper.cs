@@ -57,42 +57,31 @@ namespace Xiyu.Cryptography
             return Convert.ToBase64String(memoryStream.ToArray());
         }
 
+
         /// <summary>
         /// 解密数据
         /// </summary>
         /// <param name="cipherText"></param>
         /// <param name="key"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<string> DecryptAsync(string cipherText, byte[] key, CancellationToken cancellationToken = default)
+        public static async Task<string> DecryptAsync(string cipherText, byte[] key)
         {
-            try
-            {
-                using var aes = Aes.Create();
-                aes.Key = key;
-                aes.IV = new byte[16];
+            using var aes = Aes.Create();
+            aes.Key = key;
+            aes.IV = new byte[16];
 
-                var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-                using var memoryStream = new MemoryStream(Convert.FromBase64String(cipherText));
-                await using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+            var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+            using var memoryStream = new MemoryStream(Convert.FromBase64String(cipherText));
+            await using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+            {
+                using var sr = new StreamReader(cryptoStream);
+                var sb = new StringBuilder();
+                while (await sr.ReadLineAsync() is { } line)
                 {
-                    using var sr = new StreamReader(cryptoStream);
-                    var sb = new StringBuilder();
-                    while (await sr.ReadLineAsync() is { } line)
-                    {
-                        sb.Append(line);
-                    }
-
-                    return sb.ToString();
+                    sb.Append(line);
                 }
-            }
-            catch (OperationCanceledException e)
-            {
-                throw new OperationCanceledException(e.Message);
-            }
-            catch (Exception e)
-            {
-                throw new CryptographicException($"解密数据时发生错误! {e.Message}");
+
+                return sb.ToString();
             }
         }
 
@@ -123,7 +112,7 @@ namespace Xiyu.Cryptography
         public static async Task<T> DeserializeObjectDecryptAsync<T>(string cipherText, byte[] key, JsonSerializerSettings jsonSerializerSettings = null,
             CancellationToken cancellationToken = default)
         {
-            var jsonContent = await DecryptAsync(cipherText, key, cancellationToken);
+            var jsonContent = await DecryptAsync(cipherText, key);
             var instance = JsonConvert.DeserializeObject<T>(jsonContent, jsonSerializerSettings);
 
             return instance;

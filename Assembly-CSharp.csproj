@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\Assembly-CSharp\</OutputPath>
-    <DefineConstants>UNITY_2022_3_14;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;UNITY_UGP_API;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;DOTWEEN;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2022_3_14;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;UNITY_UGP_API;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;DOTWEEN;OldCode=false;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
@@ -46,20 +46,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Xiyu\Settings\MainViewContentScriptableObject.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\Tab.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\Website.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\TabEventSendingCenter.cs" />
     <Compile Include="Assets\Xiyu\Expand\Singleton\TemporarySingletonMono.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\Hyperlink.cs" />
     <Compile Include="Assets\Xiyu\Cryptography\AesEncryptionHelper.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\RequestModule.cs" />
+    <Compile Include="Assets\Xiyu\AsyncCancellationToken.cs" />
     <Compile Include="Assets\Xiyu\TitleBar.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\ResponseModule.cs" />
     <Compile Include="Assets\Xiyu\Expand\Singleton.cs" />
     <Compile Include="Assets\Xiyu\AI\ErrorCode.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\SignInWindow.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\ICharacterControl.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\View\UserLogon.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\CharacterContentRoot.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\DragCloneTagPage.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Tools\Addressabe\AssetReferenceItem.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\RoleBodyType.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\Property.cs" />
     <Compile Include="Assets\Xiyu\GameGuide\FirstSceneLoad.cs" />
+    <Compile Include="Assets\Xiyu\AI\Prompt\NewPromptCenter\PromptRequestException.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\AccessToken.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\Authenticate.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
@@ -67,16 +75,19 @@
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\IGeomTransforms.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\BarrageComments\BulletCommentsScreenView.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\Message.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\NavigationCenter.cs" />
     <Compile Include="Assets\Xiyu\Application\ApplicationData.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\WebsiteBox.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\LogLevel.cs" />
     <Compile Include="Assets\Xiyu\Settings\PreformScriptableObject.cs" />
-    <Compile Include="Assets\Xiyu\Test.cs" />
+    <Compile Include="Assets\Xiyu\Settings\WebViewContentReferenceDeviceSo.cs" />
+    <Compile Include="Assets\Xiyu\Settings\WebPageInfoSettingSo.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\IDialogWindowParameters.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\Guide\GameMaskManager.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuItem\DanmuContent.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\WebsiteSecurityLevel.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\LoggerManager.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\ConsoleLogger.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\TagPageEventSender.cs" />
@@ -84,6 +95,7 @@
     <Compile Include="Assets\Xiyu\Expand\MethodTestTime.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\GeomTransforms.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\ViewContentLoader.cs" />
+    <Compile Include="Assets\Xiyu\AI\Prompt\NewPromptCenter\PromptRequest.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SearchForModule.cs" />
     <Compile Include="Assets\Xiyu\Settings\SingleScriptableObject.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\RefState.cs" />
@@ -92,6 +104,7 @@
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\View\NavigationController.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuMsgSender\DanmuMessageSender.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\NotClickMaskPanel.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\View\LiveRoom.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\UnityLLM.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Tools\Addressabe\AssetReferenceGameObject.cs" />
     <Compile Include="Assets\Xiyu\FileSystem\File.cs" />
@@ -99,39 +112,46 @@
     <Compile Include="Assets\Xiyu\CharacterIllustration\ResourcesLocation.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UIContainer.cs" />
     <Compile Include="Assets\ASceneTest\RoleGameRunTest.cs" />
+    <Compile Include="Assets\Xiyu\AI\Prompt\NewPromptCenter\PromptRequestListResult.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\ElectronAuth.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\SelectDialogWindow.cs" />
     <Compile Include="Assets\Xiyu\AsyncLoading.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuItem\DanmuHead.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\WebContentLoader.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\RequestResource.cs" />
     <Compile Include="Assets\Xiyu\GameInitialization\Initialization.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\IamAuthenticate.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\SingleDialogWindow.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\WebViewContent.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\TagPage.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowManager.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteResourceManager.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\MemoryModule.cs" />
-    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UIStyleContainer.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\ViewContent.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Tools\Addressabe\WebsiteCenter.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\RequestOptions.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\InputDialogWindow.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuMsgSender\MessageBoxContent.cs" />
-    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\IUIStyle.cs" />
+    <Compile Include="Assets\Xiyu\DefDelegation.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowParameters.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\WebsiteFinder.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\AuthenticateManager.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuItem\DanmuUserName.cs" />
+    <Compile Include="Assets\Xiyu\AI\Prompt\NewPromptCenter\PromptRequestResult.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\TagPageDragControl.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteAssetLoader.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\View\DanmuController.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\Usage.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\PenaltyModule.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\WebHyperLinkTo.cs" />
     <Compile Include="Assets\Xiyu\AI\Multimap.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\SearchInfo.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\DeserializeParameterModule.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindow.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\Logger.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\TabDragControl.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\VirtualIconControl.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\UI\OutputTextManager.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\BarrageComments\BulletComments.cs" />
@@ -141,21 +161,28 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Xiyu\AI\Prompt\Prompt.cs" />
     <Compile Include="Assets\Xiyu\Constant\GameConstant.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\HyperLinkToAiRoom.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SerializeParameterModule.cs" />
+    <Compile Include="Assets\Xiyu\Cryptography\DecryptFailException.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\UI\Arrow.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\User.cs" />
     <Compile Include="Assets\Xiyu\ScriptTemple.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\DragCloneTab.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\EventFunctionSystem\WebContentInitAttribute.cs" />
     <Compile Include="Assets\Xiyu\Icon.cs" />
     <Compile Include="Assets\Xiyu\Expand\Singleton\TimelySingletonMono.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\MessageType.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuItem\Danmu.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\SceneView\GameInsView.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\PageInfo.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\EventFunctionSystem\EventHolderAttribute.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowBase.cs" />
     <Compile Include="Assets\Xiyu\AI\Prompt\PromptCenterProcessing.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\ILogger.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Library\PackageCache\com.cysharp.unitask@7c0f199fe0\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Resources\Data\ai body.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
@@ -919,14 +946,14 @@
     <Reference Include="Unity.2D.Animation.Runtime">
       <HintPath>F:\Unity\MyProject\ai-chat\Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Tilemap.Extras">
-      <HintPath>F:\Unity\MyProject\ai-chat\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualScripting.Core.Editor">
       <HintPath>F:\Unity\MyProject\ai-chat\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>F:\Unity\MyProject\ai-chat\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras">
+      <HintPath>F:\Unity\MyProject\ai-chat\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.005">
       <HintPath>F:\Unity\MyProject\ai-chat\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.005.dll</HintPath>
@@ -999,6 +1026,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UniTask.TextMeshPro.csproj">
+      <Project>{0787c440-91de-fcaa-313f-5728c9094a8a}</Project>
+      <Name>UniTask.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.DOTween.csproj">
+      <Project>{9b7de070-2348-40f4-6d8d-bfb464151260}</Project>
+      <Name>UniTask.DOTween</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Addressables.csproj">
+      <Project>{5622ac88-26d5-96be-59f3-5e019a45a54f}</Project>
+      <Name>UniTask.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{ddaa075d-7e52-f9c9-2005-b1e3613d3131}</Project>
+      <Name>UniTask.Linq</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{d811bc46-4b78-aee7-a49c-7aa1d8c13ae0}</Project>
+      <Name>UniTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

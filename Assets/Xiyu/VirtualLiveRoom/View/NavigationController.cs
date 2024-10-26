@@ -1,6 +1,8 @@
-﻿using System;
+﻿#if OldCode
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Xiyu.Settings;
 using Xiyu.VirtualLiveRoom.Component.Navigation;
@@ -72,7 +74,7 @@ namespace Xiyu.VirtualLiveRoom.View
             // Object.Instantiate(viewContent.TagViewItem, basePanel);
 
 
-            websiteBox.SetWebsite(new Uri(viewContent.URL));
+            yield return websiteBox.SetWebsite(viewContent.URL).ToCoroutine();
 
             _webViewContents.Add(viewContent);
         }
@@ -106,3 +108,4 @@ namespace Xiyu.VirtualLiveRoom.View
         // private ViewContent FindWebViewContents(Predicate<ViewContent> predicate) => _webViewContents.Find(predicate);
     }
 }
+#endif

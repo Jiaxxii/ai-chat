@@ -1,24 +1,26 @@
-﻿using System;
+﻿#if OldCode
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 namespace Xiyu.VirtualLiveRoom.Component.Navigation
 {
+    [Obsolete("组件已经弃用，请使用\"Xiyu.VirtualLiveRoom.Component.NewNavigation.WebContentLoader\"", false)]
     [Serializable]
     public class ViewContentLoader
     {
-        [SerializeField] private string preformName;
+        [Header("资源")] [SerializeField] private string preformName;
 
-        [SerializeField] private UnityEngine.AddressableAssets.AssetReferenceT<GameObject> preformViewContent;
+        [SerializeField] private AssetReferenceT<GameObject> preformViewContent;
 
-        [TextArea(1, 3)] [SerializeField] private string url;
+        [Header("网页")] [Space] [TextArea(1, 3)] [SerializeField]
+        private string url;
 
+        [TextArea(1, 2)] [SerializeField] private string titleName;
         [SerializeField] private Sprite webIcon;
-
-        [SerializeField] private string titleName;
 
 
         public string PreformName => preformName;
@@ -39,7 +41,7 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
                 return;
             }
 
-            UnityEngine.AddressableAssets.Addressables.Release(preformViewContent.OperationHandle);
+            Addressables.Release(preformViewContent.OperationHandle);
             // UnityEngine.AddressableAssets.Addressables.ReleaseInstance(preformViewContent.OperationHandle);
         }
 
@@ -50,7 +52,7 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                ViewContent = UnityEngine.Object.Instantiate(handle.Result, parent: parent)
+                ViewContent = Object.Instantiate(handle.Result, parent: parent)
                     .GetComponent<ViewContent>();
                 onComplete?.Invoke(ViewContent);
             }
@@ -67,7 +69,7 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                ViewContent = UnityEngine.Object.Instantiate(handle.Result, parent: parent)
+                ViewContent = Object.Instantiate(handle.Result, parent: parent)
                     .GetComponent<ViewContent>();
 
                 ViewContent.TagPage = tagPage;
@@ -102,3 +104,4 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
         // public static IEqualityComparer<ViewContent> PreformNameURLComparer { get; } = new PreformNameURLEqualityComparer();
     }
 }
+#endif

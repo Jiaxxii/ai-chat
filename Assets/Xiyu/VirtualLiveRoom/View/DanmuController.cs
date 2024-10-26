@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 using Xiyu.VirtualLiveRoom.Component;
 using Xiyu.VirtualLiveRoom.Component.DanmuItem;
 using Xiyu.VirtualLiveRoom.Component.DanmuMsgSender;
+using Xiyu.VirtualLiveRoom.EventFunctionSystem;
 
 namespace Xiyu.VirtualLiveRoom.View
 {
@@ -28,13 +30,13 @@ namespace Xiyu.VirtualLiveRoom.View
 
         private void Start()
         {
-            messageSender.MessageBox.OnMessageSend += OnSendMessageEventHandler;
+            messageSender.MessageBox.OnMessageSend += UniTask.UnityAction<string>(OnSendMessageEventHandler);
         }
 
-        private void OnSendMessageEventHandler(string msg)
+        private async UniTaskVoid OnSendMessageEventHandler(string msg)
         {
             // 这里的消息已经被 messageSender.MessageBox.SubmitCheck 筛选过了
-            var danmu = Danmu.Create(danmuBoxRectTransform, User.UserHeadSprite, User.UserName, msg);
+            var danmu = await Danmu.CreateAsync(danmuBoxRectTransform, User.UserHeadSprite, User.UserName, msg);
             SendDanmu(danmu);
         }
 
@@ -49,13 +51,11 @@ namespace Xiyu.VirtualLiveRoom.View
             }
 
             _rollMove = true;
-            StartCoroutine(MoveRollCoroutine());
+            MoveRollCoroutine();
         }
 
-        private IEnumerator MoveRollCoroutine()
+        private void MoveRollCoroutine()
         {
-            yield return new WaitForEndOfFrame();
-
             DOTween.To(() => danmuListScrollRect.verticalNormalizedPosition, v => danmuListScrollRect.verticalNormalizedPosition = v
                     , 0, rollDurationSeconds)
                 .SetEase(rollMoveEase)

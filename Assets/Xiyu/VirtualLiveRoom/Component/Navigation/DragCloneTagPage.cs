@@ -1,8 +1,11 @@
-﻿using System;
+﻿#if OldCode
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Xiyu.VirtualLiveRoom.Component.Navigation
 {
+    [Obsolete("组件已经弃用，请使用\"Xiyu.VirtualLiveRoom.Component.NewNavigation.TabDragControl\"",false)]
     public class DragCloneTagPage : MonoBehaviour
     {
         [SerializeField] private TagPage cloneTagPage;
@@ -61,3 +64,4 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
         }
     }
 }
+#endif

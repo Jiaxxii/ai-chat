@@ -1,69 +1,56 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
+using Xiyu.Cryptography;
 
 namespace Xiyu.AI.Client
 {
-    public enum SignatureState
-    {
-        /// <summary>
-        /// 无效的秘钥
-        /// </summary>
-        InvalidKey,
-
-        /// <summary>
-        /// 空的 SecretKey 或 AccessKey
-        /// </summary>
-        NullEmptySecretKeyOrAccessKey,
-
-        /// <summary>
-        /// 秘钥过期
-        /// </summary>
-        Expire,
-
-        /// <summary>
-        /// 可用
-        /// </summary>
-        Available,
-
-        /// <summary>
-        /// 无法使用
-        /// </summary>
-        Unavailable
-    }
-
     public static class AuthenticateManager
     {
-        public static ElectronAuth AuthenticateElectronAuth { get; set; }
+        public static ElectronAuth AuthenticateElectronAuth { get; private set; }
 
-        public static (SignatureState signatureState, SignatureExpireState? signatureExpireState) SetAuth(string jsonContent, int tolerateHours = 0)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="jsonContent"></param>
+        /// <param name="tolerateHours"></param>
+        /// <exception cref="global::Xiyu.VirtualLiveRoom.Component.UserLogin.DecryptFailException"></exception>
+        /// <returns></returns>
+        public static void SetAuth(string jsonContent, int tolerateHours = 0)
         {
+            ElectronAuth electronAuth;
             try
             {
-                var electronAuth = JsonConvert.DeserializeObject<ElectronAuth>(jsonContent);
+                electronAuth = JsonConvert.DeserializeObject<ElectronAuth>(jsonContent);
 
-                if (electronAuth.IsNull())
-                {
-                    return (SignatureState.NullEmptySecretKeyOrAccessKey, null);
-                }
-
-                var signatureExpireState = electronAuth.IsExpire(tolerateHours);
-
-                if (signatureExpireState == SignatureExpireState.Available)
-                {
-                    AuthenticateElectronAuth = electronAuth;
-                    return (SignatureState.Available, SignatureExpireState.Available);
-                }
-
-                if (signatureExpireState == SignatureExpireState.Expire)
-                {
-                    return (SignatureState.Expire, SignatureExpireState.Expire);
-                }
-
-                return (SignatureState.Unavailable, signatureExpireState);
+                AuthenticateElectronAuth = electronAuth;
             }
-            catch (JsonSerializationException)
+            catch (JsonSerializationException e)
             {
-                return (SignatureState.InvalidKey, null);
+                throw new DecryptFailException($"Json序列化失败:{e.Message}", "哎呀！密码后台对应不上艾！");
             }
+            catch (Exception e)
+            {
+                throw new DecryptFailException($"序列化失败:{e}", "呜呜呜，我也布吉岛发生了什么...");
+            }
+
+
+            var expireError = electronAuth.IsExpire(tolerateHours);
+
+
+            if (electronAuth.IsNull())
+            {
+                throw new DecryptFailException($"Json序列化失败!空的{nameof(ElectronAuth.AccessKey)}或{nameof(ElectronAuth.SecretKey)}",
+                    "你是不是被骗了鸭~");
+            }
+
+            if (expireError.HasFlag(SignatureState.Expire)
+                || expireError.HasFlag(SignatureState.CreateTicksOutNowTicks)
+                || expireError.HasFlag(SignatureState.CreateTicksOverAffectiveTicks)
+                || expireError.HasFlag(SignatureState.LifeTimeOutMaxEffectiveDay))
+            {
+                throw new DecryptFailException($"秘钥过期\"{electronAuth}\"", "过期了呢，人家不认！");
+            }
+
         }
     }
 }

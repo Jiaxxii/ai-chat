@@ -1,9 +1,12 @@
-﻿using TMPro;
+﻿#if OldCode
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Xiyu.VirtualLiveRoom.Component.Navigation
 {
+    [Obsolete("组件已经弃用，请使用\"Xiyu.VirtualLiveRoom.Component.NewNavigation.Tab\"", false)]
     public class TagPage : UIContainer
     {
         [SerializeField] private Image basePanel;
@@ -67,3 +70,4 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
         public static TagPage Create(GameObject asset, Transform parent) => Instantiate(asset, parent).GetComponent<TagPage>();
     }
 }
+#endif

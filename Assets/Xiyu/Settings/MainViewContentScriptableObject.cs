@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if OldCode
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using Xiyu.VirtualLiveRoom.Component.Navigation;
@@ -15,3 +16,4 @@ namespace Xiyu.Settings
             => viewContents.Find(item => item.PreformName == preformName);
     }
 }
+#endif

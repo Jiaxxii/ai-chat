@@ -63,7 +63,7 @@ namespace Xiyu.AI.LargeLanguageModel
         /// <summary>
         /// 超时时间
         /// </summary>
-        public int OutTimeSecond { get; set; } = 15;
+        public int OutTimeSecond { get; set; } = 15; // SECOND
 
         /// <summary>
         /// <see cref="Request"/> 类型 T 的反序列化样式

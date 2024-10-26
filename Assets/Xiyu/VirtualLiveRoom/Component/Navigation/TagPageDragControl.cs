@@ -1,10 +1,10 @@
-﻿using System;
+﻿#if OldCode
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace Xiyu
@@ -23,6 +23,7 @@ namespace Xiyu
         public TagPage Current { get; }
     }
 
+    [Obsolete("组件已经弃用，请使用\"Xiyu.VirtualLiveRoom.Component.NewNavigation.TabDragControl\"", false)]
     public class TagPageDragControl : MonoBehaviour
     {
         [SerializeField] private Canvas canvas;
@@ -44,18 +45,15 @@ namespace Xiyu
 
         public IEnumerator Create(TagPage tagPage, ViewContentLoader viewContentLoader, Action<TagPage> onCreateComplete = null)
         {
-            // 加载预制体 （只会在第一次调用时加载）
-            // yield return LoadAssetAsync();
-
             // 开启自动排序
             layoutGroup.enabled = true;
 
             tagPage.SetTitle(viewContentLoader.WebIcon, viewContentLoader.TitleName);
 
 
-            tagPage.TagPageEventSender.OnTagPageDrag += eventData => OnTagPageDragHandler(tagPage, eventData);
-            tagPage.TagPageEventSender.OnTagPageBeginDrag += eventData => OnTagPageBeginDragHandler(tagPage, eventData);
-            tagPage.TagPageEventSender.OnTagPageEndDrag += eventData => OnTagPageEndDragHandler(tagPage, eventData);
+            tagPage.TagPageEventSender.OnTagDrag += eventData => OnTagPageDragHandler(tagPage, eventData);
+            tagPage.TagPageEventSender.OnTagBeginDrag += eventData => OnTagPageBeginDragHandler(tagPage, eventData);
+            tagPage.TagPageEventSender.OnTagEndDrag += eventData => OnTagPageEndDragHandler(tagPage, eventData);
 
 
             _exchangeList.Add(new ExchangeBoard(tagPage)
@@ -73,18 +71,15 @@ namespace Xiyu
 
         public void InitTagPage(TagPage tagPage, ViewContentLoader viewContentLoader)
         {
-            // 加载预制体 （只会在第一次调用时加载）
-            // yield return LoadAssetAsync();
-
             // 开启自动排序
             layoutGroup.enabled = true;
 
             tagPage.SetTitle(viewContentLoader.WebIcon, viewContentLoader.TitleName);
 
 
-            tagPage.TagPageEventSender.OnTagPageDrag += eventData => OnTagPageDragHandler(tagPage, eventData);
-            tagPage.TagPageEventSender.OnTagPageBeginDrag += eventData => OnTagPageBeginDragHandler(tagPage, eventData);
-            tagPage.TagPageEventSender.OnTagPageEndDrag += eventData => OnTagPageEndDragHandler(tagPage, eventData);
+            tagPage.TagPageEventSender.OnTagDrag += eventData => OnTagPageDragHandler(tagPage, eventData);
+            tagPage.TagPageEventSender.OnTagBeginDrag += eventData => OnTagPageBeginDragHandler(tagPage, eventData);
+            tagPage.TagPageEventSender.OnTagEndDrag += eventData => OnTagPageEndDragHandler(tagPage, eventData);
 
 
             _exchangeList.Add(new ExchangeBoard(tagPage)
@@ -223,3 +218,4 @@ namespace Xiyu
         // }
     }
 }
+#endif

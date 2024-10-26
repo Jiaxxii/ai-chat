@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿#if OldCode
+using System;
+using UnityEngine;
 
 namespace Xiyu.VirtualLiveRoom.Component.Navigation
 {
+    [Obsolete("组件已经弃用，请使用\"Xiyu.VirtualLiveRoom.Component.NewNavigation.WebViewContent\"", false)]
     public class ViewContent : UIContainer
     {
         [SerializeField] private CanvasGroup canvasGroup;
@@ -23,3 +26,4 @@ namespace Xiyu.VirtualLiveRoom.Component.Navigation
         }
     }
 }
+#endif

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4793751c2e244ad89789bd6846351264, type: 3}
+  m_Name: WebPageInfoSettings
+  m_EditorClassIdentifier: 
+  webPageInfoCollections:
+  - url: https://www.xiyu.logon.com
+    title: "\u6B22\u8FCE (*\uFF40v\xB4*)\u30CE\u4EBB"
+    icon: {fileID: 21300000, guid: d682c3a64ae6ad746983e48c9b308f1c, type: 3}
+    securityLevel: 1
+  - url: https://www.xiyu.lv/?form=2186014465.com
+    title: "\u65B0V\u7231\u5B9E \u591A\u591A\u5173\u7167~"
+    icon: {fileID: 21300000, guid: 437e0de9ffa55a3449e33360740f5acd, type: 3}
+    securityLevel: 1
+  - url: https://www.xiyu.time.com
+    title: "\u770B\u770B\u73B0\u5728\u7684\u65F6\u95F4\u53ED~"
+    icon: {fileID: 21300008, guid: 0fd21678280ad9c47aa2d32baf438c5d, type: 3}
+    securityLevel: 1
+  - url: https://www.xiyu.index.com
+    title: "\u4F5C\u8005\u6709\u8BDD\u8BF4"
+    icon: {fileID: 21300000, guid: 97365c86aefda5d42ba1f6945111ead0, type: 3}
+    securityLevel: 1
+  - url: https://www.xiyu.link/?form=1.com
+    title: "\u8DF3\u8F6C\u5230<color=#C714B8>\u7231\u5B9E</color>\u7684\u76F4\u64AD\u95F4"
+    icon: {fileID: 21300000, guid: 437e0de9ffa55a3449e33360740f5acd, type: 3}
+    securityLevel: 1

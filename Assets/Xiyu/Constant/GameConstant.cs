@@ -7,7 +7,7 @@ namespace Xiyu.Constant
     {
         public const string MainCanvasName = "直播画面栏";
 
-        // public const string Player = "西";
+        public const string Player = "西";
 
         public const string InputDialogWindow = "Input Dialog Window";
 
@@ -25,7 +25,9 @@ namespace Xiyu.Constant
         public const int MaxDanmuMessageLength = 20 * 4;
         public static readonly Func<string, bool> DefaultDanmuMessageSendBoxSubmitCheck = msg => !string.IsNullOrEmpty(msg) && msg.Length <= MaxDanmuMessageLength;
 
-        public static readonly string DefaultNavigationPage = "https://www.xiyuVL.com";
+        // public static readonly string DefaultNavigationPage = "https://www.xiyuVL.com";
+
+        // public static readonly string WebIndexPage = "https://www.xiyu.index.com";
 
         /// <summary>
         /// 访问剪切板心跳间隔

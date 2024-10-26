@@ -1,0 +1,17 @@
+{
+  "templateId": "pt-pvxmt5s8qvui5782",
+  "templateName": "测试模板B",
+  "templateContent": "{player}现在的时间是：2024年10月18日00:26:18",
+  "templateVariables": "",
+  "variableIdentifier": "",
+  "negativeTemplateContent": "",
+  "type": "Custom",
+  "sceneType": "TextToText",
+  "labels": [
+    {
+      "labelId": "pl-f8atnbq0qmp1a7zc",
+      "labelName": "Test",
+      "color": ""
+    }
+  ]
+}
