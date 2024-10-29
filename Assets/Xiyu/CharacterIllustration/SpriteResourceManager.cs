@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 using Xiyu.LoggerSystem;
 
 namespace Xiyu.CharacterIllustration
@@ -11,7 +11,7 @@ namespace Xiyu.CharacterIllustration
     {
         private static readonly Dictionary<string, SpriteAssetLoader> TypeToSpriteAssetLoaders = new();
 
-        public static IEnumerator CreateAssetAsync(string type, JObject roleTransformInfoJObject)
+        public static IEnumerator CreateAssetCoroutineAsync(string type, JObject roleTransformInfoJObject)
         {
             yield return LoadAsync(roleTransformInfoJObject,
                 spriteAssetMap =>
@@ -23,6 +23,18 @@ namespace Xiyu.CharacterIllustration
                     }
                 });
         }
+
+        public static async UniTask CreateAssetAsync(string type, JObject roleTransformInfoJObject)
+        {
+            var spriteAssetMap = await LoadAsync(roleTransformInfoJObject);
+            
+            var spriteAssetLoader = new SpriteAssetLoader(type, spriteAssetMap);
+            if (!TypeToSpriteAssetLoaders.TryAdd(type, spriteAssetLoader))
+            {
+                LoggerManager.Instance.LogError($"可能包含重复的key\"{type}\"!");
+            }
+        }
+
 
         public static SpriteAssetLoader Get(string type) => TypeToSpriteAssetLoaders[type];
 
@@ -108,6 +120,47 @@ namespace Xiyu.CharacterIllustration
             }
 
             onLoadComplete.Invoke(jsonData);
+        }
+
+        public static async UniTask<Dictionary<string, SpriteAsset>> LoadAsync(JObject roleTransformInfoJObject)
+        {
+            var jsonData = new Dictionary<string, SpriteAsset>();
+            foreach (var property in roleTransformInfoJObject.Properties())
+            {
+                var data = property.Value["data"];
+                if (data is not JArray dataArray)
+                {
+                    LoggerManager.Instance.LogWarning($"属性:\"{property.Name}\"不是一个数组!");
+                    jsonData.Add(property.Name, null);
+                    continue;
+                }
+
+                var transformInfos = new TransformInfo[dataArray.Count];
+                for (var i = 0; i < transformInfos.Length; i++)
+                {
+                    if (dataArray[i] is not JObject target)
+                    {
+                        LoggerManager.Instance.LogWarning($"属性\"{property.Name}->data\"中的数据不是一个对象");
+                        target = new JObject();
+                    }
+
+                    transformInfos[i] = new TransformInfo(target);
+                }
+
+                var type = property.Value["type"]?.Value<string>();
+                if (string.IsNullOrEmpty(type))
+                {
+                    LoggerManager.Instance.LogWarning($"属性\"{property.Value}\"缺少\"type\"属性!");
+                    type = "null";
+                }
+
+                var spriteAsset = new SpriteAsset(type, new Data(transformInfos));
+                jsonData.Add(property.Name, spriteAsset);
+
+                await UniTask.Yield();
+            }
+
+            return jsonData;
         }
     }
 

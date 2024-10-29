@@ -99,13 +99,13 @@ namespace Xiyu.GameFunction.CharacterComponent
             Body.Init(nameof(Body), 1);
             Faces.Init(nameof(Faces), 4);
 
-            yield return SpriteResourceManager.CreateAssetAsync(roleTye, transformInfoDataJson);
+            yield return SpriteResourceManager.CreateAssetCoroutineAsync(roleTye, transformInfoDataJson);
 
             SpriteAssetLoader = SpriteResourceManager.Get(roleTye);
 
             if (isLoadRefAssets)
             {
-                yield return SpriteAssetLoader.LoadRefAssetsAsync(roleTye);
+                yield return SpriteAssetLoader.LoadRefAssetsCoroutineAsync(roleTye);
             }
 
             _windowSize = windowSize;
@@ -133,7 +133,7 @@ namespace Xiyu.GameFunction.CharacterComponent
             {
                 // 设置身体
                 var bodyData = SpriteAssetLoader.GetSpriteAsset(bodyCode).Data.TransformInfoData;
-                yield return SpriteAssetLoader.LoadAssetAsync(bodyCode, bodySprites => Body.Display(bodySprites, bodyData));
+                yield return SpriteAssetLoader.LoadAssetCoroutineAsync(bodyCode, bodySprites => Body.Display(bodySprites, bodyData));
             }
 
             if (result.equalFace)
@@ -143,7 +143,7 @@ namespace Xiyu.GameFunction.CharacterComponent
 
             // 设置脸部
             var faceData = SpriteAssetLoader.GetSpriteAsset(faceCode).Data.TransformInfoData;
-            yield return SpriteAssetLoader.LoadAssetAsync(faceCode, facesSprites => Faces.Display(facesSprites, faceData));
+            yield return SpriteAssetLoader.LoadAssetCoroutineAsync(faceCode, facesSprites => Faces.Display(facesSprites, faceData));
         }
 
         public IEnumerator DisplayFaceFade(string faceCode, float outDuration, float inDuration)
@@ -188,7 +188,7 @@ namespace Xiyu.GameFunction.CharacterComponent
             {
                 // 异步加载资源  
                 var faceData = SpriteAssetLoader.GetSpriteAsset(typeCode).Data.TransformInfoData;
-                yield return SpriteAssetLoader.LoadAssetAsync(typeCode, facesSprites => bodyType.Invoke().Display(facesSprites, faceData));
+                yield return SpriteAssetLoader.LoadAssetCoroutineAsync(typeCode, facesSprites => bodyType.Invoke().Display(facesSprites, faceData));
             }
 
             // 创建新的序列以执行淡入动画  

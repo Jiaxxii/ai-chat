@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -45,7 +46,7 @@ namespace Xiyu.CharacterIllustration
         /// </summary>
         /// <param name="label">资源标签名称</param>
         /// <returns>此方法需要配合协程使用</returns>
-        public IEnumerator LoadRefAssetsAsync(string label = null)
+        public IEnumerator LoadRefAssetsCoroutineAsync(string label = null)
         {
             State = RefState.None;
             if (string.IsNullOrEmpty(label) || string.IsNullOrWhiteSpace(label))
@@ -75,12 +76,48 @@ namespace Xiyu.CharacterIllustration
         }
 
         /// <summary>
+        /// <para>  *必须调用</para>
+        /// 异步加载资源类型为 <see cref="Sprite"/> 并且标签为 <see cref="label"/>
+        /// <para>(不指定时使用 <see cref="Type"/>) 作为 <see cref="label"/></para>
+        /// </summary>
+        /// <param name="label">资源标签名称</param>
+        /// <returns>此方法需要配合协程使用</returns>
+        public async UniTask LoadRefAssetsAsync(string label = null)
+        {
+            State = RefState.None;
+            if (string.IsNullOrEmpty(label) || string.IsNullOrWhiteSpace(label))
+            {
+                label = Type;
+            }
+
+            var refsHandle = Addressables.LoadResourceLocationsAsync(label, typeof(Sprite));
+
+            State = RefState.Loading;
+            await refsHandle;
+
+            if (refsHandle.Status != AsyncOperationStatus.Succeeded)
+            {
+                State = RefState.Fail;
+            }
+
+            foreach (var assetRef in refsHandle.Result)
+            {
+                // assetRef.PrimaryKey 返回图片的源名称
+                // (前提需要图片命名遵循本项目的命名规范)
+                _codeFindSpriteResourceLoaderMap.Add(assetRef.PrimaryKey, new SpriteResourceLoader(assetRef));
+            }
+
+            State = RefState.Ok;
+            // Addressables.Release(refsHandle);
+        }
+
+        /// <summary>
         /// 将引用的资源(图集)加载到内存中
         /// </summary>
         /// <param name="typeCode">图集代码</param>
         /// <param name="onCompletion">在加载完所有图集时</param>
         /// <returns>此方法需要配合协程使用</returns>
-        public IEnumerator LoadAssetAsync(string typeCode, Action<Sprite[]> onCompletion)
+        public IEnumerator LoadAssetCoroutineAsync(string typeCode, Action<Sprite[]> onCompletion)
         {
             if (string.IsNullOrEmpty(typeCode) || string.IsNullOrWhiteSpace(typeCode))
             {
@@ -101,7 +138,7 @@ namespace Xiyu.CharacterIllustration
             {
                 // Debug.LogWarning("资源引用未加载,尝试加载中......");
                 LoggerManager.Instance.LogWarning("资源引用未加载,尝试加载中......");
-                yield return LoadRefAssetsAsync(Type);
+                yield return LoadRefAssetsCoroutineAsync(Type);
             }
 
             if (State == RefState.Loading)
@@ -132,32 +169,61 @@ namespace Xiyu.CharacterIllustration
             onCompletion?.Invoke(sprites);
         }
 
-        // /// <summary>
-        // /// 将引用的资源(图集)加载到内存中
-        // /// </summary>
-        // /// <param name="typeCode">图集代码</param>
-        // /// <param name="onItemCompletion">在加载完成一个图集时</param>
-        // /// <returns>此方法需要配合协程使用</returns>
-        // public IEnumerator LoadAssetAsync(string typeCode, Action<Sprite> onItemCompletion)
-        // {
-        //     if (string.IsNullOrEmpty(typeCode) || string.IsNullOrWhiteSpace(typeCode))
-        //     {
-        //         Debug.LogError("空的\"typeCode\"");
-        //         yield break;
-        //     }
-        //
-        //     if (!_typeFindAtlasInitializationTransformationInfoMap.TryGetValue(typeCode, out var spriteAsset))
-        //     {
-        //         Debug.LogError($"不存在的资源名称\"{typeCode}\"");
-        //         yield break;
-        //     }
-        //
-        //     // 这里获取的就是这个"body(faces) code"对应的精灵立绘信息
-        //     foreach (var data in spriteAsset.Data.TransformInfoData)
-        //     {
-        //         var resource = _codeFindSpriteResourceLoaderMap[data.Path];
-        //         yield return resource.GetAsync(sprite => onItemCompletion?.Invoke(sprite));
-        //     }
-        // }
+        /// <summary>
+        /// 将引用的资源(图集)加载到内存中
+        /// </summary>
+        /// <param name="typeCode">图集代码</param>
+        /// <returns>此方法需要配合协程使用</returns>
+        public async UniTask<Sprite[]> LoadAssetAsync(string typeCode)
+        {
+            if (string.IsNullOrEmpty(typeCode) || string.IsNullOrWhiteSpace(typeCode))
+            {
+                // Debug.LogError("空的\"typeCode\"");
+                LoggerManager.Instance.LogError("空的\"typeCode\"");
+                throw new ArgumentException(nameof(typeCode));
+            }
+
+            if (!_typeFindAtlasInitializationTransformationInfoMap.TryGetValue(typeCode, out var spriteAsset))
+            {
+                // Debug.LogError($"不存在的资源名称\"{typeCode}\"");
+                LoggerManager.Instance.LogError($"不存在的资源名称\"{typeCode}\"");
+                throw new NullReferenceException($"不存在的资源名称\"{typeCode}\"");
+            }
+
+
+            if (State == RefState.None)
+            {
+                Debug.LogWarning("资源引用未加载,尝试加载中......");
+                // LoggerManager.Instance.LogWarning("资源引用未加载,尝试加载中......");
+                await LoadRefAssetsAsync(Type);
+            }
+
+            if (State == RefState.Loading)
+            {
+                Debug.LogWarning("资源引用未加载完成,尝试等待中......");
+                // LoggerManager.Instance.LogWarning("资源引用未加载完成,尝试等待中......");
+                await UniTask.WaitUntil(() => State != RefState.Loading);
+            }
+
+            if (State == RefState.Fail)
+            {
+                Debug.LogError("资源加载失败!");
+                // LoggerManager.Instance.LogError("资源加载失败!");
+                throw new Exception("资源加载失败!");
+            }
+
+            var transformInfoData = spriteAsset.Data.TransformInfoData;
+            var sprites = new Sprite[transformInfoData.Length];
+
+            // 这里获取的就是这个"body(faces) code"对应的精灵立绘信息
+            for (var i = 0; i < sprites.Length; i++)
+            {
+                var resource = _codeFindSpriteResourceLoaderMap[transformInfoData[i].Path];
+                sprites[i] = await resource.GetAsync();
+            }
+
+            return sprites;
+        }
+
     }
 }

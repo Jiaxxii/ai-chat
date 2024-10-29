@@ -10,5 +10,7 @@ namespace Xiyu.Application
         public static string LoggerPath => Path.Combine(MainDataDirectory, "logs");
 
         public static string PromptPath => Path.Combine(MainDataDirectory, "Prompt");
+
+        public static string BodyInfoSettingsPath => Path.Combine(MainDataDirectory, "body informations");
     }
 }

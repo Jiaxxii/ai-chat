@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEngine;
 using Xiyu.VirtualLiveRoom.Component;
@@ -14,6 +15,7 @@ namespace Xiyu.Settings
         [SerializeField] private List<PageInfo> webPageInfoCollections;
 
         private Dictionary<string, PageInfo> _webPageInfoSetMap;
+
 
         private void Awake()
         {
@@ -31,7 +33,12 @@ namespace Xiyu.Settings
 
         public IEnumerator<PageInfo> GetEnumerator()
         {
-            return _webPageInfoSetMap.Select(v => v.Value).GetEnumerator();
+            if (_webPageInfoSetMap is null or { Count: 0 })
+            {
+                Awake();
+            }
+
+            return _webPageInfoSetMap!.Select(v => v.Value).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

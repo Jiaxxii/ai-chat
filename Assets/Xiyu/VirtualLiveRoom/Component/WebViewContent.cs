@@ -4,7 +4,7 @@ namespace Xiyu.VirtualLiveRoom.Component
 {
     public class WebViewContent : UIContainer
     {
-        [SerializeField] private CanvasGroup baseCanvasGroup;
+        [SerializeField] protected CanvasGroup baseCanvasGroup;
         
 
         public float Alpha

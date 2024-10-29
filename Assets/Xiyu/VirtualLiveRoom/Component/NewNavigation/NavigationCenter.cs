@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Xiyu.Settings;
@@ -69,6 +70,11 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
 
         public async UniTask AppendViewAsync(string url)
         {
+            await InitializedView(url);
+        }
+
+        private async UniTask InitializedView(string url)
+        {
             // 加载网页内容加载器
             var webContentRefDev = (WebViewContentReferenceDeviceSo)await Resources.LoadAsync<WebViewContentReferenceDeviceSo>("Settings/WebViewContentRef");
 
@@ -110,14 +116,33 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
             var webContentPair = new WebContentPair(tab, webViewContent);
             WebPageMap.Add(webPageInfo.Url, webContentPair);
 
-            await WaitForInitializationAsync(webViewContent, tab.destroyCancellationToken);
+            var valueTuple = GetInstanceAttributeAnsInitMethodsUniTask(webViewContent, tab.GetCancellationTokenOnDestroy());
+            if (!valueTuple.initAttribute.ShouldInitialize)
+            {
+                _websiteLoadingComplete = true;
+                FocusViewWindow(webPageInfo.Url);
+                return;
+            }
 
-            _websiteLoadingComplete = true;
+            // 如果为 true 表示在 初始化 发生在 网页内容 显示前 (先初始化后显示)
+            if (valueTuple.initAttribute.FinalInitialization)
+            {
+                await valueTuple.initTask;
+                _websiteLoadingComplete = true;
+                FocusViewWindow(webPageInfo.Url);
+            }
+            else
+            {
+                FocusViewWindow(webPageInfo.Url);
+                await valueTuple.initTask;
 
-            FocusViewWindow(webPageInfo.Url);
+                _websiteLoadingComplete = true;
+            }
         }
 
-        private static UniTask WaitForInitializationAsync(WebViewContent instance, CancellationToken cancellationToken)
+
+        private static (WebContentInitAttribute initAttribute, UniTask initTask) GetInstanceAttributeAnsInitMethodsUniTask(WebViewContent instance,
+            CancellationToken cancellationToken)
         {
             var type = instance.GetType();
 
@@ -137,10 +162,10 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
 
             if (initAttribute is null or { ShouldInitialize: false })
             {
-                return UniTask.CompletedTask;
+                return (initAttribute, UniTask.CompletedTask);
             }
 
-            return (UniTask)methods.Invoke(instance, new object[] { initAttribute.NotUsedCancellationToken ? default : cancellationToken });
+            return (initAttribute, (UniTask)methods.Invoke(instance, new object[] { initAttribute.NotUsedCancellationToken ? default : cancellationToken }));
         }
 
         public static void FocusViewWindow(string url)
@@ -219,7 +244,8 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
 
         public async UniTask SwitchWebContentAsync(string url, CancellationToken cancellationToken)
         {
-            await UniTask.WaitForEndOfFrame(this, cancellationToken);
+            FocusViewWindow(url);
+            await UniTask.CompletedTask;
         }
     }
 }

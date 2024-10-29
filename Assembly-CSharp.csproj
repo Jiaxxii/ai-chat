@@ -61,6 +61,7 @@
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\SignInWindow.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\ICharacterControl.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\View\UserLogon.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\AssetManager.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\CharacterComponent\CharacterContentRoot.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\DragCloneTagPage.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Tools\Addressabe\AssetReferenceItem.cs" />
@@ -74,6 +75,8 @@
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\LLM.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\IGeomTransforms.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\BarrageComments\BulletCommentsScreenView.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Character\RoleUnit.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Character\ICharacterControl.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\Message.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\NavigationCenter.cs" />
     <Compile Include="Assets\Xiyu\Application\ApplicationData.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\WebsiteSecurityLevel.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\LoggerManager.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\BodyInfo.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\ConsoleLogger.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\TagPageEventSender.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\FileLogger.cs" />
@@ -96,6 +100,7 @@
     <Compile Include="Assets\Xiyu\GameFunction\GeometricTransformations\GeomTransforms.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\ViewContentLoader.cs" />
     <Compile Include="Assets\Xiyu\AI\Prompt\NewPromptCenter\PromptRequest.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\BodyInfoSettings.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SearchForModule.cs" />
     <Compile Include="Assets\Xiyu\Settings\SingleScriptableObject.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\RefState.cs" />
@@ -128,11 +133,13 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Xiyu\CharacterIllustration\SpriteResourceManager.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\MemoryModule.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\MonoTest.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Navigation\ViewContent.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Tools\Addressabe\WebsiteCenter.cs" />
     <Compile Include="Assets\Xiyu\AI\Client\RequestOptions.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\InputDialogWindow.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\DanmuMsgSender\MessageBoxContent.cs" />
+    <Compile Include="Assets\Xiyu\Expand\TimeConsuming.cs" />
     <Compile Include="Assets\Xiyu\DefDelegation.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowParameters.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
@@ -145,11 +152,13 @@
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\View\DanmuController.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\Usage.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\PenaltyModule.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Character\RoleBodyType.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\WebHyperLinkTo.cs" />
     <Compile Include="Assets\Xiyu\AI\Multimap.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\SearchInfo.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Response\DeserializeParameterModule.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindow.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\ResourceLoadFailedException.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\Logger.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\NewNavigation\TabDragControl.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\VirtualIconControl.cs" />
@@ -160,8 +169,10 @@
     <Compile Include="Assets\Xiyu\CharacterIllustration\TransformInfo.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Xiyu\AI\Prompt\Prompt.cs" />
+    <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\Character\CharacterController.cs" />
     <Compile Include="Assets\Xiyu\Constant\GameConstant.cs" />
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\Component\UserLogin\HyperLinkToAiRoom.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\AssetLoader.cs" />
     <Compile Include="Assets\Xiyu\AI\LargeLanguageModel\Service\Request\SerializeParameterModule.cs" />
     <Compile Include="Assets\Xiyu\Cryptography\DecryptFailException.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\UI\Arrow.cs" />
@@ -179,6 +190,7 @@
     <Compile Include="Assets\Xiyu\VirtualLiveRoom\EventFunctionSystem\EventHolderAttribute.cs" />
     <Compile Include="Assets\Xiyu\GameFunction\GameWindows\DialogWindowBase.cs" />
     <Compile Include="Assets\Xiyu\AI\Prompt\PromptCenterProcessing.cs" />
+    <Compile Include="Assets\Xiyu\CharacterIllustrationResource\AssetLoaderCenter.cs" />
     <Compile Include="Assets\Xiyu\LoggerSystem\ILogger.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -190,6 +202,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\Resources\Data\new_ai_body.json" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />

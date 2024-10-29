@@ -190,7 +190,7 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
             if (string.IsNullOrEmpty(userName))
             {
                 inputFieldName.text = GameConstant.Player;
-                await DoTitleTextAsync($"那你就叫<color=#12F3EF>{GameConstant.Player}</color>~~~");
+                await DoTitleTextAsync($"那你就叫“<color=#ff669b>{GameConstant.Player}</color>”~~~");
             }
 
             if (userHead == null)

@@ -7,7 +7,7 @@ namespace Xiyu.VirtualLiveRoom.View
     {
         protected override UniTask Initialization(CancellationToken cancellationToken = default)
         {
-            return UniTask.WaitForSeconds(3, cancellationToken: cancellationToken);
+            return UniTask.WaitForSeconds(0, cancellationToken: cancellationToken);
         }
     }
 }

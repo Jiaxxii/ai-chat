@@ -29,5 +29,10 @@ namespace Xiyu.VirtualLiveRoom.EventFunctionSystem
         /// 如果为 true 表示不接受<see cref="System.Threading.CancellationToken"/>
         /// </summary>
         public bool NotUsedCancellationToken { get; set; }
+
+        /// <summary>
+        /// 如果为 true 表示在初始化发生在网页内容显示之前
+        /// </summary>
+        public bool FinalInitialization { get; set; } = true;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -42,7 +43,7 @@ namespace Xiyu.CharacterIllustration
             // Addressables.Release(spriteHandle);
         }
 
-        public async Task<Sprite> GetAsync()
+        public async UniTask<Sprite> GetAsync()
         {
             if (IsRead)
             {
@@ -50,15 +51,15 @@ namespace Xiyu.CharacterIllustration
             }
 
             var spriteHandle = Addressables.LoadAssetAsync<Sprite>(Resource);
+            await spriteHandle;
 
-            var sprite = await spriteHandle.Task;
+            Debug.Assert(spriteHandle.Status == AsyncOperationStatus.Succeeded, $"加载精灵\"{Resource.PrimaryKey}\"时发生异常!");
+
+            _target = spriteHandle.Result;
             IsRead = true;
-            _target = sprite;
 
-            Addressables.Release(spriteHandle);
-
-            return sprite;
+            return _target;
+            // Addressables.Release(spriteHandle);
         }
-        
     }
 }
