@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -9,20 +9,19 @@ using DG.Tweening;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 using Xiyu.AI.Client;
-using Xiyu.AI.LargeLanguageModel.Service.Request;
 using Xiyu.AI.Prompt.NewPromptCenter;
 using Xiyu.Constant;
 using Xiyu.Cryptography;
+using Xiyu.LoggerSystem;
 using Xiyu.VirtualLiveRoom.Component.NewNavigation;
 using Xiyu.VirtualLiveRoom.Tools.Addressabe;
 using Random = UnityEngine.Random;
 
 namespace Xiyu.VirtualLiveRoom.Component.UserLogin
 {
-    public class SignInWindow : MonoBehaviour
+    public class SignInWindow : UIContainer
     {
         [SerializeField] private TMP_InputField inputFieldName;
         [SerializeField] private TMP_InputField inputFieldToken;
@@ -35,13 +34,16 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
 
         private CancellationTokenSource _loadingTextCancellationTokenSource;
 
+
         private void Awake()
         {
             loginButton.onClick.AddListener(UniTask.UnityAction(OnButtonClickEventHandler));
 
 #if UNITY_EDITOR
-            inputFieldToken.text = System.IO.File.ReadAllText(@"C:\Users\jiaxx\AppData\Roaming\JetBrains\Rider2024.1\scratches\NewFile1.txt");
+            GUIUtility.systemCopyBuffer = File.ReadAllText(@"C:\Users\jiaxx\AppData\Roaming\JetBrains\Rider2024.1\scratches\NewFile1.txt");
 #endif
+            inputFieldName.text = PlayerPrefs.HasKey("player name") ? PlayerPrefs.GetString("player name") : string.Empty;
+            inputFieldToken.text = PlayerPrefs.HasKey("aksk") ? PlayerPrefs.GetString("aksk") : string.Empty;
         }
 
 
@@ -62,9 +64,12 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
             {
                 // 验证鉴权凭证
                 await SetAuthenticationCertificateAsync(inputFieldToken.text);
+                PlayerPrefs.SetString("aksk", inputFieldToken.text);
 
                 // 设置用户名称与头像
                 await SetPreferredNameAndHeadAsync(inputFieldName.text);
+                PlayerPrefs.SetString("player name", inputFieldName.text);
+                PlayerPrefs.SetString("user", User.UserHeadSprite.name);
 
                 // 请求千帆API的模板List （验证网络连通性）
                 var promptInfos = await RequestQianFanPromptListAsync(destroyCancellationToken);
@@ -85,14 +90,15 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
             catch (DecryptFailException e)
             {
                 inputFieldName.text = string.Empty;
-                await DoTitleTextAsync(e.ErrorTitle);
+                await UniTask.WhenAll(
+                    LoggerManager.Instance.LogWarnAsync(e.ErrorTitle),
+                    DoTitleTextAsync(e.ErrorTitle)
+                );
             }
             catch (Exception e)
             {
                 inputFieldName.text = string.Empty;
-#if UNITY_EDITOR
-                Debug.LogWarning(e);
-#endif
+                await LoggerManager.Instance.LogWarnAsync(e.ToString());
             }
             finally
             {
@@ -130,31 +136,32 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
                 // 保存到本地
                 await PromptRequest.WritPromptListToAsync(promptInfos, cancellationToken);
 
+
                 return promptInfos;
             }
             // 网络未链接 or 超时 or PromptInfos请求失败
             catch (UnityWebRequestException e)
             {
-#if UNITY_EDITOR
-                Debug.LogWarning(e.ToString());
-#endif
-                await DoTitleTextAsync("你的wife呸~ wifi是不是有问题嘛~~~");
+                await UniTask.WhenAll(
+                    LoggerManager.Instance.LogWarnAsync(e.ToString(), cancellationToken: cancellationToken),
+                    DoTitleTextAsync("你的wife呸~ wifi是不是有问题嘛~~~")
+                );
             }
             // 服务返回的数据流异常
             catch (JsonSerializationException e)
             {
-#if UNITY_EDITOR
-                Debug.LogWarning(e.ToString());
-#endif
-                await DoTitleTextAsync("emmmmmm，一定是服务器的问题！！！");
+                await UniTask.WhenAll(
+                    LoggerManager.Instance.LogWarnAsync(e.ToString(), cancellationToken: cancellationToken),
+                    DoTitleTextAsync("emmmmmm，一定是服务器的问题！！！")
+                );
             }
             // 服务返回的Json结构改变导致序列化为空 (触发此异常表示Json反序列是成功的，只是关键数据未赋值)
             catch (PromptRequestException e)
             {
-#if UNITY_EDITOR
-                Debug.LogWarning(e.ToString());
-#endif
-                await DoTitleTextAsync("对不起哦~可以联系<color=#E4514C>西雨与雨</color>（抖音）好好更新哦~");
+                await UniTask.WhenAll(
+                    LoggerManager.Instance.LogWarnAsync(e.ToString(), cancellationToken: cancellationToken),
+                    DoTitleTextAsync("对不起哦~可以联系<color=#E4514C>西雨与雨</color>（抖音）好好更新哦~")
+                );
             }
 
             throw new Exception("未通过网络链接测试，具体请查看日志。");
@@ -184,7 +191,7 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
             }
         }
 
-        private async UniTask SetPreferredNameAndHeadAsync(string userName, Sprite userHead = null)
+        private async UniTask SetPreferredNameAndHeadAsync(string userName)
         {
             // 未输入名称则提供默认名称
             if (string.IsNullOrEmpty(userName))
@@ -193,11 +200,18 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
                 await DoTitleTextAsync($"那你就叫“<color=#ff669b>{GameConstant.Player}</color>”~~~");
             }
 
-            if (userHead == null)
+
+            if (PlayerPrefs.HasKey("user"))
+            {
+                var spriteName = PlayerPrefs.GetString("user", "main");
+                User.UserHeadSprite = (Sprite)await Resources.LoadAsync<Sprite>($"Default/User/{spriteName}");
+            }
+            else
             {
                 var sprites = Resources.LoadAll<Sprite>("Default/User");
                 User.UserHeadSprite = sprites[Random.Range(0, sprites.Length)];
             }
+
 
             User.UserName = inputFieldName.text;
         }

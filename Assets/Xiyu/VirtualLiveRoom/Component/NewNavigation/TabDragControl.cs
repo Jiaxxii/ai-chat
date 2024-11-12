@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -166,8 +165,6 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
         {
             var leftEb = GetLeft(exchangeBoard);
             var right = GetRight(exchangeBoard);
-
-            // Debug.Log($"left:{(leftEb == null ? "空" : "非空")}，right:{(right == null ? "空" : "非空")}");
 
             var currentX = getCurrentPositionX?.Invoke() ?? exchangeBoard.Current.AnchoredPosition.x;
             if (leftEb != null && leftEb.Current.AnchoredPosition.x > currentX)

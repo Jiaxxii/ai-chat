@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Xiyu.VirtualLiveRoom.EventFunctionSystem;
 
 namespace Xiyu.VirtualLiveRoom.Component.DanmuMsgSender
 {
     public class MessageBoxContent : UIContainer
     {
         [SerializeField] private Image basePanel;
+
+        [WebContentInit(false)]
+        protected override Cysharp.Threading.Tasks.UniTask Initialization(System.Threading.CancellationToken cancellationToken = default)
+        {
+            return base.Initialization(cancellationToken);
+        }
 
 
         public Sprite BackGround

@@ -16,7 +16,7 @@ namespace Xiyu.Constant
         public const string SingleDialogWindow = "Single Dialog Window";
         public const int MaxEffectiveDay = 7;
 
-        public const string LoggerDefaultPatternLayout = "[%d{yyyy-MM-dd HH:mm:ss}] [ThreadID:%t] [%level] <%logger> : %msg";
+        public const string LoggerDefaultPatternLayout = "[%d{yyyy-MM-dd HH:mm:ss}] [线程:%t] [%level] <%logger> : %msg";
 
         public const string LoggerDefaultFileLoggerName = "文件日志";
         public const string LoggerDefaultConsoleLoggerName = "内部控制台";

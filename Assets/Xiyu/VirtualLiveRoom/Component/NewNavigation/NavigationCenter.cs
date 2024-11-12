@@ -4,9 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Xiyu.LoggerSystem;
 using Xiyu.Settings;
 using Xiyu.VirtualLiveRoom.EventFunctionSystem;
 using Debug = UnityEngine.Debug;
@@ -57,7 +58,7 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
 
             if (startUrlView.Count == 0)
             {
-                Debug.LogError("初始网页网址必须包含至少一个的有效的网址！");
+                await LoggerManager.Instance.LogErrorAsync("初始网页网址必须包含至少一个的有效的网址！");
             }
 
             foreach (var url in startUrls)
@@ -76,13 +77,12 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
         private async UniTask InitializedView(string url)
         {
             // 加载网页内容加载器
-            var webContentRefDev = (WebViewContentReferenceDeviceSo)await Resources.LoadAsync<WebViewContentReferenceDeviceSo>("Settings/WebViewContentRef");
+            var webContentRefDev = (AddressableGameObjectLoaderSo)await Resources.LoadAsync<AddressableGameObjectLoaderSo>("Settings/WebViewContentRef");
 
             // 判断网址有效性
             if (!WebsiteFinder.TryFindWebsitePageInfo(url, out var webPageInfo))
             {
-                Debug.LogWarning($"无效网址：{url}");
-                // TODO
+                await LoggerManager.Instance.LogWarnAsync($"无效网址：{url}");
                 return;
             }
 
@@ -113,60 +113,47 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
 
             tab.EventCenter.OnTabClose += webInfo => CloseView(webInfo.Url);
 
+            tab.EventCenter.OnTagPointerEnter += (_, _) =>
+            {
+                tab.transform.DOScaleX(1.05F, 0.15F)
+                    .OnComplete(() => tab.transform.DOScaleX(1F, 0.15F));
+            };
+
             var webContentPair = new WebContentPair(tab, webViewContent);
             WebPageMap.Add(webPageInfo.Url, webContentPair);
 
-            var valueTuple = GetInstanceAttributeAnsInitMethodsUniTask(webViewContent, tab.GetCancellationTokenOnDestroy());
-            if (!valueTuple.initAttribute.ShouldInitialize)
+            var first = true;
+            foreach (var methodInfo in Reflection.GetComponentsInitInChildren(webViewContent.transform, webViewContent.GetCancellationTokenOnDestroy()))
             {
-                _websiteLoadingComplete = true;
-                FocusViewWindow(webPageInfo.Url);
-                return;
-            }
+                if (!methodInfo.initAttribute.ShouldInitialize)
+                {
+                    _websiteLoadingComplete = true;
 
-            // 如果为 true 表示在 初始化 发生在 网页内容 显示前 (先初始化后显示)
-            if (valueTuple.initAttribute.FinalInitialization)
-            {
-                await valueTuple.initTask;
-                _websiteLoadingComplete = true;
-                FocusViewWindow(webPageInfo.Url);
-            }
-            else
-            {
-                FocusViewWindow(webPageInfo.Url);
-                await valueTuple.initTask;
+                    if (first)
+                        FocusViewWindow(webPageInfo.Url);
+                }
 
-                _websiteLoadingComplete = true;
+                if (methodInfo.initAttribute.FinalInitialization)
+                {
+                    await methodInfo.initTask.Invoke();
+
+                    _websiteLoadingComplete = true;
+                    if (first)
+                        FocusViewWindow(webPageInfo.Url);
+                }
+                else
+                {
+                    if (first)
+                        FocusViewWindow(webPageInfo.Url);
+                    await methodInfo.initTask.Invoke();
+
+                    _websiteLoadingComplete = true;
+                }
+
+                first = false;
             }
         }
 
-
-        private static (WebContentInitAttribute initAttribute, UniTask initTask) GetInstanceAttributeAnsInitMethodsUniTask(WebViewContent instance,
-            CancellationToken cancellationToken)
-        {
-            var type = instance.GetType();
-
-            // 非公开 非静态 返回值为 <UniTask> 参数包含 <CancellationToken> 的方法
-            var methods = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(info => info.ReturnType == typeof(UniTask)
-                                        && info.GetParameters()
-                                            .Any(p => p.ParameterType == typeof(CancellationToken)));
-
-            if (methods is null)
-            {
-                throw new NotImplementedException(
-                    $"类'{type}'缺少一个必要的方法，该方法应具有以下签名：'NotPublic {typeof(UniTask).FullName} UserInitializationName ({typeof(CancellationToken).FullName} cancellationToken)'。此外，建议为该方法添加特性'[{typeof(WebContentInitAttribute).FullName}]'。");
-            }
-
-            var initAttribute = methods.GetCustomAttribute<WebContentInitAttribute>();
-
-            if (initAttribute is null or { ShouldInitialize: false })
-            {
-                return (initAttribute, UniTask.CompletedTask);
-            }
-
-            return (initAttribute, (UniTask)methods.Invoke(instance, new object[] { initAttribute.NotUsedCancellationToken ? default : cancellationToken }));
-        }
 
         public static void FocusViewWindow(string url)
         {
@@ -246,6 +233,77 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
         {
             FocusViewWindow(url);
             await UniTask.CompletedTask;
+        }
+
+
+        public static class Reflection
+        {
+            public static IEnumerable<(WebContentInitAttribute initAttribute, Func<UniTask> initTask)> GetComponentsInitInChildren(Transform parent,
+                CancellationToken cancellationToken)
+            {
+                var list = new List<(WebContentInitAttribute attribute, Func<UniTask> task, Type type)>(4);
+                foreach (var uiContainer in parent.GetComponentsInChildren<UIContainer>())
+                {
+                    var methods = uiContainer.GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                        .FirstOrDefault(m => m.ReturnType == typeof(UniTask) &&
+                                             m.GetParameters().Any(p => p.ParameterType == typeof(CancellationToken)));
+
+                    if (methods is null)
+                    {
+                        throw new NotImplementedException(
+                            $"类'{uiContainer.GetType()}'缺少一个必要的方法，该方法应具有以下签名：'NotPublic {typeof(UniTask).FullName} UserInitializationName ({typeof(CancellationToken).FullName} cancellationToken)'。此外，建议为该方法添加特性'[{typeof(WebContentInitAttribute).FullName}]'。");
+                    }
+
+
+                    var initAttribute = methods.GetCustomAttribute<WebContentInitAttribute>();
+
+                    if (initAttribute is not null)
+                    {
+                        Func<UniTask> task = () => (UniTask)methods.Invoke(uiContainer, new object[] { initAttribute.NotUsedCancellationToken ? default : cancellationToken });
+                        list.Add((initAttribute, task, uiContainer.GetType()));
+                    }
+                }
+
+                return Sort(list);
+            }
+
+
+            private static LinkedList<(WebContentInitAttribute, Func<UniTask>)> Sort(List<(WebContentInitAttribute attribute, Func<UniTask> task, Type type)> list)
+            {
+                // 创建一个字典来存储类型到应该插入的索引的映射，以及LinkedList节点  
+                var typeToNodeInfo = new Dictionary<Type, (LinkedListNode<(WebContentInitAttribute, Func<UniTask>)> node, bool isInserted)>();
+                var sortedList = new LinkedList<(WebContentInitAttribute, Func<UniTask>)>();
+
+                foreach (var element in list)
+                {
+                    var node = new LinkedListNode<(WebContentInitAttribute, Func<UniTask>)>((element.attribute, element.task));
+                    typeToNodeInfo[element.type] = (node, false); // 初始时标记为未插入  
+
+                    if (element.attribute.ThenAfterInitialization == null)
+                    {
+                        sortedList.AddLast(node); // 没有依赖，直接添加到末尾  
+                        typeToNodeInfo[element.type] = (node, true); // 标记为已插入  
+                    }
+                    else
+                    {
+                        // 尝试找到依赖项的位置并插入之后  
+                        if (typeToNodeInfo.TryGetValue(element.attribute.ThenAfterInitialization, out var depNodeInfo) && depNodeInfo.isInserted)
+                        {
+                            sortedList.AddAfter(depNodeInfo.node, node); // 插入到依赖项之后  
+                            typeToNodeInfo[element.type] = (node, true); // 标记为已插入  
+                        }
+                        // 否则，将保持在LinkedList外部，稍后可能添加到末尾（存在循环依赖或依赖项不存在时）  
+                    }
+                }
+
+                // 添加所有未插入的节点到LinkedList末尾（处理循环依赖或缺失依赖）  
+                foreach (var kvp in typeToNodeInfo.Where(kvp => !kvp.Value.isInserted))
+                {
+                    sortedList.AddLast(kvp.Value.node);
+                }
+
+                return sortedList;
+            }
         }
     }
 }

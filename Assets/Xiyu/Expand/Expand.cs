@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +9,9 @@ namespace Xiyu.Expand
 {
     public static class Expand
     {
+        private static readonly System.Random Random = new();
+        
+        
         /// <returns><see cref="value"/> / 2F</returns>
         // [MethodImpl(MethodImplOptions.InternalCall)]
         public static float Half(this float value) => value / 2f;
@@ -53,19 +56,38 @@ namespace Xiyu.Expand
         }
 
 
-        public static float InverseMapFloat(this float value, float outMin, float outMax, float inMin, float inMax)
+        
+ 
+        public static T GetRandom<T>(this IEnumerable<T> collection)
         {
-            return (inMax - inMin) / (outMax - outMin) * (value - outMin) + inMin;
+            var array = collection as T[] ?? collection.ToArray();
+            if (array.Length == 0)
+                throw new InvalidOperationException("Collection is empty.");
+            return array[Random.Next(array.Length)];
         }
-
-
-#if UNITY_EDITOR
-        public static T GetRandom<T>(this IEnumerable<T> collect)
+ 
+        public static T GetRandom<T>(this ICollection<T> collection)
         {
-            var array = collect.ToArray();
-            return array[Random.Range(0, array.Length)];
+            if (collection.Count == 0)
+                throw new InvalidOperationException("Collection is empty.");
+        
+            int index = Random.Next(collection.Count);
+            foreach (var item in collection)
+            {
+                if (--index == 0)
+                    return item;
+            }
+ 
+            // This line should never be reached if the collection's Count is accurate.
+            throw new InvalidOperationException("Unable to select a random element.");
         }
-#endif
+ 
+        public static T GetRandom<T>(this IList<T> list)
+        {
+            if (list.Count == 0)
+                throw new InvalidOperationException("List is empty.");
+            return list[Random.Next(list.Count)];
+        }
 
         // [MethodImpl(MethodImplOptions.InternalCall)]
         public static RectTransform AsRectTransform(this Transform transform) => (RectTransform)transform;

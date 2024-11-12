@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using Xiyu.CharacterIllustration;
 using Xiyu.CharacterIllustrationResource;
-using Xiyu.GameFunction.CharacterComponent;
+using Xiyu.Expand;
 using Xiyu.Settings;
 
 namespace Xiyu.VirtualLiveRoom.Component.Character
@@ -24,9 +22,31 @@ namespace Xiyu.VirtualLiveRoom.Component.Character
             set => SpriteContent.gameObject.SetActive(value);
         }
 
+        public float Alpha
+        {
+            get => SpriteContent.color.a;
+            set => SpriteContent.color = SpriteContent.color.SetAlpha(value);
+        }
+
         private RoleUnit Init()
         {
             SpriteContent = GetComponent<Image>();
+            return this;
+        }
+
+        public RoleUnit Init(Sprite sprite, DataItem dataItem, bool active)
+        {
+            Init();
+            SetStyle(sprite, dataItem.Size, dataItem.Position);
+            Active = active;
+            return this;
+        }
+
+        public RoleUnit Init(Sprite sprite, DataItem dataItem, float alpha)
+        {
+            Init();
+            SetStyle(sprite, dataItem.Size, dataItem.Position);
+            Alpha = alpha;
             return this;
         }
 
@@ -55,20 +75,35 @@ namespace Xiyu.VirtualLiveRoom.Component.Character
             SpriteContent.rectTransform.anchoredPosition = position;
         }
 
+        private static ResourceRequest _resourceRequest;
+
+        internal static async UniTask<AddressableGameObjectLoaderSo> WaitForWebContentLoad()
+        {
+            _resourceRequest ??= Resources.LoadAsync<AddressableGameObjectLoaderSo>("Settings/RefPrefabricate");
+
+            if (!_resourceRequest.isDone)
+            {
+                await _resourceRequest;
+            }
+
+
+            return (AddressableGameObjectLoaderSo)_resourceRequest.asset;
+        }
+
         internal static async UniTask<IEnumerable<RoleUnit>> CreateRoleAsync(Transform parent, int reserveNumber = 4)
         {
-            var webViewContentReferenceDeviceSo = (WebViewContentReferenceDeviceSo)await Resources.LoadAsync<WebViewContentReferenceDeviceSo>("Settings/RefPrefabricate");
+            var webViewContentReferenceDeviceSo = await WaitForWebContentLoad();
 
             var roleUnitList = new List<RoleUnit>(reserveNumber);
 
-            var roleUnits = parent.GetComponentsInChildren<RoleUnit>();
-
-            if (roleUnits != null && roleUnits.Length != 0)
-            {
-                // 表示有可用的组件
-                roleUnitList.AddRange(roleUnits.Select(roleUnit => roleUnit.Init()));
-                reserveNumber -= roleUnitList.Count;
-            }
+            // var roleUnits = parent.GetComponentsInChildren<RoleUnit>();
+            //
+            // if (roleUnits != null && roleUnits.Length != 0)
+            // {
+            //     // 表示有可用的组件
+            //     roleUnitList.AddRange(roleUnits.Select(roleUnit => roleUnit.Init()));
+            //     reserveNumber -= roleUnitList.Count;
+            // }
 
             for (var i = 0; i < reserveNumber; i++)
             {

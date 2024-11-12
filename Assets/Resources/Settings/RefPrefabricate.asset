@@ -7,27 +7,33 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33057ca7e6f84757b2d17127768e2c40, type: 3}
   m_Name: RefPrefabricate
   m_EditorClassIdentifier: 
   viewContentCollection:
-  - url: "\u5F39\u5E55\u9879"
+  - key: "\u5F39\u5E55\u9879"
     preformViewContent:
       m_AssetGUID: 93185aa053f0b0e42b08ee2097fe7b05
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - url: Role Content Root Template
+  - key: Role Content Root Template
     preformViewContent:
       m_AssetGUID: 5f0b86e6a3d6dc743a6d24427ba67081
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - url: Role Unit Template
+  - key: Role Unit Template
     preformViewContent:
       m_AssetGUID: cb604a7d7f5456a46b929eb73946f5a6
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - key: Bullet Comment
+    preformViewContent:
+      m_AssetGUID: 64c461d2b2583724492c7046b88e9332
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

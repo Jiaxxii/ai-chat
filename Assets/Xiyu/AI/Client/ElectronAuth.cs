@@ -58,7 +58,6 @@ namespace Xiyu.AI.Client
         /// 签名生命周期大于最大生命周期
         /// </summary>
         LifeTimeOutMaxEffectiveDay = 1 << 5,
-
     }
 
     // public enum SignatureState
@@ -94,6 +93,9 @@ namespace Xiyu.AI.Client
         [JsonProperty(PropertyName = "ak")] public string AccessKey { get; set; }
 
         [JsonProperty(PropertyName = "sk")] public string SecretKey { get; set; }
+
+        [JsonProperty(PropertyName = "tts_authorization")]
+        public string TTSAuth { get; set; }
 
         [JsonProperty(PropertyName = "create_ticks")]
         public long CreateTicks { get; set; }

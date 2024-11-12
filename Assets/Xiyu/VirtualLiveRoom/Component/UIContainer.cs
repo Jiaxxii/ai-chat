@@ -1,27 +1,15 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Xiyu.VirtualLiveRoom.EventFunctionSystem;
 
 namespace Xiyu.VirtualLiveRoom.Component
 {
     public class UIContainer : MonoBehaviour
     {
-        [WebContentInit]
+        [Xiyu.VirtualLiveRoom.EventFunctionSystem.WebContentInit]
         [JetBrains.Annotations.UsedImplicitly]
-        protected virtual UniTask Initialization(CancellationToken cancellationToken = default)
+        protected virtual UniTask Initialization(System.Threading.CancellationToken cancellationToken = default)
         {
             return UniTask.WaitForEndOfFrame(this, cancellationToken);
-        }
-
-
-        public virtual void WebPageFocus()
-        {
-        }
-
-
-        public virtual void WebPageLostFocus()
-        {
         }
     }
 }

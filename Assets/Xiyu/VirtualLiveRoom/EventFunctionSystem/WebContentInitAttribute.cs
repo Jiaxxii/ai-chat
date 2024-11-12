@@ -34,5 +34,8 @@ namespace Xiyu.VirtualLiveRoom.EventFunctionSystem
         /// 如果为 true 表示在初始化发生在网页内容显示之前
         /// </summary>
         public bool FinalInitialization { get; set; } = true;
+
+
+        public Type? ThenAfterInitialization { get; set; } = null;
     }
 }

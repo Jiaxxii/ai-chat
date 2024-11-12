@@ -35,13 +35,26 @@ namespace Xiyu.VirtualLiveRoom.Component.Character
         /// <param name="bodyCode">身体</param>
         /// <param name="faceCode">脸部</param>
         /// <returns>此方法需要配合协程使用</returns>
-        UniTask Display(string bodyCode, string faceCode);
+        UniTask Display([NotNull] string bodyCode, [NotNull] string faceCode);
 
-        UniTask DisplayFaceFade(string faceCode, float outDuration = 0.2F, float inDuration = 0.2F);
-        UniTask DisplayBodyFade(string bodyCode, float outDuration = 0.25F, float inDuration = 0.33F);
+        /// <summary>
+        /// 显示立绘
+        /// </summary>
+        /// <param name="bodyCode"></param>
+        /// <param name="faceCode"></param>
+        /// <param name="duration"></param>
+        /// <param name="smoothSwitch"></param>
+        public UniTask Display([NotNull] string bodyCode, [NotNull] string faceCode, float duration, bool smoothSwitch = true);
+
+        UniTask DisplayFaceFade([NotNull] string faceCode, float outDuration = 0.2F, float inDuration = 0.2F);
+        UniTask DisplayBodyFade([NotNull] string bodyCode, float outDuration = 0.25F, float inDuration = 0.33F);
 
 
         UniTask Init(Vector2 windowSize, string roleTye);
+        public UniTask Init(Vector2 windowSize, [NotNull] string roleType, [NotNull] string bodyCode, [NotNull] string faceCode, bool active = false);
+
+        public UniTask Init(Vector2 windowSize, [NotNull] string roleType, [NotNull] string bodyCode, [NotNull] string faceCode, float alpha = 0F);
+        public UniTask Init(Vector2 windowSize, [NotNull] string roleType, [NotNull] string bodyCode, [NotNull] string faceCode, float duration, float startAlpha);
 
 
         [CanBeNull]

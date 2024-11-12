@@ -488,6 +488,7 @@ GameObject:
   - component: {fileID: 506059161187407808}
   - component: {fileID: 1710910915084581456}
   - component: {fileID: 4560068810553792530}
+  - component: {fileID: 3877665456326881032}
   m_Layer: 5
   m_Name: "\u9A8C\u8BC1"
   m_TagString: Untagged
@@ -618,6 +619,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3877665456326881032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206525333823565640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f7c2fbe75f42db9b561f5807d6990b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: sound
+  audioName: clip_ui_1
 --- !u!1 &2311590954997578441
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +936,7 @@ GameObject:
   - component: {fileID: 5973572145466530367}
   - component: {fileID: 3425341799474214693}
   - component: {fileID: 3447668855916298943}
+  - component: {fileID: 8605834848677599434}
   m_Layer: 5
   m_Name: InputField - Name
   m_TagString: Untagged
@@ -1125,6 +1141,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &8605834848677599434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822924667358456712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f7c2fbe75f42db9b561f5807d6990b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: sound
+  audioName: clip_ui_1
 --- !u!1 &3197835571462171012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +1523,7 @@ GameObject:
   - component: {fileID: 5201331271677170317}
   - component: {fileID: 3401463305803860055}
   - component: {fileID: 8431330614843045865}
+  - component: {fileID: 180357387837787349}
   m_Layer: 5
   m_Name: InputField - Token
   m_TagString: Untagged
@@ -1697,6 +1728,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &180357387837787349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5216747822535867799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f7c2fbe75f42db9b561f5807d6990b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: sound
+  audioName: clip_ui_1
 --- !u!1 &5479127096663782250
 GameObject:
   m_ObjectHideFlags: 0

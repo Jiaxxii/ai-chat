@@ -4,6 +4,7 @@ using Xiyu.Constant;
 
 namespace Xiyu.GameFunction.SceneView
 {
+    [Obsolete("",true)]
     public static class GameInsView
     {
         private static Canvas _mainCanvas;

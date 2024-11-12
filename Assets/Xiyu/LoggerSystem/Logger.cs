@@ -1,10 +1,11 @@
 ﻿// #define USER_DEBUG
+
 using System;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Xiyu.Constant;
 
 namespace Xiyu.LoggerSystem
@@ -12,7 +13,7 @@ namespace Xiyu.LoggerSystem
     public abstract class Logger : ILogger
     {
         public string Name { get; set; }
-        public string PatternLayout { get; set; }
+        public string PatternLayout { get; set; } = GameConstant.LoggerDefaultPatternLayout;
 
         protected Logger(string patternLayout)
         {
@@ -21,7 +22,6 @@ namespace Xiyu.LoggerSystem
 
         protected Logger()
         {
-            PatternLayout = GameConstant.LoggerDefaultPatternLayout;
         }
 
 
@@ -40,56 +40,22 @@ namespace Xiyu.LoggerSystem
             }
         }
 
-
-        public void LogInfo(string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        public UniTask LogAsync(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default)
         {
-            Log(LogLevel.Info, message, stackTrace, cancellationToken);
-        }
-
-        public void LogWarning(string message, bool stackTrace = false, CancellationToken cancellationToken = default)
-        {
-            Log(LogLevel.Warn, message, stackTrace, cancellationToken);
-        }
-
-        public void LogError(string message, bool stackTrace = false, CancellationToken cancellationToken = default)
-        {
-            Log(LogLevel.Error, message, stackTrace, cancellationToken);
-        }
-
-        public async void ThrowFail(string message)
-        {
-            var logMessage = GetLogMessage(LogLevel.Fail, message, true);
-            await SaveAsync(logMessage);
-#if UNITY_EDITOR
-            UnityEngine.Debug.LogWarning("game quit");
-            UnityEngine.Debug.Break();
-#else
-            UnityEngine.Application.Quit(-1);
-#endif
-        }
-
-
-        public async void Log(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default)
-        {
-#if UNITY_EDITOR && USER_DEBUG
-            switch (logLevel)
-            {
-                case LogLevel.Info:
-                    UnityEngine.Debug.Log(message);
-                    break;
-                case LogLevel.Warn:
-                    UnityEngine.Debug.LogWarning(message);
-                    break;
-                case LogLevel.Error or LogLevel.Fail:
-                    UnityEngine.Debug.LogError(message);
-                    break;
-                default:
-                    UnityEngine.Debug.LogError($"type:{logLevel} {message}");
-                    break;
-            }
-#endif
             var logMessage = GetLogMessage(logLevel, message, stackTrace);
-            await SaveAsync(logMessage, cancellationToken);
+            return SaveAsync(logMessage, cancellationToken);
+        }
+
+        public UniTaskVoid LogForget(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            var logMessage = GetLogMessage(logLevel, message, stackTrace);
+            return SaveForget(logMessage, cancellationToken);
+        }
+
+        public void Log(LogLevel logLevel, string message, bool stackTrace = false)
+        {
+            var logMessage = GetLogMessage(logLevel, message, stackTrace);
+            Save(logMessage);
         }
 
 
@@ -97,15 +63,19 @@ namespace Xiyu.LoggerSystem
         {
             var stringBuilder = new StringBuilder(PatternLayout);
             stringBuilder.Replace($"%d{{{TimeFormat}}}", DateTime.Now.ToString(TimeFormat));
-            stringBuilder.Replace("%t", Environment.CurrentManagedThreadId.ToString());
-            stringBuilder.Replace("%level", logLevel.ToString().ToUpperInvariant());
+            var currentManagedThreadId = Environment.CurrentManagedThreadId;
+            stringBuilder.Replace("%t", currentManagedThreadId == 1 ? "PlayerLoop" : currentManagedThreadId.ToString());
+            stringBuilder.Replace("%level", logLevel.ToString().ToLowerInvariant());
             stringBuilder.Replace("%logger", Name);
             stringBuilder.Replace("%msg", message);
 
             return stackTrace ? stringBuilder.AppendLine(new StackTrace(true).ToString()).AppendLine().ToString() : stringBuilder.AppendLine().ToString();
         }
 
-        protected abstract Task SaveAsync(string content, CancellationToken cancellationToken = default);
+
+        protected abstract UniTask SaveAsync(string content, CancellationToken cancellationToken);
+        protected abstract UniTaskVoid SaveForget(string content, CancellationToken cancellationToken);
+        protected abstract void Save(string content);
 
 
         protected static bool TryGetTimeFormat(string content, out string format)

@@ -4,6 +4,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
+using Xiyu.LoggerSystem;
 
 namespace Xiyu.AI.Prompt.NewPromptCenter
 {
@@ -81,7 +82,7 @@ namespace Xiyu.AI.Prompt.NewPromptCenter
                 }
                 else
                 {
-                    Debug.LogWarning($"未定义的变量名称：{varInfo.varName}。(集合中[{string.Join(',', variableNames)}])");
+                    LoggerManager.Instance.LogWarn($"未定义的变量名称：{varInfo.varName}。(集合中[{string.Join(',', variableNames)}])");
                 }
             }
 
@@ -107,7 +108,7 @@ namespace Xiyu.AI.Prompt.NewPromptCenter
                 }
                 else
                 {
-                    Debug.LogWarning($"未定义的变量名称：{varInfo.Key}。(集合中[{string.Join(',', variableNames)}])");
+                    LoggerManager.Instance.LogWarn($"未定义的变量名称：{varInfo.Key}。(集合中[{string.Join(',', variableNames)}])");
                 }
             }
 

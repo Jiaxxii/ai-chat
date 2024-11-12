@@ -6,14 +6,13 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using Xiyu.AI.Client;
 using Xiyu.ArtificialIntelligence;
+using Xiyu.LoggerSystem;
 using File = Xiyu.FileSystem.File;
 
 namespace Xiyu.AI.Prompt.NewPromptCenter
@@ -25,7 +24,7 @@ namespace Xiyu.AI.Prompt.NewPromptCenter
         private static readonly string PromptResources = Environment.CurrentDirectory + "/prompts";
         private static readonly string PromptList = Path.Combine(PromptResources, "list");
 
-        public static readonly string DefaultPromptID = "pt-nr8kqave80gdw8dk";
+        public static readonly string DefaultPromptID = "pt-4xesf3ppt8v6niqc";
 
 
         public static Prompt LastRequestPrompt { get; private set; }
@@ -197,7 +196,7 @@ namespace Xiyu.AI.Prompt.NewPromptCenter
                 if (string.IsNullOrEmpty(jsonContent) || !jsonContent.StartsWith('{') || !jsonContent.EndsWith('}'))
                 {
 #if UNITY_EDITOR
-                    Debug.LogWarning($"文件\"{fileInfo.FullName}\"不是一个有效的模板Json文件！");
+                    await LoggerManager.Instance.LogWarnAsync($"文件\"{fileInfo.FullName}\"不是一个有效的模板Json文件！", cancellationToken: cancellationToken);
 #endif
                     continue;
                 }

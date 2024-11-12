@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Net.Http;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
@@ -37,10 +38,7 @@ namespace Xiyu.AI.LargeLanguageModel
             HttpMethod = method ?? HttpMethod.Post;
             // _downloadHandler = downloadHandler ?? new DownloadHandlerBuffer();
 
-#if UNITY_EDITOR
-            // OnRequestFailEventHandler += Debug.LogError;
-            OnRequestFailEventHandler += v => LoggerManager.Instance.LogError(v);
-#endif
+            OnRequestFailEventHandler += v => LoggerManager.Instance.LogError(v,true);
         }
 
 
@@ -104,6 +102,30 @@ namespace Xiyu.AI.LargeLanguageModel
             }
         }
 
+
+        /// <summary>
+        /// 发送一次请求
+        /// </summary>
+        /// <param name="requestOptions">Query Header</param>
+        public virtual async UniTask<string> RequestAsync(RequestOptions requestOptions)
+        {
+            using var request = SetConfigureWebRequest(requestOptions);
+
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            await request.SendWebRequest();
+
+
+            if (request.responseCode == 200 && request.result == UnityWebRequest.Result.Success)
+            {
+                var resultJson = request.downloadHandler.text;
+                return resultJson;
+            }
+
+            OnRequestFailEventHandler?.Invoke(request.error);
+            return await UniTask.FromException<string>(new UnityWebRequestException(request));
+        }
+
         /// <summary>
         /// 发送一次请求
         /// </summary>
@@ -132,7 +154,32 @@ namespace Xiyu.AI.LargeLanguageModel
             }
         }
 
+        /// <summary>
+        /// 发送一次请求
+        /// </summary>
+        /// <param name="requestOptions">Query Header</param>
+        /// <typeparam name="T"><see cref="T"/>必须继承自<see cref="DeserializeParameterModule"/></typeparam>
+        public virtual async UniTask<T> RequestAsync<T>(RequestOptions requestOptions) where T : DeserializeParameterModule, new()
+        {
+            using var request = SetConfigureWebRequest(requestOptions);
 
+            request.downloadHandler = new DownloadHandlerBuffer();
+            await request.SendWebRequest();
+
+
+            if (request.responseCode == 200 && request.result == UnityWebRequest.Result.Success)
+            {
+                var resultJson = request.downloadHandler.text;
+
+                var response = DeserializeParameterModule.Deserialize<T>(resultJson, JsonSerializerSettings);
+                return response;
+            }
+
+            OnRequestFailEventHandler?.Invoke(request.error);
+            return await UniTask.FromException<T>(new UnityWebRequestException(request));
+        }
+        
+        
         protected virtual UnityWebRequest SetConfigureWebRequest(RequestOptions requestOptions)
         {
             var request = Auth.ConfigureWebRequest(requestOptions, HttpMethod, Url);

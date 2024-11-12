@@ -14,6 +14,13 @@ namespace Xiyu.VirtualLiveRoom.Component.DanmuMsgSender
 
         public event UnityAction<string> OnMessageSend;
 
+        public bool Interactable
+        {
+            get => messageSendButton.interactable;
+            set => messageSendButton.interactable = value;
+        }
+
+
         public Func<string, bool> SubmitCheck { get; set; } = GameConstant.DefaultDanmuMessageSendBoxSubmitCheck;
 
         public string Content
@@ -25,7 +32,7 @@ namespace Xiyu.VirtualLiveRoom.Component.DanmuMsgSender
 
         private void Start()
         {
-            messageInputField.onSubmit.AddListener(MessageSend);
+            // messageInputField.onSubmit.AddListener(MessageSend);
             messageSendButton.onClick.AddListener(() => MessageSend(Content));
         }
 

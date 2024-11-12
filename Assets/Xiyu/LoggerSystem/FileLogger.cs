@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Xiyu.Application;
 
 namespace Xiyu.LoggerSystem
@@ -19,18 +18,33 @@ namespace Xiyu.LoggerSystem
             FileName = fileName;
         }
 
-        protected override Task SaveAsync(string content, CancellationToken cancellationToken = default)
+
+        protected override void Save(string content)
+        {
+            SaveForget(content, System.Threading.CancellationToken.None).Forget();
+        }
+
+        protected override async UniTaskVoid SaveForget(string content, System.Threading.CancellationToken cancellationToken)
+        {
+            await SaveAsync(content, cancellationToken);
+        }
+
+        protected override async UniTask SaveAsync(string content, System.Threading.CancellationToken cancellationToken)
         {
             var saveFilePath = Path.Combine(ApplicationData.LoggerPath, FileName);
 
-            if (File.Exists(saveFilePath)) return FileSystem.File.AppendAllTextAsync(saveFilePath, content, cancellationToken);
+            if (File.Exists(saveFilePath))
+            {
+                await FileSystem.File.AppendAllTextAsync(saveFilePath, content, cancellationToken);
+                return;
+            }
 
             var suffix = Path.GetExtension(FileName);
 
             saveFilePath = Path.Combine(ApplicationData.LoggerPath,
                 TryGetTimeFormat(DefaultFileName, out var format) ? $"{DateTime.Now.ToString(format)}{suffix}" : $"{DateTime.Now:yy-MM-dd}{suffix}");
 
-            return FileSystem.File.AppendAllTextAsync(saveFilePath, content, cancellationToken);
+            await FileSystem.File.AppendAllTextAsync(saveFilePath, content, cancellationToken);
         }
     }
 }

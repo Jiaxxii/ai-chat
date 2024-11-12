@@ -1,9 +1,9 @@
-﻿#if UNITY_EDITOR
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Xiyu.LoggerSystem;
 using Debug = UnityEngine.Debug;
 
 namespace Xiyu.Expand
@@ -15,13 +15,13 @@ namespace Xiyu.Expand
         private readonly Action<TimeSpan, IEnumerable<TimeSpan>?> _onTimeStop;
 
         private readonly Action<TimeSpan, IEnumerable<TimeSpan>?> _defaultAction = (elapsed, pauseElapsed) =>
-            Debug.Log($"耗时:<color=red>{elapsed.TotalMilliseconds - (pauseElapsed?.Sum(v => v.TotalMilliseconds) ?? 0)}</color> ms");
+           LoggerManager.Instance.LogInfo($"耗时:<color=red>{elapsed.TotalMilliseconds - (pauseElapsed?.Sum(v => v.TotalMilliseconds) ?? 0):F5}</color> ms");
 
         private Stopwatch? _pauseStopwatch;
         private readonly Queue<TimeSpan> _pauseElapsedQueue = new();
 
         private bool _isPause;
-
+        
         // ctor
         public TimeConsuming(Action<TimeSpan, IEnumerable<TimeSpan>?>? stopwatchStop = null) => _onTimeStop = stopwatchStop ?? _defaultAction;
 
@@ -65,4 +65,3 @@ namespace Xiyu.Expand
         }
     }
 }
-#endif

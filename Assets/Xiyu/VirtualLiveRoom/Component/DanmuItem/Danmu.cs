@@ -1,8 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Xiyu.GameFunction.CharacterComponent;
 using Xiyu.Settings;
+using Xiyu.VirtualLiveRoom.Component.DanmuItem.Data;
+using Color = UnityEngine.Color;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Xiyu.VirtualLiveRoom.Component.DanmuItem
 {
@@ -27,9 +29,17 @@ namespace Xiyu.VirtualLiveRoom.Component.DanmuItem
         }
 
 
+        public void UpdateData(Data.Danmu danmu)
+        {
+            PanelColor = danmu.PanelColor;
+        }
+
+
+        public Data.Danmu ReadOnlyData => new(PanelColor.ToXiyuColor());
+
         public static async UniTask<Danmu> CreateAsync(Transform root, Sprite headSprite, string userName, string content)
         {
-            var asset = (WebViewContentReferenceDeviceSo)await Resources.LoadAsync<WebViewContentReferenceDeviceSo>("Settings/RefPrefabricate");
+            var asset = (AddressableGameObjectLoaderSo)await Resources.LoadAsync<AddressableGameObjectLoaderSo>("Settings/RefPrefabricate");
 
             var danmu = await asset.LoadComponentAssetAsync<Danmu>("弹幕项", root);
 

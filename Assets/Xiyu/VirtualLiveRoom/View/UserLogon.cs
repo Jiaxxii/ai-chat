@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Xiyu.VirtualLiveRoom.EventFunctionSystem;
 
 namespace Xiyu.VirtualLiveRoom.View
 {
     public class UserLogon : Component.WebViewContent
     {
-        protected override UniTask Initialization(CancellationToken cancellationToken = default)
-        {
-            return UniTask.WaitForSeconds(0, cancellationToken: cancellationToken);
-        }
+        [WebContentInit(false)]
+        protected override UniTask Initialization(CancellationToken cancellationToken = default) => UniTask.CompletedTask;
+        
     }
 }

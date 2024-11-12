@@ -129,26 +129,28 @@ namespace Xiyu.GameFunction.GameWindows
 
         private static DialogWindow<TResult> CreateFunc(string typeName, bool autoClose, Transform parent = null)
         {
-            var preform = CharacterComponent.CharacterContentRoot.PreformScriptableObject.Table[typeName].Preform;
-
-            var dialogWindow = Instantiate(preform, parent == null ? DialogWindowManager.Instance.Parent : parent).GetComponent<DialogWindow<TResult>>();
-
-            dialogWindow.Init(autoClose);
-
-
-            return dialogWindow;
+            throw new NotImplementedException();
+            // var preform = CharacterComponent.CharacterContentRoot.PreformScriptableObject.Table[typeName].Preform;
+            //
+            // var dialogWindow = Instantiate(preform, parent == null ? DialogWindowManager.Instance.Parent : parent).GetComponent<DialogWindow<TResult>>();
+            //
+            // dialogWindow.Init(autoClose);
+            //
+            //
+            // return dialogWindow;
         }
 
         private static DialogWindow<TResult> CreateFunc(string typeName, UnityAction<object> autoCloseAction, Transform parent = null)
         {
-            var preform = CharacterComponent.CharacterContentRoot.PreformScriptableObject.Table[typeName].Preform;
+            throw new NotImplementedException();
+            /*var preform = CharacterComponent.CharacterContentRoot.PreformScriptableObject.Table[typeName].Preform;
 
             var dialogWindow = Instantiate(preform, parent == null ? DialogWindowManager.Instance.Parent : parent).GetComponent<DialogWindow<TResult>>();
 
             dialogWindow.Init(autoCloseAction);
 
 
-            return dialogWindow;
+            return dialogWindow;*/
         }
 
 

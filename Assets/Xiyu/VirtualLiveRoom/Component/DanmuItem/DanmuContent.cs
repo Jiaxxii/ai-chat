@@ -1,6 +1,8 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Xiyu.VirtualLiveRoom.Component.DanmuItem.Data;
 
 namespace Xiyu.VirtualLiveRoom.Component.DanmuItem
 {
@@ -15,16 +17,25 @@ namespace Xiyu.VirtualLiveRoom.Component.DanmuItem
             set => contentText.text = value;
         }
 
-        public Color FontColor
+        public UnityEngine.Color FontColor
         {
             get => contentText.color;
             set => contentText.color = value;
         }
 
-        public Color PanelColor
+        public UnityEngine.Color PanelColor
         {
             get => basePanel.color;
             set => basePanel.color = value;
         }
+
+        public void UpdateData(Data.DanmuContent danmuContent)
+        {
+            Content = danmuContent.Content;
+            FontColor = danmuContent.FontColor;
+            PanelColor = danmuContent.PanelColor;
+        }
+
+        public Data.DanmuContent ReadOnlyData => new(Content, FontColor.ToXiyuColor(), PanelColor.ToXiyuColor());
     }
 }

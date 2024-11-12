@@ -7,13 +7,15 @@ using UnityEngine;
 
 namespace Xiyu.CharacterIllustrationResource
 {
-    public class BodyInfoSettings
+    public static class BodyInfoSettings
     {
         public static readonly string MainSettingsFilePath = Path.Combine(Application.ApplicationData.BodyInfoSettingsPath, "main settings.json");
 
         private static Dictionary<string, BodyInfo> _bodyInfos = new();
 
         public static IReadOnlyDictionary<string, BodyInfo> Main => _bodyInfos;
+        
+        
 
         public static async UniTask LoadSettingsAsync()
         {

@@ -1,18 +1,12 @@
 ﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace Xiyu.LoggerSystem
 {
     public interface ILogger
     {
-        void LogInfo(string message, bool stackTrace = false, CancellationToken cancellationToken = default);
-
-        void LogWarning(string message, bool stackTrace = false, CancellationToken cancellationToken = default);
-
-        void LogError(string message, bool stackTrace = false, CancellationToken cancellationToken = default);
-
-        void ThrowFail(string message);
-
-
-        void Log(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default);
+        UniTask LogAsync(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default);
+        UniTaskVoid LogForget(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default);
+        void Log(LogLevel logLevel, string message, bool stackTrace = false);
     }
 }

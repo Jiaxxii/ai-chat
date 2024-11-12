@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Xiyu.VirtualLiveRoom.Component
 {
     public class WebViewContent : UIContainer
     {
         [SerializeField] protected CanvasGroup baseCanvasGroup;
-        
+
 
         public float Alpha
         {
@@ -22,5 +23,19 @@ namespace Xiyu.VirtualLiveRoom.Component
 
 
         public PageInfo PageInfo { get; private set; }
+
+
+        [JetBrains.Annotations.UsedImplicitly]
+        public virtual UniTaskVoid WebPageFocus()
+        {
+            return default;
+        }
+
+
+        [JetBrains.Annotations.UsedImplicitly]
+        public virtual UniTaskVoid WebPageLostFocus()
+        {
+            return default;
+        }
     }
 }

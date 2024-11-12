@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Xiyu.Constant;
-using Xiyu.Expand;
 
 namespace Xiyu.LoggerSystem
 {
-    public class LoggerManager : Singleton<LoggerManager>, ILogger
+    public class LoggerManager : MonoBehaviour, ILogger
     {
+        private static readonly Lazy<LoggerManager> Lazy = new(FindObjectOfType<LoggerManager>);
+        public static LoggerManager Instance => Lazy.Value;
+
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private TextMeshProUGUI logOutputUGUI;
         [SerializeField] private RectTransform basePanel;
 
-        private float _startLogContentSizeY;
 
         private bool _isRolling;
 
@@ -31,11 +34,9 @@ namespace Xiyu.LoggerSystem
 
         private readonly System.Text.StringBuilder _logContentStringBuilder = new(1_0_2_4 * 1_0);
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-
-            _loggers.Add(new ConsoleLogger(ConsoleLog)
+            _loggers.Add(new ConsoleLogger(ConsoleLogSaveAsync)
             {
                 Name = GameConstant.LoggerDefaultConsoleLoggerName
             });
@@ -51,79 +52,118 @@ namespace Xiyu.LoggerSystem
                 Log(logLevel, condition);
             };
 
-            _startLogContentSizeY = scrollRect.content.sizeDelta.y;
+            SetActive(false);
         }
 
         public void SetActive(bool value)
         {
             basePanel.gameObject.SetActive(value);
+            if (value)
+                basePanel.transform.SetAsLastSibling();
         }
 
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote))
+            if (Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.Escape))
             {
                 SetActive(!basePanel.gameObject.activeSelf);
+                if (basePanel.gameObject.activeSelf)
+                {
+                    ToFallRoll(1.75F);
+                }
             }
         }
 
 
-        private void ConsoleLog(LogLevel logLevel, string msg)
+        private async UniTask ConsoleLogSaveAsync(string content, CancellationToken cancellationToken)
         {
-            var logLevelString = logLevel switch
-            {
-                LogLevel.Debug or LogLevel.Error or LogLevel.Fail => $"<color=red>{logLevel.ToString()}</color>",
-                LogLevel.Info => logLevel.ToString(),
-                LogLevel.Warn => $"<color=yellow>{logLevel.ToString()}</color>",
-                _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
-            };
+            logOutputUGUI.text = _logContentStringBuilder.AppendLine(content).ToString();
+            await UniTask.NextFrame();
 
-            logOutputUGUI.text = _logContentStringBuilder.AppendLine($"{logLevelString} {msg}{Environment.NewLine}").ToString();
 
-            var height = logOutputUGUI.preferredHeight;
+            ToFallRoll(1);
+        }
 
-            if (height <= _startLogContentSizeY) return;
 
-            scrollRect.content.sizeDelta = new Vector2(scrollRect.content.sizeDelta.x, height);
-            _startLogContentSizeY = height;
-
+        private void ToFallRoll(float duration)
+        {
             if (_isRolling)
             {
                 return;
             }
 
             _isRolling = true;
-            DOTween.To(() => scrollRect.verticalNormalizedPosition, v => scrollRect.verticalNormalizedPosition = v, 0, 1)
+            DOTween.To(() => scrollRect.verticalNormalizedPosition, v => scrollRect.verticalNormalizedPosition = v, 0, duration)
                 .SetEase(Ease.OutQuint)
                 .OnComplete(() => _isRolling = false);
         }
 
 
-        public void LogInfo(string message, bool stackTrace = false, CancellationToken cancellationToken = default) =>
-            Log(LogLevel.Info, message, stackTrace, cancellationToken);
-
-        public void LogWarning(string message, bool stackTrace = false, CancellationToken cancellationToken = default) =>
-            Log(LogLevel.Warn, message, stackTrace, cancellationToken);
-
-        public void LogError(string message, bool stackTrace = false, CancellationToken cancellationToken = default) =>
-            Log(LogLevel.Error, message, stackTrace, cancellationToken);
-
-        public void ThrowFail(string message)
+        public async UniTask LogAsync(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default)
         {
-            foreach (var logger in _loggers)
-            {
-                logger.ThrowFail(message);
-            }
+            await UniTask.WhenAll(_loggers.Select(l => l.LogAsync(logLevel, message, stackTrace, cancellationToken)));
         }
 
-        public void Log(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        public async UniTaskVoid LogForget(LogLevel logLevel, string message, bool stackTrace = false, CancellationToken cancellationToken = default)
         {
-            SetActive(true);
-            foreach (var logger in _loggers)
-            {
-                logger.Log(logLevel, message, stackTrace, cancellationToken);
-            }
+            await LogAsync(logLevel, message, stackTrace, cancellationToken);
         }
+
+        public void Log(LogLevel logLevel, string message, bool stackTrace = false)
+        {
+            LogForget(logLevel, message, stackTrace, CancellationToken.None).Forget();
+        }
+
+        #region Log
+
+        public UniTask LogInfoAsync([NotNull] string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            return this.LogAsync(LogLevel.Info, message, stackTrace, cancellationToken);
+        }
+
+        public UniTask LogWarnAsync([NotNull] string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            return this.LogAsync(LogLevel.Warn, message, stackTrace, cancellationToken);
+        }
+
+        public UniTask LogErrorAsync([NotNull] string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            return this.LogAsync(LogLevel.Error, message, stackTrace, cancellationToken);
+        }
+
+
+        public UniTaskVoid LogInfoForget([NotNull] string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            return this.LogForget(LogLevel.Info, message, stackTrace, cancellationToken);
+        }
+
+        public UniTaskVoid LogWarnForget([NotNull] string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            return this.LogForget(LogLevel.Warn, message, stackTrace, cancellationToken);
+        }
+
+        public UniTaskVoid LogErrorForget([NotNull] string message, bool stackTrace = false, CancellationToken cancellationToken = default)
+        {
+            return this.LogForget(LogLevel.Error, message, stackTrace, cancellationToken);
+        }
+
+
+        public void LogInfo([NotNull] string message, bool stackTrace = false)
+        {
+            this.Log(LogLevel.Info, message, stackTrace);
+        }
+
+        public void LogWarn([NotNull] string message, bool stackTrace = false)
+        {
+            this.Log(LogLevel.Warn, message, stackTrace);
+        }
+
+        public void LogError([NotNull] string message, bool stackTrace = false)
+        {
+            this.Log(LogLevel.Error, message, stackTrace);
+        }
+
+        #endregion
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEngine;
+using Xiyu.LoggerSystem;
 using Xiyu.VirtualLiveRoom.Component;
-using Xiyu.VirtualLiveRoom.Component.NewNavigation;
 
 namespace Xiyu.Settings
 {
@@ -22,7 +20,7 @@ namespace Xiyu.Settings
             _webPageInfoSetMap = new Dictionary<string, PageInfo>();
             foreach (var info in webPageInfoCollections.Where(info => !_webPageInfoSetMap.TryAdd(info.Url, info)))
             {
-                Debug.LogWarning($"重复的key:\"{info.Url}\"");
+               LoggerManager.Instance.LogWarn($"重复的key:\"{info.Url}\"");
             }
         }
 

@@ -10,30 +10,30 @@ namespace Xiyu.GameFunction.GeometricTransformations
         public GeomTransforms(Vector2 windowSize, Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter)
         {
             WindowSize = windowSize;
-            _positionProperty = positionSetter;
-            _sizeProperty = sizeSetter;
-            _scaleProperty = scaleSetter;
-            _rotateProperty = rotateSetter;
+            PositionProperty = positionSetter;
+            SizeProperty = sizeSetter;
+            ScaleProperty = scaleSetter;
+            RotateProperty = rotateSetter;
         }
 
-        public GeomTransforms(Vector2 windowSize,Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter,
+        public GeomTransforms(Vector2 windowSize, Property<Vector2> positionSetter, Property<Vector2> sizeSetter, Property<Vector3> scaleSetter, Property<Vector3> rotateSetter,
             Property<Color> colorProperty)
         {
             WindowSize = windowSize;
-            _positionProperty = positionSetter;
-            _sizeProperty = sizeSetter;
-            _scaleProperty = scaleSetter;
-            _rotateProperty = rotateSetter;
-            _colorProperty = colorProperty;
+            PositionProperty = positionSetter;
+            SizeProperty = sizeSetter;
+            ScaleProperty = scaleSetter;
+            RotateProperty = rotateSetter;
+            ColorProperty = colorProperty;
         }
 
-        private readonly Property<Vector2> _positionProperty;
-        private readonly Property<Vector2> _sizeProperty;
-        private readonly Property<Vector3> _scaleProperty;
-        private readonly Property<Vector3> _rotateProperty;
+        protected readonly Property<Vector2> PositionProperty;
+        protected readonly Property<Vector2> SizeProperty;
+        protected readonly Property<Vector3> ScaleProperty;
+        protected readonly Property<Vector3> RotateProperty;
 
-        private readonly Property<Color> _colorProperty;
-        
+        protected readonly Property<Color> ColorProperty;
+
         /// <summary>
         /// (重要)
         /// </summary>
@@ -41,66 +41,68 @@ namespace Xiyu.GameFunction.GeometricTransformations
 
         public Vector2 Position
         {
-            get => _positionProperty.GetValue();
-            set => _positionProperty.SetValue(value);
+            get => PositionProperty.GetValue();
+            set => PositionProperty.SetValue(value);
         }
 
         public Vector3 Scale
         {
-            get => _scaleProperty.GetValue();
-            set => _scaleProperty.SetValue(value);
+            get => ScaleProperty.GetValue();
+            set => ScaleProperty.SetValue(value);
         }
 
         public Vector3 Rotate
         {
-            get => _rotateProperty.GetValue();
-            set => _rotateProperty.SetValue(value);
+            get => RotateProperty.GetValue();
+            set => RotateProperty.SetValue(value);
         }
 
-        public Vector2 Size => _sizeProperty.GetValue();
+        public Vector2 RawSize => SizeProperty.GetValue();
 
         public Color Color
         {
-            get => _colorProperty.GetValue();
-            set => _colorProperty.SetValue(value);
+            get => ColorProperty.GetValue();
+            set => ColorProperty.SetValue(value);
         }
+
+        public Vector2 SizeScaling => RawSize * Scale.ToV2();
 
         public GeomTransforms MoveTo(Vector2 target)
         {
-            _positionProperty.SetValue(target);
+            PositionProperty.SetValue(target);
             return this;
         }
 
         public GeomTransforms Offset(Vector2 offset)
         {
-            _positionProperty.Member += offset;
+            PositionProperty.Member += offset;
             return this;
         }
 
         public GeomTransforms SetScale(Vector2 scale)
         {
-            var z = _scaleProperty.Member.z;
-            _scaleProperty.SetValue(new Vector3(scale.x, scale.y, z));
+            var z = ScaleProperty.Member.z;
+            ScaleProperty.SetValue(new Vector3(scale.x, scale.y, z));
             return this;
         }
 
         public GeomTransforms SetScale(float scale)
         {
-            var z = _scaleProperty.Member.z;
-            _scaleProperty.SetValue(new Vector3(scale, scale, z));
+            var z = ScaleProperty.Member.z;
+            ScaleProperty.SetValue(new Vector3(scale, scale, z));
             return this;
         }
 
         public GeomTransforms SetAngle(Vector3 angle)
         {
-            _rotateProperty.SetValue(angle);
+            RotateProperty.SetValue(angle);
             return this;
         }
 
         public GeomTransforms SetAngle(float angle)
         {
-            var raw = _rotateProperty.Member;
-            _rotateProperty.SetValue(new Vector3(raw.x, raw.y, angle));
+            var raw = RotateProperty.Member;
+            RotateProperty.SetValue(new Vector3(raw.x, raw.y, angle));
             return this;
         }
 
@@ -121,8 +123,8 @@ namespace Xiyu.GameFunction.GeometricTransformations
                 ViewHorizontalAlign.Ignore => throw new ArgumentException(),
 
                 ViewHorizontalAlign.Center => 0,
-                ViewHorizontalAlign.Left => -WindowSize.x.Half() + (Size.x.Half() * Scale.x),
-                ViewHorizontalAlign.Right => WindowSize.x.Half() - (Size.x.Half() * Scale.x),
+                ViewHorizontalAlign.Left => -WindowSize.x.Half() + (RawSize.x.Half() * Scale.x),
+                ViewHorizontalAlign.Right => WindowSize.x.Half() - (RawSize.x.Half() * Scale.x),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(align), align, null)
             };
@@ -135,8 +137,8 @@ namespace Xiyu.GameFunction.GeometricTransformations
                 ViewVerticalAlign.Ignore => throw new ArgumentException(),
 
                 ViewVerticalAlign.Center => 0,
-                ViewVerticalAlign.Top => WindowSize.y.Half() - (Size.y.Half() * Scale.y),
-                ViewVerticalAlign.Bottom => -WindowSize.y.Half() + (Size.y.Half() * Scale.y),
+                ViewVerticalAlign.Top => WindowSize.y.Half() - (RawSize.y.Half() * Scale.y),
+                ViewVerticalAlign.Bottom => -WindowSize.y.Half() + (RawSize.y.Half() * Scale.y),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(align), align, null)
             };
@@ -147,22 +149,22 @@ namespace Xiyu.GameFunction.GeometricTransformations
             return DOTween.To(() => Color, color => Color = color, endColor, duration);
         }
 
-        public YieldInstruction WaitForDoNod(float offsetY = 100, float duration = 1.5F, int loops = 1, Ease ease = Ease.OutBounce)
+        public Sequence DoNod(float offsetY = 100, float duration = 1.5F, int loops = 1, Ease ease = Ease.OutBounce)
         {
             var sequence = DOTween.Sequence();
             sequence.Append(DOTween.To(() => Position, pos => Position = pos, Position - new Vector2(0, offsetY), duration / 2F));
             sequence.Append(DOTween.To(() => Position, pos => Position = pos, Position, duration / 2F));
             sequence.SetEase(ease);
             sequence.SetLoops(loops <= 1 ? 1 : loops, LoopType.Yoyo);
-            return sequence.WaitForCompletion();
+            return sequence;
         }
 
-        public YieldInstruction WaitForDoShake(float duration = 0.75F, float strength = 35F, int vibrato = 30, float randomness = 20f, bool fadeOut = true)
+        public Tween DoShake(float duration = 0.75F, float strength = 35F, int vibrato = 30, float randomness = 20f, bool fadeOut = true)
         {
-            return DOTween.Shake(() => Position.ToV3(), pos => Position = pos.ToV2(), duration, strength, vibrato, randomness, true, fadeOut).WaitForCompletion();
+            return DOTween.Shake(() => Position.ToV3(), pos => Position = pos.ToV2(), duration, strength, vibrato, randomness, true, fadeOut);
         }
 
-        public YieldInstruction WaitForDoShakeHead(float offsetX = 100, float duration = 0.75F, int loops = 1, Ease ease = Ease.InOutSine)
+        public Sequence DoShakeHead(float offsetX = 100, float duration = 0.75F, int loops = 1, Ease ease = Ease.InOutSine)
         {
             var sequence = DOTween.Sequence();
             sequence.Append(DOTween.To(() => Position, pos => Position = pos, Position - new Vector2(offsetX, 0), duration * .25F));
@@ -170,17 +172,17 @@ namespace Xiyu.GameFunction.GeometricTransformations
             sequence.Append(DOTween.To(() => Position, pos => Position = pos, Position, duration * .25F));
             sequence.SetEase(ease);
             sequence.SetLoops(loops <= 1 ? 1 : loops, LoopType.Yoyo);
-            return sequence.WaitForCompletion();
+            return sequence;
         }
 
-        public YieldInstruction WaitForDoJump(float offsetY = 150F, float duration = 0.75F, int loops = 1, Ease ease = Ease.OutBounce)
+        public Sequence DoJump(float offsetY = 150F, float duration = 0.75F, int loops = 1, Ease ease = Ease.OutBounce)
         {
             var sequence = DOTween.Sequence();
             sequence.Append(DOTween.To(() => Position, pos => Position = pos, Position + new Vector2(0, offsetY), duration * .5F));
             sequence.Append(DOTween.To(() => Position, pos => Position = pos, Position, duration * .5F));
             sequence.SetEase(ease);
             sequence.SetLoops(loops <= 1 ? 1 : loops, LoopType.Yoyo);
-            return sequence.WaitForCompletion();
+            return sequence;
         }
     }
 

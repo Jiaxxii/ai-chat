@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Xiyu.LoggerSystem;
 
 namespace Xiyu.VirtualLiveRoom.Component
 {
@@ -33,7 +34,7 @@ namespace Xiyu.VirtualLiveRoom.Component
 
         public static PageInfo NotImplemented()
         {
-            UnityEngine.Debug.LogWarning("PageInfo未实现!");
+            LoggerManager.Instance.LogWarnAsync("PageInfo未实现!");
             return new PageInfo("未命名标题", "https://www.notimplemented.com", null, WebsiteSecurityLevel.Null);
         }
 

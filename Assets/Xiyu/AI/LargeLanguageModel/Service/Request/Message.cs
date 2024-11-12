@@ -9,7 +9,18 @@ namespace Xiyu.AI.LargeLanguageModel.Service.Request
     {
         [SerializeField] private RoleType role;
         [SerializeField] [TextArea(3, 10)] private string content;
-        
+
+        public Message(RoleType role, string content)
+        {
+            this.role = role;
+            this.content = content;
+        }
+
+        public Message()
+        {
+            
+        }
+
         public string Role
         {
             get => role.ToString().ToLowerInvariant();

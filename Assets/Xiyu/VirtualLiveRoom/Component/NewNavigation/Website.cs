@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
@@ -11,14 +12,19 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
     /// <summary>
     /// 网址栏
     /// </summary>
-    public class Website : UIContainer
+    public class Website : UIContainer, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private Image basePanel;
         [SerializeField] private TMP_InputField addressInputField;
         [SerializeField] private Image safeLogoImage;
+        [SerializeField] private Color highlightColor;
 
         // [SerializeField] [Range(0.05F, 1)] private float fadeColorSeconds = 0.75F;
 
         [SerializeField] [Range(0.5F, 3)] private float logoFillSeconds = 1.5F;
+
+
+        private Color _rawColor;
 
         /// <summary>
         /// 在网站成功发送时调用（参数分别为 当前，目标）
@@ -46,6 +52,8 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
             // 将网址输入框的提交事件绑定网址检测方法
             // addressInputField.onSubmit.AddListener(OnAddressInputFieldSubmitEventHandler);
             addressInputField.onSubmit.AddListener(UniTask.UnityAction<string>(OnAddressInputFieldSubmitEventHandlerAsync));
+
+            _rawColor = basePanel.color;
         }
 
         public void SetFist(PageInfo pageInfo)
@@ -65,7 +73,6 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
             // 输入的网址与原来网址相同
             if (CurrentPageInfo.Url == targetPageInfo.Url)
             {
-                // Debug.Log(CurrentPageInfo.Url);
                 return;
             }
 
@@ -133,6 +140,16 @@ namespace Xiyu.VirtualLiveRoom.Component.NewNavigation
                 safeLogoImage.fillAmount = 1F;
                 return;
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            basePanel.DOColor(highlightColor, 0.3F);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            basePanel.DOColor(_rawColor, 0.3F);
         }
     }
 }

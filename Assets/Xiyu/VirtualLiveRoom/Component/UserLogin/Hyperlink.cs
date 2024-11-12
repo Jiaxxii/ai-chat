@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using Xiyu.LoggerSystem;
 using Xiyu.VirtualLiveRoom.Component.NewNavigation;
 
 namespace Xiyu.VirtualLiveRoom.Component.UserLogin
@@ -63,7 +64,7 @@ namespace Xiyu.VirtualLiveRoom.Component.UserLogin
 
             if (!WebsiteFinder.TryFindWebsitePageInfo(webHyperLinkTo.TargetUrl, out var currentPageInfo))
             {
-                Debug.LogError($"链接\"{webHyperLinkTo.TargetUrl}\"不存在！");
+              LoggerManager.Instance.LogError($"链接\"{webHyperLinkTo.TargetUrl}\"不存在！");
                 return;
             }
 
